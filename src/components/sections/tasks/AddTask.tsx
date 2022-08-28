@@ -16,14 +16,28 @@ const AddTask = () => {
 		id: Number(Math.random().toPrecision(12).slice(2, 6)),
 		completed: false,
 		name: "",
-		due_date: moment().calendar(null, {
-			sameDay: "[Today], DD MMM",
-			nextDay: "[Tomorrow]",
-		}),
-		schedule: "",
-		deadline: "",
+		due_date: {
+			date: [],
+			time: [],
+		},
+		schedule: {
+			start: {
+				date: [moment().calendar()],
+				time: [],
+			},
+			end: {
+				date: [],
+				time: [],
+			},
+			duration: 0,
+		},
+		deadline: {
+			date: [],
+			time: [],
+		},
 		repeat: "",
 	};
+
 	const [taskFormValues, setTaskFormValues]: [TaskProps, any] =
 		useState(initialFormValues);
 
@@ -34,23 +48,69 @@ const AddTask = () => {
 		if (inputTitle === "add_task") {
 			setTaskFormValues({ ...taskFormValues, name: inputValue });
 		} else if (inputTitle === "due_date") {
-			let date = taskFormValues.due_date === "" ? null : inputValue;
-
-			let dueDate = moment(date).calendar(null, {
-				sameDay: "[Today], DD MMM",
-				nextDay: "[Tomorrow], DD MMM",
-				nextWeek: "[Next] ddd, DD MMM",
-				lastDay: "[Yesterday], DD MMM",
-				lastWeek: "[Last] ddd, DD MMM",
-				sameElse: "DD MMM, [d left]",
-			});
-
-			setTaskFormValues({
-				...taskFormValues,
-				due_date: dueDate,
-			});
-		} else if (inputTitle === "schedule") {
-			setTaskFormValues({ ...taskFormValues, schedule: inputValue });
+			if (e.target.type === "date") {
+				setTaskFormValues({
+					...taskFormValues,
+					due_date: {
+						...taskFormValues.due_date,
+						date: [inputValue || ""],
+					},
+				});
+			} else {
+				setTaskFormValues({
+					...taskFormValues,
+					due_date: {
+						...taskFormValues.due_date,
+						time: [inputValue || ""],
+					},
+				});
+			}
+		} else if (inputTitle.includes("schedule")) {
+			if (inputTitle.includes("start")) {
+				if (e.target.type === "date") {
+					setTaskFormValues({
+						...taskFormValues,
+						schedule: {
+							...taskFormValues.schedule,
+							start: {
+								...taskFormValues.schedule.start,
+								date: [inputValue || ""],
+							},
+						},
+					});
+				} else {
+					setTaskFormValues({
+						...taskFormValues,
+						schedule: {
+							...taskFormValues.schedule,
+							start: {
+								...taskFormValues.schedule.start,
+								time: [inputValue || ""],
+							},
+						},
+					});
+				}
+			} else if (inputTitle.includes("end")) {
+				if (e.target.type === "date") {
+					setTaskFormValues({
+						...taskFormValues,
+						schedule: {
+							end: {
+								date: [inputValue || ""],
+							},
+						},
+					});
+				} else {
+					setTaskFormValues({
+						...taskFormValues,
+						schedule: {
+							end: {
+								time: [inputValue || ""],
+							},
+						},
+					});
+				}
+			}
 		} else if (inputTitle === "deadline") {
 			setTaskFormValues({ ...taskFormValues, deadline: inputValue });
 		} else if (inputTitle === "repeat") {
@@ -89,63 +149,270 @@ const AddTask = () => {
 					<h2> Set Due Day :</h2>
 
 					<div>
-						<label htmlFor="task">Date :</label>
 						<input
-							type="date"
 							name="due_date"
 							id=""
 							onChange={(e: any) => handleInputChange(e)}
+							placeholder="Date"
+							aria-placeholder="Date"
+							// min={today}
+							onFocus={(e: any) => {
+								e.target.type = "date";
+							}}
+							onBlur={(e: any) => {
+								e.target.value == ""
+									? (e.target.type = "text")
+									: (e.target.type = "date");
+							}}
+							// onChange={(e: any) => {
+							// 	e.target.value == ""
+							// 		? (e.target.type = "text")
+							// 		: (e.target.type = "date");
+							// 	setDueDateVal(e.target.value);
+							// }}
+						/>
+
+						<input
+							name="due_date"
+							id=""
+							onChange={(e: any) => handleInputChange(e)}
+							placeholder="Time"
+							aria-placeholder="Date"
+							// min={today}
+							onFocus={(e: any) => {
+								e.target.type = "time";
+							}}
+							onBlur={(e: any) => {
+								e.target.value == ""
+									? (e.target.type = "text")
+									: (e.target.type = "time");
+							}}
+							// onChange={(e: any) => {
+							// 	e.target.value == ""
+							// 		? (e.target.type = "text")
+							// 		: (e.target.type = "time");
+							// 	setDueDateVal(e.target.value);
+							// }}
 						/>
 					</div>
-					{/* <div>
-						<label htmlFor="task">Time :</label>
-						<input
-							placeholder="Start"
-							type="time"
-							name="due-time"
-							id=""
-						/>
-					</div> */}
 				</div>
 
 				<div>
 					<h2>Set Schedule :</h2>
 
 					<div>
-						<label htmlFor="task">Date :</label>
-						<input
-							type="date"
-							name="schedule-date"
-							id=""
-							onChange={(e: any) => handleInputChange(e)}
-						/>
+						<div>
+							<label htmlFor="task">Start :</label>
+
+							<div>
+								<input
+									name="schedule-start"
+									id=""
+									onChange={(e: any) => handleInputChange(e)}
+									placeholder="Date"
+									aria-placeholder="Date"
+									// min={today}
+									onFocus={(e: any) => {
+										e.target.type = "date";
+									}}
+									onBlur={(e: any) => {
+										e.target.value == ""
+											? (e.target.type = "text")
+											: (e.target.type = "date");
+									}}
+									// onChange={(e: any) => {
+									// 	e.target.value == ""
+									// 		? (e.target.type = "text")
+									// 		: (e.target.type = "date");
+									// 	setDueDateVal(e.target.value);
+									// }}
+								/>
+
+								<input
+									name="schedule-start"
+									id=""
+									onChange={(e: any) => handleInputChange(e)}
+									placeholder="Date"
+									aria-placeholder="Date"
+									// min={today}
+									onFocus={(e: any) => {
+										e.target.type = "time";
+									}}
+									onBlur={(e: any) => {
+										e.target.value == ""
+											? (e.target.type = "text")
+											: (e.target.type = "time");
+									}}
+									// onChange={(e: any) => {
+									// 	e.target.value == ""
+									// 		? (e.target.type = "text")
+									// 		: (e.target.type = "time");
+									// 	setDueDateVal(e.target.value);
+									// }}
+								/>
+							</div>
+						</div>
+
+						<div>
+							<label htmlFor="task">End :</label>
+
+							<div>
+								<input
+									name="schedule-end"
+									id=""
+									onChange={(e: any) => handleInputChange(e)}
+									placeholder="Date"
+									aria-placeholder="Date"
+									// min={today}
+									onFocus={(e: any) => {
+										e.target.type = "date";
+									}}
+									onBlur={(e: any) => {
+										e.target.value == ""
+											? (e.target.type = "text")
+											: (e.target.type = "date");
+									}}
+									// onChange={(e: any) => {
+									// 	e.target.value == ""
+									// 		? (e.target.type = "text")
+									// 		: (e.target.type = "date");
+									// 	setDueDateVal(e.target.value);
+									// }}
+								/>
+
+								<input
+									name="schedule-end"
+									id=""
+									onChange={(e: any) => handleInputChange(e)}
+									placeholder="Date"
+									aria-placeholder="Date"
+									// min={today}
+									onFocus={(e: any) => {
+										e.target.type = "time";
+									}}
+									onBlur={(e: any) => {
+										e.target.value == ""
+											? (e.target.type = "text")
+											: (e.target.type = "time");
+									}}
+									// onChange={(e: any) => {
+									// 	e.target.value == ""
+									// 		? (e.target.type = "text")
+									// 		: (e.target.type = "time");
+									// 	setDueDateVal(e.target.value);
+									// }}
+								/>
+							</div>
+						</div>
 					</div>
+
 					<div>
 						<label htmlFor="task">Duration :</label>
 
-						<input
-							placeholder="Start"
-							type="time"
-							name="schedule-start-time"
-							id=""
-						/>
-						<input
-							placeholder="End"
-							type="time"
-							name="schedule-end-time"
-							id=""
-						/>
+						<div>
+							<input
+								name="schedule-duration"
+								id=""
+								onChange={(e: any) => handleInputChange(e)}
+								placeholder="Date"
+								aria-placeholder="Date"
+								// min={today}
+								onFocus={(e: any) => {
+									e.target.type = "date";
+								}}
+								onBlur={(e: any) => {
+									e.target.value == ""
+										? (e.target.type = "text")
+										: (e.target.type = "date");
+								}}
+								// onChange={(e: any) => {
+								// 	e.target.value == ""
+								// 		? (e.target.type = "text")
+								// 		: (e.target.type = "date");
+								// 	setDueDateVal(e.target.value);
+								// }}
+							/>
+
+							<input
+								name="schedule-duration"
+								id=""
+								onChange={(e: any) => handleInputChange(e)}
+								placeholder="Date"
+								aria-placeholder="Date"
+								// min={today}
+								onFocus={(e: any) => {
+									e.target.type = "time";
+								}}
+								onBlur={(e: any) => {
+									e.target.value == ""
+										? (e.target.type = "text")
+										: (e.target.type = "time");
+								}}
+								// onChange={(e: any) => {
+								// 	e.target.value == ""
+								// 		? (e.target.type = "text")
+								// 		: (e.target.type = "time");
+								// 	setDueDateVal(e.target.value);
+								// }}
+							/>
+						</div>
 					</div>
 				</div>
 
 				<div>
 					<h2>Set your Deadline :</h2>
-					<input
-						type="datetime-local"
-						name="deadline"
-						id=""
-						onChange={(e: any) => handleInputChange(e)}
-					/>
+
+					<div>
+						<div>
+							<input
+								name="deadline-date"
+								id=""
+								onChange={(e: any) => handleInputChange(e)}
+								placeholder="Date"
+								aria-placeholder="Date"
+								// min={today}
+								onFocus={(e: any) => {
+									e.target.type = "date";
+								}}
+								onBlur={(e: any) => {
+									e.target.value == ""
+										? (e.target.type = "text")
+										: (e.target.type = "date");
+								}}
+								// onChange={(e: any) => {
+								// 	e.target.value == ""
+								// 		? (e.target.type = "text")
+								// 		: (e.target.type = "date");
+								// 	setDueDateVal(e.target.value);
+								// }}
+							/>
+						</div>
+
+						<div>
+							<input
+								name="deadline-time"
+								id=""
+								onChange={(e: any) => handleInputChange(e)}
+								placeholder="Date"
+								aria-placeholder="Date"
+								// min={today}
+								onFocus={(e: any) => {
+									e.target.type = "time";
+								}}
+								onBlur={(e: any) => {
+									e.target.value == ""
+										? (e.target.type = "text")
+										: (e.target.type = "time");
+								}}
+								// onChange={(e: any) => {
+								// 	e.target.value == ""
+								// 		? (e.target.type = "text")
+								// 		: (e.target.type = "time");
+								// 	setDueDateVal(e.target.value);
+								// }}
+							/>
+						</div>
+					</div>
 				</div>
 
 				<div>

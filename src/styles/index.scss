@@ -1,0 +1,40 @@
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+li {
+	list-style: none;
+}
+a {
+	text-decoration: none;
+}
+
+button {
+	background: none;
+	border: none;
+}
+
+.icon-container {
+	display: grid;
+	place-items: center;
+
+	* {
+		color: gray;
+	}
+}
+
+:root {
+	--clr-secondary: rgb(228, 228, 228);
+	--clr-icons: gray;
+
+	// overflow-y: scroll;
+	// caret-color: transparent;
+	// scrollbar-color: transparent;
+	// scrollbar-gutter: hidden;
+	// scrollbar-width: 100px;
+}
+
+@import "./layouts/normalLayout";
+
+@import "./pages/home";

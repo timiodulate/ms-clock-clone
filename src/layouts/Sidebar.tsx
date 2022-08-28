@@ -1,53 +1,81 @@
-import React, { ReactNode, useState } from "react";
-import { useUserTasks } from "../contexts/user-tasks";
+import Link from "next/link";
+import React from "react";
+import {
+	BsListTask,
+	BsFillCalendar2WeekFill,
+	BsSearch,
+	BsInfoCircleFill,
+} from "react-icons/bs";
+import { TbApi } from "react-icons/tb";
 
 const Sidebar = () => {
-	const { filterTasks } = useUserTasks();
-
-	const [filterValues, setFilterValues] = useState({ status: "" });
-
-	const handleInputChange = (e: any) => {
-		e.preventDefault();
-		let inputTitle: string = e.target.name;
-		let inputValue: any = e.target.value;
-
-		if (inputTitle === "status") {
-			const valExists = inputValue === filterValues.status;
-
-			setFilterValues({
-				...filterValues,
-				status: valExists ? "" : inputValue,
-			});
-
-			filterTasks({ status: valExists ? "" : inputValue });
-		}
+	const sidebarItems = {
+		top: [
+			{
+				id: 1,
+				title: "Tasks",
+				icon: <BsListTask />,
+				link: "/",
+			},
+			{
+				id: 2,
+				title: "Calender View",
+				icon: <BsFillCalendar2WeekFill />,
+				link: "/calender",
+			},
+			{
+				id: 3,
+				title: "Search",
+				icon: <BsSearch />,
+				link: "/search",
+			},
+		],
+		bottom: [
+			{
+				id: 1,
+				title: "About",
+				icon: <BsInfoCircleFill />,
+				link: "/about",
+			},
+			{
+				id: 2,
+				title: "Users API",
+				icon: <TbApi />,
+				link: "/api/",
+			},
+		],
 	};
 
 	return (
-		<aside>
-			<div>
-				<h1>Filter</h1>
-
-				{/* <div>Edit</div> */}
-			</div>
-
-			<form>
-				<div>
-					<h1>Status</h1>
-
-					<div className="roles d-flex align-items-center t-text-c-04 mb-4 ">
-						{["Completed", "helpee"].map((rolee) => (
-							<button
-								name="status"
-								value={rolee}
-								onClick={(e: any) => handleInputChange(e)}
-							>
-								{rolee}
-							</button>
-						))}
-					</div>
-				</div>
-			</form>
+		<aside className="primary-sidebar">
+			<nav>
+				<ul>
+					{sidebarItems.top.map((item) => (
+						<li key={item.id} title={item.title}>
+							<Link href={item.link}>
+								<a>
+									<span className="icon-container">
+										{item.icon}
+									</span>
+								</a>
+							</Link>{" "}
+						</li>
+					))}
+				</ul>
+				<ul>
+					{sidebarItems.bottom.map((item) => (
+						<li key={item.id} title={item.title}>
+							<Link href={item.link}>
+								<a>
+									<span className="icon-container">
+										{item.icon}
+									</span>
+								</a>
+							</Link>{" "}
+						</li>
+					))}
+				</ul>
+			</nav>
 		</aside>
 	);
 };

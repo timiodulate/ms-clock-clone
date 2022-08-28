@@ -8,12 +8,13 @@ export interface TaskProps {
 	id?: number;
 	completed?: boolean;
 	name?: string;
-
-	due_date?: any;
-	schedule?:
-		| any
-		| { date: any; duration: "all day" | { start: any; end: any } };
-	deadline?: any;
+	due_date?: { time: any; date: any } | any;
+	schedule?: {
+		start: { moment?: any; time: any; date: any } | any;
+		end: { time: any; date: any } | any;
+		duration: number | "all day";
+	};
+	deadline?: { time: any; date: any } | any;
 	repeat?: any;
 	repeat_ends?: any;
 }

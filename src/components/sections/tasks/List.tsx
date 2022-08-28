@@ -3,13 +3,15 @@ import { User } from "../../../interfaces";
 
 type ListProps = {
 	items: User[];
+	completed?: boolean;
+	updateTasks?: any;
 };
 
-const List = ({ items }: ListProps) => (
+const List = ({ items, completed, updateTasks }: ListProps) => (
 	<ul>
 		{items.map((item) => (
 			<li key={item?.id}>
-				<ListItem data={item} />
+				<ListItem data={item} updateTasks={updateTasks} />
 			</li>
 		))}
 	</ul>
@@ -22,10 +24,13 @@ import { useUserTasks } from "../../../contexts/user-tasks";
 
 type Props = {
 	data: User;
+	updateTasks: any;
 };
 
-const ListItem = ({ data }: Props) => {
+const ListItem = ({ data, updateTasks }: Props) => {
 	const { handleTaskStatusChange } = useUserTasks();
+
+	console.log(data?.schedule.start.date[1]);
 
 	return (
 		<div className={data.completed ? "completed" : ""}>
@@ -34,12 +39,25 @@ const ListItem = ({ data }: Props) => {
 				id="item.id"
 				value={data.completed ? "completed" : "not-completed"}
 				checked={data.completed}
-				onChange={() => handleTaskStatusChange(data.id)}
+				onChange={() => {
+					handleTaskStatusChange(data.id);
+					updateTasks(data.id);
+				}}
 			/>
 			<Link href="/[id]" as={`/${data.id}`}>
 				<a>
-					{/* {data.id}: */}
-					{data.name}
+					<h2>{data.name}</h2>
+
+					<div>
+						<p>
+							{data?.schedule.start.date[1] === "Today"
+								? data?.schedule.start.time[0] ||
+								  data?.schedule.start.date[1]
+								: data?.schedule.start.date[1]}
+						</p>
+
+						<p>{data.deadline.time[0] || data.deadline.date[1]}</p>
+					</div>
 				</a>
 			</Link>
 		</div>
