@@ -8,6 +8,7 @@
 		padding-inline: 1rem;
 		background-color: var(--clr-secondary);
 		color: white;
+		z-index: 3;
 
 		nav {
 			display: flex;
@@ -29,14 +30,12 @@
 		position: relative;
 
 		.filter-sidebar {
+			position: initial;
 			border-right: 1px var(--clr-secondary) solid;
 			padding-block: 1.5rem;
 			padding-inline: 0.4rem;
-			min-width: 210px;
-
-			&.hidden {
-				display: none;
-			}
+			width: 250px;
+			background-color: white;
 
 			> * {
 				padding-block-end: 0.6rem;
@@ -69,12 +68,28 @@
 			@media screen and (max-width: 760px) {
 				position: absolute;
 				top: 0;
-				z-index: 10;
-				background-color: white;
+				bottom: 0;
+				z-index: 2;
+				padding-inline: 0;
+				width: 0;
+				transform: translateX(-250px);
+				transition: all ease-in-out 500ms;
+
+				&[aria-visible="true"] {
+					padding-inline: 0.4rem;
+					width: 250px;
+					transform: translateX(0px);
+				}
+			}
+			@media screen and (min-width: 760px) {
+				&.hidden {
+					display: none;
+				}
 			}
 		}
 
 		.main-contents {
+			flex: 1;
 			position: relative;
 			display: flex;
 			flex-direction: column;
@@ -87,6 +102,10 @@
 				gap: 1rem;
 				padding-block: 1.5rem;
 				padding-inline: 1rem;
+
+				button {
+					cursor: pointer;
+				}
 
 				div {
 					flex: 1;

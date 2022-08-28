@@ -13,9 +13,18 @@ type Props = {
 
 const Layout = ({ children, title = "This is the default title" }: Props) => {
 	const [isVisible, setIsVisible] = useState(false);
+	const [sidebarVisible, setSidebarVisible] = useState(false);
 
-	const toggleFilterSidebar = () => {
-		setIsVisible(!isVisible);
+	const toggleFilterSidebar = (mobile?: "mobile", any?: boolean) => {
+		if (mobile) {
+			if (any) {
+				sidebarVisible && setSidebarVisible(false);
+			} else {
+				setSidebarVisible(!sidebarVisible);
+			}
+		} else {
+			setIsVisible(!isVisible);
+		}
 	};
 
 	return (
@@ -32,13 +41,21 @@ const Layout = ({ children, title = "This is the default title" }: Props) => {
 			<Sidebar />
 
 			<div className="main">
-				<FilterSidebar isVisible={isVisible} />
+				<FilterSidebar
+					isVisible={isVisible}
+					sidebarVisible={sidebarVisible}
+					toggleFilterSidebar={toggleFilterSidebar}
+				/>
 
 				<div className="main-contents">
 					<header>
 						<button
 							className="sidebar-toggle"
-							onClick={toggleFilterSidebar}
+							onClick={() => toggleFilterSidebar()}
+							onMouseEnter={() => toggleFilterSidebar("mobile")}
+							// onMouseLeave={() =>
+							// 	toggleFilterSidebar("mobile", true)
+							// }
 						>
 							{isVisible ? <BiAlignLeft /> : <BiAlignRight />}
 						</button>

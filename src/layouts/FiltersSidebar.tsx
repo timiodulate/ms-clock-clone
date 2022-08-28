@@ -1,7 +1,7 @@
 import React, { ReactNode, useState } from "react";
 import { useUserTasks } from "../contexts/user-tasks";
 
-const FilterSidebar = ({ isVisible }) => {
+const FilterSidebar = ({ isVisible, sidebarVisible, toggleFilterSidebar }) => {
 	const { filterTasks } = useUserTasks();
 
 	const [filterValues, setFilterValues] = useState({ status: "" });
@@ -35,7 +35,11 @@ const FilterSidebar = ({ isVisible }) => {
 	};
 
 	return (
-		<aside className={`filter-sidebar ${isVisible ? "" : "hidden"}`}>
+		<aside
+			className={`filter-sidebar ${isVisible ? "" : "hidden"}`}
+			aria-visible={sidebarVisible}
+			onMouseLeave={() => toggleFilterSidebar("mobile")}
+		>
 			<div className="list">
 				<h1>Smart List</h1>
 
