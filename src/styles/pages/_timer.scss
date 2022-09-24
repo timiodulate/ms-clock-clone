@@ -27,6 +27,62 @@
 				> * {
 					margin-bottom: 0.6rem;
 				}
+
+				.focus-time-selector-container {
+					h1 {
+						margin-bottom: 1rem;
+						margin-inline: auto;
+						width: 60%;
+						font-size: 1rem;
+					}
+
+					.focus-time-selector {
+						display: flex;
+						border: var(--grey) 1px solid;
+						border-radius: 4px;
+						margin-inline: auto;
+						width: 200px;
+
+						> div {
+							&:first-child {
+								flex: 2;
+								border-right: var(--grey) 1px solid;
+								padding-block: 1rem;
+								text-align: center;
+
+								h2 {
+									font-size: 3rem;
+								}
+							}
+
+							&:last-child {
+								display: flex;
+								flex-direction: column;
+								align-items: center;
+
+								span {
+									flex: 1;
+									display: grid;
+									place-items: center;
+									padding-inline: 1rem;
+
+									&.disabled {
+										color: var(--grey);
+									}
+
+									&:first-child {
+										border-bottom: var(--grey) 1px solid;
+									}
+								}
+							}
+						}
+					}
+				}
+
+				> p {
+					font-size: 0.9rem;
+				}
+
 				.skip-breaks-toggle {
 					&.disabled {
 						color: var(--grey);
@@ -55,6 +111,52 @@
 					}
 				}
 			}
+		}
+	}
+
+	.track-focus-section {
+		> div {
+			div {
+				display: grid;
+				place-items: center;
+				border: 15px solid var(--grey);
+				border-radius: 50%;
+				margin-block-end: 1rem;
+				margin-inline: auto;
+				width: 220px;
+				height: 220px;
+				font-size: 4rem;
+			}
+
+			span {
+				color: var(--blue);
+				font-size: 3rem;
+			}
+
+			// p {
+			// 	color: var(--grey);
+			// }
+		}
+	}
+
+	.stopwatch-section {
+		.watch-container {
+			display: flex;
+			justify-content: center;
+			text-align: center;
+			font-size: 2rem;
+
+			div {
+				span {
+					display: block;
+					font-size: 0.7rem;
+				}
+			}
+		}
+
+		.watch-controller {
+			display: flex;
+			justify-content: center;
 		}
 	}
 }
