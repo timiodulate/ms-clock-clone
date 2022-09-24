@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { User } from "../../../interfaces";
+import { MdHourglassBottom } from "react-icons/md";
+import { GiAlarmClock } from "react-icons/gi";
 
 type ListProps = {
 	items: User[];
@@ -50,13 +52,22 @@ const ListItem = ({ data, updateTasks }: Props) => {
 
 					<div>
 						<p>
+							<span>
+								<GiAlarmClock />
+							</span>
+
 							{data?.schedule.start.date[1] === "Today"
 								? data?.schedule.start.time[0] ||
 								  data?.schedule.start.date[1]
 								: data?.schedule.start.date[1]}
 						</p>
 
-						<p>{data.deadline.time[0] || data.deadline.date[1]}</p>
+						<p>
+							<span>
+								<MdHourglassBottom />
+							</span>
+							{data.deadline.time[0] || data.deadline.date[1]}
+						</p>
 					</div>
 				</a>
 			</Link>

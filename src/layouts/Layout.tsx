@@ -63,7 +63,25 @@ const Layout = ({ children, title = "This is the default title" }: Props) => {
 						<div>
 							<h1>All</h1>
 
-							<button className="sidebar-toggle">Sort</button>
+							<div>
+								<button className="sort-toggle">Sort</button>
+
+								<select name="Sort" id="">
+									<option value="Deadlne">
+										{" "}
+										Schedule Start Time
+									</option>
+									<option value="Deadlne"> Deadline</option>
+									<option value="Task List">
+										{" "}
+										Task List
+									</option>
+									<option value="Task Title">
+										{" "}
+										Task Title
+									</option>
+								</select>
+							</div>
 						</div>
 					</header>
 					{children}
