@@ -1,10 +1,10 @@
-import Layout from "../src/layouts/Layout";
+import Layout from "../../src/layouts/Layout";
 import { useEffect, useState } from "react";
 import {
 	SetFocusSection,
 	TrackFocusSection,
 	StopwatchSection,
-} from "../src/components/sections/timer";
+} from "../../src/components/sections/timer";
 
 const IndexPage = () => {
 	const [totalFocusMin, setTotalFocusMin] = useState(1);

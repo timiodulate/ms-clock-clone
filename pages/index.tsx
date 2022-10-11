@@ -12,25 +12,6 @@ const IndexPage = () => {
 	});
 	const [rotationPosition, setRotationPosition] = useState({
 		left: "",
-		right: "",
-	});
-
-	var lastScrolledLeft = 0;
-	var lastScrolledTop = 0;
-	var xMousePos = 0;
-	var yMousePos = 0;
-
-	const mainCursor = React.useRef(null);
-	const secondaryCursor = React.useRef(null);
-
-	const positionRef = React.useRef({
-		mouseX: 0,
-		mouseY: 0,
-		destinationX: 0,
-		destinationY: 0,
-		distanceX: 0,
-		distanceY: 0,
-		key: -1,
 	});
 
 	useEffect(() => {
@@ -57,19 +38,8 @@ const IndexPage = () => {
 	});
 	useEffect(() => {
 		const handle = (e) => {
-			const scrollLeft =
-				window.pageXOffset !== undefined
-					? window.pageXOffset
-					: (document.documentElement || document.body).scrollLeft;
-
-			const scrollTop =
-				window.pageYOffset !== undefined
-					? window.pageYOffset
-					: (document.documentElement || document.body).scrollTop;
-
 			setRotationPosition({
 				left: window.pageYOffset + "deg",
-				right: window.pageYOffset + "deg",
 			});
 		};
 
@@ -77,52 +47,6 @@ const IndexPage = () => {
 
 		return () => document.removeEventListener("scroll", handle);
 	});
-	// useEffect(() => {
-	// 	document.addEventListener("mousemove", (e) => {
-	// 		const { clientX, clientY } = e;
-
-	// 		const mouseX = clientX;
-	// 		const mouseY = clientY;
-
-	// 		positionRef.current.mouseX =
-	// 			mouseX - secondaryCursor.current.clientWidth / 2;
-	// 		positionRef.current.mouseY =
-	// 			mouseY - secondaryCursor.current.clientHeight / 2;
-
-	// 		mainCursor.current.style.transform = `translate3d(${
-	// 			mouseX - mainCursor.current.clientWidth / 2
-	// 		}px,${mouseY - mainCursor.current.clientHeight / 2}px, 0)`;
-	// 	});
-	// });
-	// useEffect(() => {
-	// 	const followMouse = () => {
-	// 		positionRef.current.key = requestAnimationFrame(followMouse)
-
-	// 		const  {
-	// 			mouseX,
-	// 			mouseY, destinationX, destinationY, distanceX, distanceY
-	// 		} = positionRef.current
-
-	// 		// if (!destinationX | !destinationY) {
-	// 		// 	po
-	// 		// }
-	// 	}
-	// 	document.addEventListener("mousemove", (e) => {
-	// 		const { clientX, clientY } = e;
-
-	// 		const mouseX = clientX;
-	// 		const mouseY = clientY;
-
-	// 		positionRef.current.mouseX =
-	// 			mouseX - secondaryCursor.current.clientWidth / 2;
-	// 		positionRef.current.mouseY =
-	// 			mouseY - secondaryCursor.current.clientHeight / 2;
-
-	// 		mainCursor.current.style.transform = `translate3d(${
-	// 			mouseX - mainCursor.current.clientWidth / 2
-	// 		}px,${mouseY - mainCursor.current.clientHeight / 2}px, 0)`;
-	// 	});
-	// });
 
 	return (
 		<main className="projects-page">

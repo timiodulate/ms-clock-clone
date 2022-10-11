@@ -1,81 +1,69 @@
-.home-page {
-	section {
-		background-color: white;
+.projects-page {
+	.mouse-tracker {
+		position: fixed;
+		border: 2px solid;
+		border-radius: 50%;
+		width: 50px;
+		height: 50px;
+		z-index: 100;
+		pointer-events: none;
+	}
+	.pos-indicator {
+		position: fixed;
+		padding: 1rem;
+		background-color: blue;
+		color: white;
+	}
 
-		&.hidden {
-			ul {
-				display: none;
+	section:first-child {
+		padding: 2rem;
+	}
+	h1 {
+		font-size: 6rem;
+		text-align: center;
+		margin-block-end: 4rem;
+	}
+
+	.projects-section {
+		padding: 6rem;
+
+		.rotate {
+			position: relative;
+			border: 2px solid;
+			border-radius: 50%;
+			width: 40px;
+			height: 40px;
+
+			&::after {
+				content: "";
+				position: absolute;
+				border-radius: 50%;
+				width: 10px;
+				height: 10px;
+				background-color: black;
+			}
+
+			&:hover {
+				&::after {
+					right: 20px;
+				}
 			}
 		}
 
-		button {
+		.projects-cards {
 			display: flex;
-			align-items: center;
-			gap: 0.5rem;
-			padding-block: 0.5rem;
-			padding-inline: 1rem;
-			width: 100%;
+			flex-direction: column;
+			gap: 6rem;
 
-			.icon-container {
-				height: fit-content;
+			.project-card {
+				width: fit-content;
 
-				* {
-					font-size: 1rem;
-				}
-			}
-
-			div {
-				flex: 1;
-				display: flex;
-				align-items: center;
-				justify-content: space-between;
-
-				> h1 {
-					font-size: 0.8rem;
-				}
-			}
-		}
-
-		ul {
-			padding-inline: 1rem;
-			margin-block-end: 1rem;
-
-			li {
-				+ li {
-					margin-block-start: 0.5rem;
-					padding-block-start: 0.5rem;
-					border-top: solid 1px var(--clr-secondary);
+				&:nth-child(2n) {
+					align-self: flex-end;
 				}
 
-				div {
-					display: flex;
-					align-items: center;
-					gap: 0.5rem;
-
-					&.completed > a {
-						text-decoration: line-through;
-					}
-
-					a {
-						flex: 1;
-						display: flex;
-						align-items: center;
-						justify-content: space-between;
-
-						h2 {
-							font-size: 0.9rem;
-						}
-
-						div {
-							display: flex;
-							flex-direction: column;
-							align-items: flex-start;
-
-							p {
-								font-size: 0.7rem;
-							}
-						}
-					}
+				.image-container {
+					margin-block-end: 2rem;
 				}
 			}
 		}
