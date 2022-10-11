@@ -1,176 +1,273 @@
-import Layout from "../src/layouts/Layout";
-import { TaskProps } from "../src/interfaces";
-import { sampleUserData } from "../src/utils/sample-data";
-import List from "../src/components/sections/tasks/List";
-import { useUserTasks } from "../src/contexts/user-tasks";
-import { BiChevronRight, BiChevronDown } from "react-icons/bi";
-import { useEffect, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { passport } from "../src/assets/images";
 
-type Props = {
-	items: TaskProps[];
+import { useState, useEffect } from "react";
+import React from "react";
+
+const IndexPage = () => {
+	const [mousePosition, setMousePosition] = useState({
+		x: 0,
+		y: 0,
+	});
+	const [rotationPosition, setRotationPosition] = useState({
+		left: "",
+		right: "",
+	});
+
+	var lastScrolledLeft = 0;
+	var lastScrolledTop = 0;
+	var xMousePos = 0;
+	var yMousePos = 0;
+
+	const mainCursor = React.useRef(null);
+	const secondaryCursor = React.useRef(null);
+
+	const positionRef = React.useRef({
+		mouseX: 0,
+		mouseY: 0,
+		destinationX: 0,
+		destinationY: 0,
+		distanceX: 0,
+		distanceY: 0,
+		key: -1,
+	});
+
+	useEffect(() => {
+		const handle = (e) => {
+			const scrollLeft =
+				window.pageXOffset !== undefined
+					? window.pageXOffset
+					: (document.documentElement || document.body).scrollLeft;
+
+			const scrollTop =
+				window.pageYOffset !== undefined
+					? window.pageYOffset
+					: (document.documentElement || document.body).scrollTop;
+
+			setMousePosition({
+				x: e.clientX + scrollLeft,
+				y: e.clientY + scrollTop,
+			});
+		};
+
+		document.addEventListener("mousemove", handle);
+
+		return () => document.removeEventListener("mousemove", handle);
+	});
+	useEffect(() => {
+		const handle = (e) => {
+			const scrollLeft =
+				window.pageXOffset !== undefined
+					? window.pageXOffset
+					: (document.documentElement || document.body).scrollLeft;
+
+			const scrollTop =
+				window.pageYOffset !== undefined
+					? window.pageYOffset
+					: (document.documentElement || document.body).scrollTop;
+
+			setRotationPosition({
+				left: window.pageYOffset + "deg",
+				right: window.pageYOffset + "deg",
+			});
+		};
+
+		document.addEventListener("scroll", handle);
+
+		return () => document.removeEventListener("scroll", handle);
+	});
+	// useEffect(() => {
+	// 	document.addEventListener("mousemove", (e) => {
+	// 		const { clientX, clientY } = e;
+
+	// 		const mouseX = clientX;
+	// 		const mouseY = clientY;
+
+	// 		positionRef.current.mouseX =
+	// 			mouseX - secondaryCursor.current.clientWidth / 2;
+	// 		positionRef.current.mouseY =
+	// 			mouseY - secondaryCursor.current.clientHeight / 2;
+
+	// 		mainCursor.current.style.transform = `translate3d(${
+	// 			mouseX - mainCursor.current.clientWidth / 2
+	// 		}px,${mouseY - mainCursor.current.clientHeight / 2}px, 0)`;
+	// 	});
+	// });
+	// useEffect(() => {
+	// 	const followMouse = () => {
+	// 		positionRef.current.key = requestAnimationFrame(followMouse)
+
+	// 		const  {
+	// 			mouseX,
+	// 			mouseY, destinationX, destinationY, distanceX, distanceY
+	// 		} = positionRef.current
+
+	// 		// if (!destinationX | !destinationY) {
+	// 		// 	po
+	// 		// }
+	// 	}
+	// 	document.addEventListener("mousemove", (e) => {
+	// 		const { clientX, clientY } = e;
+
+	// 		const mouseX = clientX;
+	// 		const mouseY = clientY;
+
+	// 		positionRef.current.mouseX =
+	// 			mouseX - secondaryCursor.current.clientWidth / 2;
+	// 		positionRef.current.mouseY =
+	// 			mouseY - secondaryCursor.current.clientHeight / 2;
+
+	// 		mainCursor.current.style.transform = `translate3d(${
+	// 			mouseX - mainCursor.current.clientWidth / 2
+	// 		}px,${mouseY - mainCursor.current.clientHeight / 2}px, 0)`;
+	// 	});
+	// });
+
+	return (
+		<main className="projects-page">
+			<div
+				tabIndex={-1}
+				className="mouse-tracker"
+				style={{
+					transform: `translate(${mousePosition.x - 25}px, ${
+						mousePosition.y - 25
+					}px) `,
+				}}
+			></div>
+			<div className="pos-indicator">
+				x:
+				{mousePosition.x}
+				<br />
+				y:
+				{mousePosition.y}
+			</div>
+			<section className="projects-section">
+				<div>
+					<div
+						className="rotate"
+						style={{ rotate: `${rotationPosition.left}` }}
+					></div>
+
+					<h1>
+						Projects
+						{/* This Website contains all of my projects, organized in an
+					order I want it to be */}
+					</h1>
+				</div>
+
+				<ProjectsCards />
+			</section>
+		</main>
+	);
 };
 
-const IndexPage = ({ items }: Props) => {
-	const { userTasks } = useUserTasks();
+interface ProjectProps {
+	id: number | null;
+	image: { src: string; alt: string } | null;
+	title: string | null;
+	description: string | null;
+	categories: string[] | null;
+	tools: string[] | null;
+	link: string | null;
+}
 
-	const initialSectionsData = [
+const ProjectsCards = () => {
+	const projects: ProjectProps[] = [
 		{
 			id: 1,
-			title: "Overdue",
-			tasks: [],
-			tasksCount: 0,
-			open: false,
+			image: { src: "lol", alt: "lol" },
+			title: "Pomodoro timer with stopwatch",
+			description: "",
+			categories: ["practice", "personal"],
+			tools: ["next"],
+			link: "/pomodoro-timer",
 		},
 		{
 			id: 2,
-			title: "Beyond Deadline",
-			tasks: [],
-			tasksCount: 0,
-			open: false,
+			image: { src: "lol", alt: "lol" },
+			title: "Pomodoro timer with stopwatch",
+			description: "",
+			categories: ["practice", "personal"],
+			tools: ["next"],
+			link: "/pomodoro-timer",
 		},
 		{
 			id: 3,
-			title: "Today",
-			tasks: [],
-			tasksCount: 0,
-			open: false,
-		},
-		{
-			id: 33,
-			title: "Tomorrow",
-			tasks: [],
-			tasksCount: 0,
-			open: false,
+			image: { src: "lol", alt: "lol" },
+			title: "Pomodoro timer with stopwatch",
+			description: "",
+			categories: ["practice", "personal"],
+			tools: ["next"],
+			link: "/pomodoro-timer",
 		},
 		{
 			id: 4,
-			title: "Routine",
-			tasks: [],
-			tasksCount: 0,
-			open: false,
+			image: { src: "lol", alt: "lol" },
+			title: "Pomodoro timer with stopwatch",
+			description: "",
+			categories: ["practice", "personal"],
+			tools: ["next"],
+			link: "/pomodoro-timer",
 		},
 		{
 			id: 5,
-			title: "Completed",
-			tasks: [],
-			tasksCount: 0,
-			open: false,
-		},
-		{
-			id: 6,
-			title: "Wont Do",
-			tasks: [],
-			tasksCount: 0,
-			open: false,
+			image: { src: "lol", alt: "lol" },
+			title: "Pomodoro timer with stopwatch",
+			description: "",
+			categories: ["practice", "personal"],
+			tools: ["next"],
+			link: "/pomodoro-timer",
 		},
 	];
 
-	const [sectionsData, setSectionsData] = useState(initialSectionsData);
+	return (
+		<ul className="projects-cards">
+			{projects.map((project) => (
+				<ProjectCard key={project.id} project={project} />
+			))}
+		</ul>
+	);
+};
 
-	useEffect(() => {
-		updateTasks();
-	}, [userTasks]);
-
-	const updateTasks = () => {
-		const newArr = sectionsData.map((sectionData) => {
-			if (sectionData.title === "Today") {
-				// return tasks that are not yet completed,
-				// with schedule start date and time within today
-				// with deadline that isnt past
-				sectionData.tasks = userTasks.filter(
-					(task) =>
-						task.completed !== true &&
-						task?.schedule.start.date[1] === "Today" &&
-						(task.deadline.date.length === 0 ||
-							task.deadline.time.length === 0 ||
-							task.deadline.date.includes("No deadline") ||
-							task.deadline.date[1] === "Today")
-				);
-
-				sectionData.tasksCount = sectionData.tasks.length;
-			} else if (sectionData.title === "Tomorrow") {
-				// return tasks that are not yet completed,
-				// with schedule start date and time within today
-				// with deadline that isnt past
-				sectionData.tasks = userTasks.filter(
-					(task) =>
-						task.completed !== true &&
-						task?.schedule.start.date[1] === "Tomorrow" &&
-						(task.deadline.date.length === 0 ||
-							task.deadline.time.length === 0 ||
-							task.deadline.date.includes("No deadline") ||
-							task.deadline.date[1] === "Tomorrow")
-				);
-
-				sectionData.tasksCount = sectionData.tasks.length;
-			} else if (sectionData.title === "Completed") {
-				sectionData.tasks = userTasks.filter(
-					(task) => task.completed === true
-				);
-
-				sectionData.tasksCount = sectionData.tasks.length;
-			} else if (sectionData.title === "Completed") {
-				// return tasks that have been marked completed
-				sectionData.tasks = userTasks.filter(
-					(task) => task.completed === true
-				);
-
-				sectionData.tasksCount = sectionData.tasks.length;
-			}
-			return sectionData;
-		});
-
-		setSectionsData(newArr);
-	};
-
-	const toggleSection = (id: number) => {
-		const newArr = sectionsData.map((sectionData) => {
-			if (sectionData.id === id) {
-				sectionData.open = !sectionData.open;
-			}
-			return sectionData;
-		});
-
-		setSectionsData(newArr);
-	};
+const ProjectCard = ({ project }: { project: ProjectProps }) => {
+	const {
+		image: { src, alt },
+		title,
+		description,
+		categories,
+		tools,
+		link,
+	} = project;
 
 	return (
-		<Layout title="Home | Next.js + TypeScript Example">
-			<main className="home-page">
-				{sectionsData.map((sectionData) => {
-					const { id, title, tasks, tasksCount, open } = sectionData;
+		<li className="project-card">
+			<Link className="project-link" href={link}>
+				<a>
+					<div className="image-container">
+						<Image
+							src={passport}
+							alt={alt}
+							width="381px"
+							height="381px"
+						/>
+					</div>
 
-					if (tasksCount === 0) {
-						return null;
-					}
-
-					return (
-						<section key={id} className={open ? "" : "hidden"}>
-							<button onClick={() => toggleSection(id)}>
-								<span className="icon-container">
-									{open ? (
-										<BiChevronDown />
-									) : (
-										<BiChevronRight />
-									)}
-								</span>
-
-								<div>
-									<h1>{title}</h1>
-
-									<span>{tasksCount}</span>
-								</div>
-							</button>
-							{/* <p>
-						Example fetching data from inside{" "}
-						<code>getStaticProps()</code>.
-					</p> */}
-							<List items={tasks} updateTasks={updateTasks} />
-						</section>
-					);
-				})}
-			</main>
-		</Layout>
+					<p className="title">{title}</p>
+				</a>
+				{/* <p className="project-description">{description}</p>
+			<div className="tools-used">
+				{tools.map((tool) => (
+					<span>{tool}</span>
+				))}
+			</div>
+			<div className="category">
+				{categories.map((category) => (
+					<span>{category}</span>
+				))}
+			</div>*/}
+			</Link>
+		</li>
 	);
 };
 
