@@ -8,13 +8,27 @@ import { passport, passport2 } from "../src/assets/images";
 					order I want it to be */
 }
 
+interface ProjectProps {
+	id: number | null;
+	image: { src: string; alt: string } | null;
+	title: string | null;
+	description: string | null;
+	categories: string[] | null;
+	tools: string[] | null;
+	link: string | null;
+}
+
+interface ClassProp {
+	className?: string;
+}
+
 const projects: ProjectProps[] = [
 	{
 		id: 1,
 		image: { src: "lol", alt: "lol" },
 		title: "Pomodoro timer with stopwatch",
 		description: "",
-		categories: ["practice", "personal"],
+		categories: ["personal"],
 		tools: ["next"],
 		link: "/pomodoro-timer",
 	},
@@ -57,10 +71,6 @@ const projects: ProjectProps[] = [
 ];
 
 const IndexPage = () => {
-	const [mousePosition, setMousePosition] = useState({
-		x: 0,
-		y: 0,
-	});
 	const [rotationPosition, setRotationPosition] = useState({
 		left: "",
 	});
@@ -70,32 +80,6 @@ const IndexPage = () => {
 	const [elementPosition, setElementPosition] = useState(0);
 
 	const myRef = useRef();
-
-	useEffect(() => {
-		document.firstElementChild.classList.add("hide-scrollbar");
-		console.log(document);
-
-		const handle = (e) => {
-			const scrollLeft =
-				window.pageXOffset !== undefined
-					? window.pageXOffset
-					: (document.documentElement || document.body).scrollLeft;
-
-			const scrollTop =
-				window.pageYOffset !== undefined
-					? window.pageYOffset
-					: (document.documentElement || document.body).scrollTop;
-
-			setMousePosition({
-				x: e.clientX + scrollLeft,
-				y: e.clientY + scrollTop,
-			});
-		};
-
-		document.addEventListener("mousemove", handle);
-
-		return () => document.removeEventListener("mousemove", handle);
-	}, []);
 
 	useEffect(() => {
 		const handle = (e) => {
@@ -151,24 +135,7 @@ const IndexPage = () => {
 
 	return (
 		<main className="projects-page">
-			<div
-				tabIndex={-1}
-				className="mouse-tracker "
-				style={{
-					transform: `translate(${mousePosition.x - 5}px, ${
-						mousePosition.y - 5
-					}px) `,
-				}}
-			></div>
-			<div
-				tabIndex={-1}
-				className="mouse-tracker secondary"
-				style={{
-					transform: `translate(${mousePosition.x - 25}px, ${
-						mousePosition.y - 25
-					}px) `,
-				}}
-			></div>
+			<MouseTracker />
 
 			<section className="page-header">
 				<div>
@@ -203,8 +170,8 @@ const IndexPage = () => {
 					/>
 				</div>
 
-				<div>
-					<span>=</span>
+				<div className="hover">
+					<span>MENU =</span>
 				</div>
 			</section>
 
@@ -226,15 +193,7 @@ const IndexPage = () => {
 	);
 };
 
-interface ProjectProps {
-	id: number | null;
-	image: { src: string; alt: string } | null;
-	title: string | null;
-	description: string | null;
-	categories: string[] | null;
-	tools: string[] | null;
-	link: string | null;
-}
+import { motion, AnimatePresence } from "framer-motion";
 
 const ProjectsCards = ({
 	filteredProjects,
@@ -242,15 +201,21 @@ const ProjectsCards = ({
 	filteredProjects: ProjectProps[];
 }) => {
 	return (
-		<ul className="projects-cards">
-			{filteredProjects.map((project) => (
-				<ProjectCard key={project.id} project={project} />
-			))}
-		</ul>
+		<motion.ul className="projects-cards" layout>
+			<AnimatePresence>
+				{filteredProjects.map((project) => (
+					<ProjectCard key={project.id} project={project} />
+				))}
+			</AnimatePresence>
+		</motion.ul>
 	);
 };
 
-const ProjectCard = ({ project }: { project: ProjectProps }) => {
+type ProjectCardProps = ClassProp & {
+	project: ProjectProps;
+};
+
+const ProjectCard = ({ project }: ProjectCardProps) => {
 	const {
 		image: { src, alt },
 		title,
@@ -258,7 +223,15 @@ const ProjectCard = ({ project }: { project: ProjectProps }) => {
 	} = project;
 
 	return (
-		<li className="project-card">
+		<motion.li
+			className="project-card"
+			layout
+			// animate={{ opacity: 1, scale: 1 }}
+			initial={{ opacity: 0, scale: 0 }}
+			exit={{ opacity: 0, scale: 0 }}
+			whileInView={{ opacity: 1, scale: 1 }}
+			transition={{ duration: 1.1 }}
+		>
 			<Link className="project-link" href={link}>
 				<a>
 					<div className="image-container">
@@ -273,12 +246,68 @@ const ProjectCard = ({ project }: { project: ProjectProps }) => {
 					<p className="title">{title}</p>
 				</a>
 			</Link>
-		</li>
+		</motion.li>
 	);
 };
 
 export default IndexPage;
 
+type MouseTrackerProps = ClassProp;
+
+const MouseTracker = ({ className }: MouseTrackerProps) => {
+	const [mousePosition, setMousePosition] = useState({
+		x: 0,
+		y: 0,
+	});
+
+	useEffect(() => {
+		document.firstElementChild.classList.add("hide-scrollbar");
+
+		const handle = (e) => {
+			// const scrollLeft =
+			// 	window.pageXOffset !== undefined
+			// 		? window.pageXOffset
+			// 		: (document.documentElement || document.body).scrollLeft;
+
+			// const scrollTop =
+			// 	window.pageYOffset !== undefined
+			// 		? window.pageYOffset
+			// 		: (document.documentElement || document.body).scrollTop;
+
+			setMousePosition({
+				x: e.clientX,
+				y: e.clientY,
+			});
+		};
+
+		document.addEventListener("mousemove", handle);
+
+		return () => document.removeEventListener("mousemove", handle);
+	}, []);
+
+	return (
+		<>
+			<div
+				tabIndex={-1}
+				className="mouse-tracker primary"
+				style={{
+					transform: `translate(${mousePosition.x - 5}px, ${
+						mousePosition.y - 5
+					}px) `,
+				}}
+			></div>
+			<div
+				tabIndex={-1}
+				className="mouse-tracker secondary"
+				style={{
+					transform: `translate(${mousePosition.x - 25}px, ${
+						mousePosition.y - 25
+					}px) `,
+				}}
+			></div>
+		</>
+	);
+};
 interface FilterProps {
 	className?: string;
 	allProjects: ProjectProps[];
@@ -286,6 +315,7 @@ interface FilterProps {
 	activeFilter: string;
 	setActiveFilter: any;
 }
+
 const Filter = ({
 	className,
 	allProjects,
@@ -327,7 +357,7 @@ const Filter = ({
 				<span className="menu-title">Filter:</span>
 
 				<span
-					className="menu-toggle"
+					className="menu-toggle hover"
 					onClick={() => setMenuVisible(!menuVisible)}
 				>
 					{activeFilter}
