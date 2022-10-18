@@ -13,13 +13,14 @@ html {
 
 .projects-page {
 	--pad: 2vw;
-	--bg-color: rgb(240, 240, 240);
+	--bg-color: rgb(233, 233, 233);
 
 	min-height: 100vh;
 	background-color: var(--bg-color);
 	font-family: "Inter Tight", sans-serif;
 	font-size: 0.8rem;
 	text-transform: uppercase;
+	cursor: none;
 
 	.page-header {
 		position: sticky;
@@ -96,23 +97,54 @@ html {
 		}
 
 		.projects-cards {
-			display: flex;
-			flex-direction: column;
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
 			padding-inline: var(--pad);
-			margin-block: var(--pad);
 
-			.project-card {
-				flex: 1;
-				width: fit-content;
+			.project-card-wrapper {
+				border-right: solid 1px;
+				border-bottom: solid 1px;
+				padding-inline-end: var(--pad);
+				padding-block: var(--pad);
 
 				&:nth-child(2n) {
-					align-self: flex-end;
-				}
-
-				.image-container {
-					margin-block-end: 2rem;
+					border-right: none;
+					padding-inline-end: 0;
+					padding-inline-start: var(--pad);
 				}
 			}
+
+			.project-card {
+				.image-container {
+					position: relative;
+					width: 100%;
+					height: 460px;
+					scale: 1/1;
+					margin-block-end: 1rem;
+
+					animation-name: pulsing;
+					animation-duration: 1500ms;
+					animation-iteration-count: infinite;
+
+					&:hover {
+						animation-duration: 500ms;
+					}
+				}
+
+				p {
+					color: black;
+					font-size: 0.9rem;
+				}
+			}
+		}
+	}
+
+	@keyframes pulsing {
+		from {
+			transform: scale(0.95, 0.95);
+		}
+		to {
+			transform: scale(1, 1);
 		}
 	}
 
@@ -126,9 +158,12 @@ html {
 
 		&.primary {
 			background-color: black;
+			z-index: 101;
 		}
 
 		&.secondary {
+			// background-color: rgba(255, 0, 0, 0.377);
+			// backdrop-filter: greyscale();
 			border: 1px solid;
 			width: 50px;
 			height: 50px;
@@ -178,7 +213,6 @@ html {
 	// util
 	.hover {
 		position: relative;
-		margin: 0;
 		text-transform: uppercase;
 		overflow: hidden;
 
@@ -191,14 +225,19 @@ html {
 			width: 100%;
 			border-bottom: solid 1px black;
 			transform: scaleX(0);
+			transform-origin: 0% 50%;
 			transition: transform 250ms ease-in-out;
 		}
 
 		&:hover:after {
 			transform: scaleX(1);
 		}
-		&:after {
-			transform-origin: 0% 50%;
+	}
+
+	.test {
+		* {
+			animation-play-state: paused;
+			transform: scale(1, 1);
 		}
 	}
 }
