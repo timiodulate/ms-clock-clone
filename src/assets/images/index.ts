@@ -2,6 +2,7 @@ import passport from "./passport.jpg";
 import passport2 from "./passport.png";
 import candy from "./candy.jpg";
 import pomodoroProject from "./pomodoro-project.png";
+import bubbles from "./bubbles.gif";
 
 import bloggerImg from "./blogger-lg.jpg";
 import articlePreviewImg from "./article-preview-lg.jpg";
@@ -17,6 +18,7 @@ export {
 	passport2,
 	candy,
 	pomodoroProject,
+	bubbles,
 	// hhhfoundationImg,
 	// // hhhfoundationFullImg,
 	// dzinezImg,

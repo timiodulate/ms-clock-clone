@@ -1,5 +1,7 @@
 .timer-page {
 	--gray: rgb(110, 110, 110);
+	--gray-border: rgb(216, 216, 216);
+	--gray-bg: rgb(248, 248, 248);
 	--grey: rgb(192, 191, 191);
 	--blue: rgb(35, 82, 170);
 
@@ -9,14 +11,21 @@
 	font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
 		sans-serif;
 
-	section {
-		&:first-child {
-			border: var(--grey) 1px solid;
-			border-radius: 6px;
-			margin: 2rem;
-			padding: 3rem;
-			text-align: center;
+	display: flex;
+	gap: 1rem;
+	padding: 2rem;
+	min-height: 100vh;
+	background-color: var(--gray-bg);
 
+	section {
+		flex: 1;
+		border: var(--gray-border) 1px solid;
+		border-radius: 6px;
+		padding: 3rem;
+		background-color: white;
+		text-align: center;
+
+		&:first-child {
 			.section-header {
 				margin-bottom: 1.7rem;
 
@@ -149,10 +158,6 @@
 				color: var(--blue);
 				font-size: 3rem;
 			}
-
-			// p {
-			// 	color: var(--grey);
-			// }
 		}
 	}
 
@@ -188,6 +193,22 @@
 					color: var(--blue);
 				}
 			}
+		}
+	}
+
+	@media screen and (max-width: 675px) {
+		flex-direction: column;
+
+		// section {
+		// 	&:first-child {
+		// 		margin-block-end: 1rem;
+		// 	}
+		// }
+	}
+
+	@media screen and (min-width: 675px) {
+		section {
+			flex: 1;
 		}
 	}
 }

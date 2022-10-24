@@ -16,7 +16,10 @@ html {
 	--bg-color: rgb(233, 233, 233);
 
 	min-height: 100vh;
+	background-image: url("../../assets/images/bubbles.gif");
 	background-color: var(--bg-color);
+	// mix-blend-mode: darken;
+	background-blend-mode: lighten;
 	font-family: "Inter Tight", sans-serif;
 	font-size: 0.8rem;
 	text-transform: uppercase;
@@ -98,30 +101,22 @@ html {
 
 		.projects-cards {
 			display: grid;
-			grid-template-columns: repeat(2, 1fr);
+			grid-template-columns: 1fr;
 			padding-inline: var(--pad);
 
 			.project-card-wrapper {
-				border-right: solid 1px;
 				border-bottom: solid 1px;
-				padding-inline-end: var(--pad);
-				padding-block: var(--pad);
-
-				&:nth-child(2n) {
-					border-right: none;
-					padding-inline-end: 0;
-					padding-inline-start: var(--pad);
-				}
+				padding-block-start: calc(var(--pad) / 0.8);
+				padding-block-end: calc(var(--pad) * 3.5);
 			}
 
 			.project-card {
 				.image-container {
 					position: relative;
 					width: 100%;
-					height: 460px;
+					height: 360px;
 					scale: 1/1;
 					margin-block-end: 1rem;
-
 					animation-name: pulsing;
 					animation-duration: 1500ms;
 					animation-iteration-count: infinite;
@@ -131,9 +126,49 @@ html {
 					}
 				}
 
-				p {
-					color: black;
-					font-size: 0.9rem;
+				.project-details {
+					p {
+						color: black;
+						font-size: 0.7rem;
+						font-weight: lighter;
+
+						&:first-child {
+							margin-block-end: 0.8rem;
+						}
+
+						&.title {
+							font-size: 1.1rem;
+						}
+					}
+				}
+			}
+
+			@media screen and (max-width: 675px) {
+				.ade {
+					flex-direction: column;
+				}
+			}
+
+			@media screen and (min-width: 675px) {
+				grid-template-columns: repeat(2, 1fr);
+
+				.project-card-wrapper {
+					border-right: solid 1px;
+					padding-inline-end: calc(var(--pad) / 2);
+					padding-block-start: calc(var(--pad) / 2);
+					padding-block-end: calc(var(--pad) * 1.5);
+
+					&:nth-child(2n) {
+						border-right: none;
+						padding-inline-end: 0;
+						padding-inline-start: calc(var(--pad) / 2);
+					}
+				}
+
+				.project-card {
+					.image-container {
+						height: 460px;
+					}
 				}
 			}
 		}
@@ -141,7 +176,7 @@ html {
 
 	@keyframes pulsing {
 		from {
-			transform: scale(0.95, 0.95);
+			transform: scale(0.98, 0.98);
 		}
 		to {
 			transform: scale(1, 1);

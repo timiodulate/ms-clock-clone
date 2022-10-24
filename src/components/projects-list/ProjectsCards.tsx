@@ -1,8 +1,8 @@
 import Image from "next/image";
-import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ClassProp, ProjectProps } from "./Props";
-import { candy } from "../../../assets/images";
+import { candy } from "../../assets/images";
+import CLink from "../_reusables/CLink";
 
 const ProjectsCards = ({
 	filteredProjects,
@@ -28,6 +28,8 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 		image: { src, alt },
 		title,
 		link,
+		tools,
+		bgPosition,
 	} = project;
 
 	const stopPulsating = (currentTitle, leave?: boolean) => {
@@ -78,19 +80,25 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 						stopPulsating(`${id}`, true);
 					}}
 				>
-					<Link href={link}>
-						<a className="project-link hover">
-							<div className="image-container">
-								<Image
-									src={src || candy}
-									alt={alt}
-									layout="fill"
-								/>
-							</div>
+					<CLink href={link} className="project-link hover">
+						<div className="image-container">
+							<Image
+								src={src || candy}
+								alt={alt}
+								layout="fill"
+								// style={{
+								// 	objectFit: "contain",
+								// }}
+								objectFit="cover"
+								objectPosition={bgPosition}
+							/>
+						</div>
 
-							<p className="title ">{title}</p>
-						</a>
-					</Link>
+						<div className="project-details">
+							<p>{tools.join(" - ")}</p>
+							<p className="title">{title}</p>
+						</div>
+					</CLink>
 				</motion.div>
 			</AnimatePresence>
 		</motion.li>

@@ -1,83 +1,20 @@
+import { GetStaticProps } from "next";
 import React, { useState, useEffect, useRef } from "react";
-import {
-	pomodoroProject,
-	hhhfoundationImg,
-	dzinezImg,
-	portfolioImg,
-	articlePreviewImg,
-} from "../src/assets/images";
+
 import {
 	ProjectProps,
 	MouseTracker,
 	Filter,
 	ProjectsCards,
-} from "../src/components/sections/projects-list";
+} from "../src/components/projects-list";
+import { projects } from "../src/utils/sample-data";
 
 {
 	/* This Website contains all of my projects, organized in an
 					order I want it to be */
 }
 
-const projects: ProjectProps[] = [
-	{
-		id: 1,
-		image: { src: pomodoroProject, alt: "Pomodoro timer with stopwatch" },
-		title: "Pomodoro timer with stopwatch",
-		description: "",
-		categories: ["personal"],
-		tools: ["next"],
-		link: "/pomodoro-timer",
-	},
-
-	{
-		id: 2,
-		image: { src: hhhfoundationImg, alt: "Pomodoro timer with stopwatch" },
-		title: "3hfoundation",
-		// isPrivate: true,
-		categories: ["Featured", "Projects"],
-		tools: ["React", "(S)css", "Bootstrap", "Context"],
-		description:
-			"A funtional and responsive website of HeadHeartHand Foundation which is a non-profit organization located in Surrey, British Columbia, Canada and open to all members of the public.",
-		// repoLink: "",
-		link: "https://3hfoundation.ca/",
-	},
-	{
-		id: 3,
-		image: { src: dzinezImg, alt: "Pomodoro timer with stopwatch" },
-		title: "D-zinez",
-		// isPrivate: true,
-		categories: ["Projects", "Volunteer"],
-		tools: ["React", "(S)css", "Bootstrap"],
-		description: "A funtional and responsive e-commerce website",
-		// repoLink: "",
-		link: "https://d-ecommerce.netlify.app/",
-	},
-	{
-		id: 1,
-		image: { src: portfolioImg, alt: "Pomodoro timer with stopwatch" },
-		title: "Portfolio",
-		categories: ["Featured", "Projects"],
-		// isPrivate: true,
-		tools: ["React", "(S)css", "Bootstrap"],
-		description: "My Portfolio",
-		// repoLink: "",
-		link: "https://timiodulate.me/",
-	},
-	{
-		id: 4,
-		image: { src: articlePreviewImg, alt: "Pomodoro timer with stopwatch" },
-		// isPrivate: false,
-		title: "Article Preview Component",
-		categories: ["Challenges"],
-		tools: ["Javascript"],
-		description:
-			"Your users should be able to: View the optimal layout for the component depending on their device's screen size AND See the social media share links when they click the share icon.",
-		// repoLink: "",
-		link: "",
-	},
-];
-
-const IndexPage = () => {
+const IndexPage = ({ projectsData }: { projectsData: ProjectProps[] }) => {
 	const [rotationPosition, setRotationPosition] = useState({
 		left: "",
 	});
@@ -121,8 +58,8 @@ const IndexPage = () => {
 	const [activeFilter, setActiveFilter] = useState("all-projects");
 
 	const fetchProjects = () => {
-		setAllProjects(projects);
-		setFilteredProjects(projects);
+		setAllProjects(projectsData);
+		setFilteredProjects(projectsData);
 	};
 
 	const observeCards = () => {
@@ -201,3 +138,12 @@ const IndexPage = () => {
 };
 
 export default IndexPage;
+
+export const getStaticProps: GetStaticProps = async () => {
+	// const { userTasks } = useUserTasks();
+	// Example for including static props in a Next.js function component page.
+	// Don't forget to include the respective types for any props passed into
+	// the component.
+	const projectsData: ProjectProps[] = projects;
+	return { props: { projectsData } };
+};

@@ -4,7 +4,7 @@ import {
 	SetFocusSection,
 	TrackFocusSection,
 	StopwatchSection,
-} from "../../src/components/sections/timer";
+} from "../../src/components/timer";
 
 const IndexPage = () => {
 	const [totalFocusMin, setTotalFocusMin] = useState(1);

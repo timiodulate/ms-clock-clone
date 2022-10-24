@@ -6,6 +6,7 @@ export interface ProjectProps {
 	categories: string[] | null;
 	tools: string[] | null;
 	link: string | null;
+	bgPosition?: any;
 }
 
 export interface ClassProp {

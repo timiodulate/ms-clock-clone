@@ -20,9 +20,9 @@ const Filter = ({
 
 	const filterData: string[] = [
 		"all-projects",
-		"practice",
+		"works",
 		"personal",
-		"work",
+		"challenges",
 	];
 
 	const selectFilter = (selected: string): void => {
