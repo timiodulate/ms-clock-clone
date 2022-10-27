@@ -1,7 +1,7 @@
 import React, { ReactNode, useState } from "react";
 import Link from "next/link";
 import Head from "next/head";
-import AddTask from "../components/sections/tasks/AddTask";
+import AddTask from "../components/tasks/AddTask";
 import Sidebar from "./Sidebar";
 import FilterSidebar from "./FiltersSidebar";
 import { BiAlignRight, BiAlignLeft } from "react-icons/bi";
