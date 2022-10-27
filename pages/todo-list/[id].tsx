@@ -2,7 +2,7 @@ import { GetStaticProps, GetStaticPaths } from "next";
 import { User } from "../../src/interfaces";
 import { sampleUserData } from "../../src/utils/sample-data";
 import Layout from "../../src/layouts/Layout";
-import ListDetail from "../../src/components/sections/tasks/ListDetail";
+import ListDetail from "../../src/components/tasks/ListDetail";
 import { useUserTasks } from "../../src/contexts/user-tasks";
 import Router from "next/router";
 

@@ -1,7 +1,7 @@
 import Layout from "../../src/layouts/Layout";
 import { TaskProps } from "../../src/interfaces";
 import { sampleUserData } from "../../src/utils/sample-data";
-import List from "../../src/components/sections/tasks/List";
+import List from "../../src/components/tasks/List";
 import { useUserTasks } from "../../src/contexts/user-tasks";
 import { BiChevronRight, BiChevronDown } from "react-icons/bi";
 import { useEffect, useState } from "react";
