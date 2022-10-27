@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./styles.css";
+// import "./styles.css";
 
 export default function App() {
 	const [searchInput, setSearchInput] = useState("");
