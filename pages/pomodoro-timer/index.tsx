@@ -1,14 +1,16 @@
 import Layout from "../../src/layouts/Layout";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
 	SetFocusSection,
 	TrackFocusSection,
 	StopwatchSection,
 } from "../../src/components/timer";
+import CLink from "../../src/components/_reusables/CLink";
+import useOutsideClose from "../../src/utils/useOutsideClose";
 
 const IndexPage = () => {
-	const [totalFocusMin, setTotalFocusMin] = useState(1);
-	const [totalBreakMin, setTotalBreakMin] = useState(1);
+	const [totalFocusMin, setTotalFocusMin] = useState(0);
+	const [totalBreakMin, setTotalBreakMin] = useState(0);
 
 	const [currentSession, setCurrentSession] = useState("focus");
 	const [sessionCount, setSessionCount] = useState(2);
@@ -85,32 +87,110 @@ const IndexPage = () => {
 	};
 
 	return (
-		// <Layout title="Home | Next.js + TypeScript Example">
-		<main className="timer-page">
-			{!startFocus ? (
-				<SetFocusSection
-					totalFocusMin={totalFocusMin}
-					updateState={updateState}
-					sessionCount={sessionCount}
-				/>
-			) : (
-				<TrackFocusSection
-					updateState={updateState}
-					sessionTime={sessionTime}
-					currentSession={currentSession}
-					focusTime={totalFocusMin}
-					totalBreakMin={totalBreakMin}
-				/>
-			)}
+		<PomodoroLayout>
+			<main>
+				{!startFocus ? (
+					<SetFocusSection
+						totalFocusMin={totalFocusMin}
+						updateState={updateState}
+						sessionCount={sessionCount}
+					/>
+				) : (
+					<TrackFocusSection
+						updateState={updateState}
+						sessionTime={sessionTime}
+						currentSession={currentSession}
+						focusTime={totalFocusMin}
+						totalBreakMin={totalBreakMin}
+					/>
+				)}
 
-			<StopwatchSection
-				stopwatchTime={stopwatchTime}
-				startStopwatch={startStopwatch}
-				updateState={updateState}
-			/>
-		</main>
-		// </Layout>
+				<StopwatchSection
+					stopwatchTime={stopwatchTime}
+					startStopwatch={startStopwatch}
+					updateState={updateState}
+				/>
+			</main>
+		</PomodoroLayout>
 	);
 };
 
 export default IndexPage;
+
+const PomodoroLayout = ({ children }) => {
+	const btnRef: any = useRef();
+	const {
+		elementRef,
+		isVisible: showNav,
+		toggle: toggleNav,
+	} = useOutsideClose(btnRef);
+
+	return (
+		<div className={`timer-page ${showNav ? "disableScroll" : ""}`}>
+			<aside className={showNav ? "show" : ""} ref={elementRef}>
+				<div className="top">
+					<button onClick={toggleNav}>=</button>
+
+					<div>
+						<span className="icon-container">😀</span>
+						<span className="title">Timer + Stopwatch</span>
+					</div>
+				</div>
+
+				<nav>
+					<ul>
+						<li>
+							<CLink href="/" className="flex-list">
+								<span className="icon-container">😀</span>
+								<span className="title">Timer</span>
+							</CLink>
+						</li>
+						<li>
+							<CLink href="/" className="flex-list">
+								<span className="icon-container">😉</span>
+								<span className="title">Timer</span>
+							</CLink>
+						</li>
+						<li>
+							<CLink href="/" className="flex-list">
+								<span className="icon-container">😐</span>
+								<span className="title">Timer</span>
+							</CLink>
+						</li>
+					</ul>
+
+					<ul className="bottom">
+						<li>
+							<CLink href="/" className="flex-list">
+								<span className="icon-container">😐</span>
+								<span className="title">Settings</span>
+							</CLink>
+						</li>
+						<li>
+							<CLink href="/" className="flex-list">
+								<span className="icon-container">😐</span>
+								<span className="title">Back to Portfolio</span>
+							</CLink>
+						</li>
+					</ul>
+				</nav>
+			</aside>
+			<div className="aside-placeholder"></div>
+
+			<div className="main">
+				<header>
+					<button onClick={toggleNav} ref={btnRef}>
+						=
+					</button>
+
+					<div className="flex-list">
+						<span className="icon-container">😀</span>
+						<span className="title">Timer + Stopwatch</span>
+					</div>
+				</header>
+
+				{children}
+			</div>
+		</div>
+	);
+};

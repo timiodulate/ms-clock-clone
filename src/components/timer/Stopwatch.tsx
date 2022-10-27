@@ -13,6 +13,21 @@ const StopwatchSection = ({
 			let m = 0;
 			let h = 0;
 
+			if (s == 60) {
+				s = 0;
+				m += 1;
+			}
+			if (m == 60) {
+				m = 0;
+				h += 1;
+			}
+
+			updateState("stopwatchTime", {
+				...stopwatchTime,
+				hr: h,
+				min: m,
+				sec: s++,
+			});
 			const interval = setInterval(() => {
 				if (s == 60) {
 					s = 0;

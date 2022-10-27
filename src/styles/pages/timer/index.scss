@@ -1,7 +1,8 @@
 .timer-page {
-	--gray: rgb(110, 110, 110);
+	--gray: rgb(110, 120, 110);
 	--gray-border: rgb(216, 216, 216);
-	--gray-bg: rgb(248, 248, 248);
+	--gray-bg: rgb(248, 250, 248);
+	--gray-nav: rgb(248, 248, 248);
 	--grey: rgb(192, 191, 191);
 	--blue: rgb(35, 82, 170);
 
@@ -11,204 +12,424 @@
 	font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
 		sans-serif;
 
-	display: flex;
-	gap: 1rem;
-	padding: 2rem;
-	min-height: 100vh;
+	position: relative;
 	background-color: var(--gray-bg);
 
-	section {
-		flex: 1;
-		border: var(--gray-border) 1px solid;
-		border-radius: 6px;
-		padding: 3rem;
-		background-color: white;
-		text-align: center;
+	&.disableScroll {
+		// height: 100vh;
+		overflow-y: hidden;
+	}
 
-		&:first-child {
-			.section-header {
-				margin-bottom: 1.7rem;
+	@media screen and (min-width: 670px) {
+		display: flex;
 
-				h1 {
-					margin-bottom: 0.6rem;
-					font-size: 1.35rem;
-					font-weight: 500;
-				}
+		main {
+			flex: 1;
+		}
+	}
 
-				p {
-					font-size: 0.95rem;
-					color: var(--gray);
+	--nav-pad: 0.2rem;
+
+	.flex-list {
+		display: flex;
+		align-items: center;
+		gap: 0.7rem;
+		padding: calc(var(--nav-pad) * 3);
+		border-radius: 4px;
+
+		&:not(:last-child) {
+			margin-block-end: var(--nav-pad);
+		}
+	}
+
+	aside {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+		border-right: var(--gray-border) 1px solid;
+		padding-inline: var(--nav-pad);
+		background-color: var(--gray-nav);
+
+		transition: translate 600ms ease-in-out, width 600ms ease-in-out;
+		// transition: translate 600ms ease-in-out;
+
+		div.top {
+			&:not(:last-child) {
+				margin-block-end: var(--nav-pad);
+			}
+
+			button {
+				margin-block-start: var(--nav-pad);
+				width: 100%;
+				height: fit-content;
+				text-align: center;
+
+				width: 40px;
+				height: 35px;
+
+				&:hover {
+					background-color: white;
 				}
 			}
 
-			form {
-				> * {
-					margin-bottom: 0.6rem;
-				}
+			div {
+				display: none;
+				align-items: center;
+				gap: 0.7rem;
+				border-radius: 4px;
+				padding: calc(var(--nav-pad) * 3);
+			}
+		}
 
-				.focus-time-selector-container {
-					h1 {
-						margin-bottom: 1rem;
-						margin-inline: auto;
-						width: 60%;
-						font-size: 1rem;
+		nav {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+
+			ul {
+				li {
+					&:not(:last-child) {
+						margin-block-end: var(--nav-pad);
 					}
 
-					.focus-time-selector {
-						display: flex;
-						border: var(--grey) 1px solid;
-						border-bottom: black 1px solid;
+					&:hover {
 						border-radius: 4px;
-						margin-bottom: 1.1rem;
-						margin-inline: auto;
-						width: 200px;
-
-						> div {
-							&:first-child {
-								flex: 2;
-								border-right: var(--grey) 1px solid;
-								padding-block: 1rem;
-								text-align: center;
-
-								h2 {
-									font-size: 3rem;
-									font-weight: 500;
-								}
-
-								p {
-									font-size: 0.9rem;
-									color: var(--gray);
-								}
-							}
-
-							&:last-child {
-								display: flex;
-								flex-direction: column;
-								align-items: center;
-
-								span {
-									flex: 1;
-									display: grid;
-									place-items: center;
-									padding-inline: 1rem;
-
-									&.disabled {
-										color: var(--grey);
-									}
-
-									&:first-child {
-										border-bottom: var(--grey) 1px solid;
-									}
-								}
-							}
-						}
+						background-color: var(--gray-border);
 					}
 				}
+			}
+		}
 
-				> p {
-					font-size: 0.95rem;
-				}
+		@media screen and (max-width: 670px) {
+			position: fixed;
+			border-radius: 0 10px 10px 0;
+			box-shadow: 1px 1px 2px var(--gray);
+			min-width: 300px;
+			translate: -300px;
 
-				.skip-breaks-toggle {
-					&.disabled {
-						color: var(--grey);
-					}
-				}
-				button {
+			div.top {
+				visibility: hidden;
+
+				// div {
+				// 	display: none;
+				// }
+			}
+
+			&.show {
+				translate: 0px;
+				opacity: 1;
+
+				nav {
 					display: flex;
-					justify-content: center;
-					align-items: center;
-					gap: 0.3rem;
-					border-radius: 4px;
-					margin-top: 1.7rem;
-					margin-inline: auto;
-					padding-block: 0.3rem;
-					padding-inline: 0.5rem;
-					background-color: var(--blue);
-					color: white;
+				}
+			}
+		}
 
-					span {
-						display: grid;
-						place-items: center;
+		@media screen and (min-width: 670px) and (max-width: 879px) {
+			position: fixed;
 
-						> * {
-							font-size: 1.5rem;
+			nav {
+				ul {
+					li {
+						.title {
+							display: none;
+						}
+					}
+				}
+			}
+
+			&.show {
+				min-width: 300px;
+				border-radius: 0 10px 10px 0;
+				box-shadow: 1px 1px 2px var(--gray);
+
+				nav {
+					display: flex;
+
+					ul {
+						li {
+							.title {
+								display: initial;
+							}
 						}
 					}
 				}
 			}
 		}
-	}
 
-	.track-focus-section {
-		> div {
-			div {
-				display: grid;
-				place-items: center;
-				border: 15px solid var(--grey);
-				border-radius: 50%;
-				margin-block-end: 1rem;
-				margin-inline: auto;
-				width: 220px;
-				height: 220px;
-				font-size: 4rem;
-			}
+		@media screen and (min-width: 879px) {
+			min-width: 300px;
 
-			span {
-				color: var(--blue);
-				font-size: 3rem;
+			div.top {
+				button {
+					display: none;
+				}
+
+				div {
+					display: flex;
+				}
 			}
 		}
 	}
 
-	.stopwatch-section {
-		.watch-container {
-			display: flex;
-			justify-content: center;
-			margin-block-end: 1.1rem;
-			text-align: center;
-			font-size: 3.8rem;
+	.aside-placeholder {
+		display: none;
 
-			&.idle {
-				color: var(--gray);
+		@media screen and (min-width: 670px) and (max-width: 879px) {
+			display: block;
+			min-width: 52px;
+		}
+	}
+
+	.main {
+		header {
+			position: sticky;
+			top: 0;
+			display: flex;
+			padding-inline: 1rem;
+
+			&::after {
+				content: "";
+				position: absolute;
+				z-index: -5;
+				display: block;
+				width: 100%;
+				height: 100%;
+				// background-color: var(--gray-bg);
 			}
 
-			div {
-				span {
-					display: block;
-					font-size: 0.7rem;
+			@media screen and (max-width: 670px) {
+			}
+
+			@media screen and (min-width: 670px) and (max-width: 879px) {
+				padding-inline-start: 0.2rem;
+				pointer-events: none;
+
+				button {
+					display: none;
+				}
+
+				div {
+					padding-inline: 0;
+				}
+			}
+
+			@media screen and (min-width: 879px) {
+				* {
+					display: none;
 				}
 			}
 		}
 
-		.watch-controller {
+		main {
 			display: flex;
-			justify-content: center;
-			gap: 0.5rem;
+			gap: 1rem;
+			padding: 1rem;
+			min-height: 100vh;
 
-			span {
-				font-size: 2rem;
+			section {
+				flex: 1;
+				border: var(--gray-border) 1px solid;
+				border-radius: 6px;
+				padding: 3rem;
+				background-color: white;
+				text-align: center;
 
 				&:first-child {
-					color: var(--blue);
+					.section-header {
+						margin-bottom: 1.7rem;
+
+						h1 {
+							margin-bottom: 0.6rem;
+							font-size: 1.35rem;
+							font-weight: 500;
+						}
+
+						p {
+							font-size: 0.95rem;
+							color: var(--gray);
+						}
+					}
+
+					form {
+						> * {
+							margin-bottom: 0.6rem;
+						}
+
+						.focus-time-selector-container {
+							h1 {
+								margin-bottom: 1rem;
+								margin-inline: auto;
+								width: 60%;
+								font-size: 1rem;
+							}
+
+							.focus-time-selector {
+								display: flex;
+								border: var(--grey) 1px solid;
+								border-bottom: black 1px solid;
+								border-radius: 4px;
+								margin-bottom: 1.1rem;
+								margin-inline: auto;
+								width: 200px;
+
+								> div {
+									&:first-child {
+										flex: 2;
+										border-right: var(--grey) 1px solid;
+										padding-block: 1rem;
+										text-align: center;
+
+										h2 {
+											font-size: 3rem;
+											font-weight: 500;
+										}
+
+										p {
+											font-size: 0.9rem;
+											color: var(--gray);
+										}
+									}
+
+									&:last-child {
+										display: flex;
+										flex-direction: column;
+										align-items: center;
+
+										span {
+											flex: 1;
+											display: grid;
+											place-items: center;
+											padding-inline: 1rem;
+
+											&.disabled {
+												color: var(--grey);
+											}
+
+											&:first-child {
+												border-bottom: var(--grey) 1px
+													solid;
+											}
+										}
+									}
+								}
+							}
+						}
+
+						> p {
+							font-size: 0.95rem;
+						}
+
+						.skip-breaks-toggle {
+							&.disabled {
+								color: var(--grey);
+							}
+						}
+						button {
+							display: flex;
+							justify-content: center;
+							align-items: center;
+							gap: 0.3rem;
+							border-radius: 4px;
+							margin-top: 1.7rem;
+							margin-inline: auto;
+							padding-block: 0.3rem;
+							padding-inline: 0.5rem;
+							background-color: var(--blue);
+							color: white;
+
+							span {
+								display: grid;
+								place-items: center;
+
+								> * {
+									font-size: 1.5rem;
+								}
+							}
+						}
+					}
 				}
 			}
-		}
-	}
 
-	@media screen and (max-width: 675px) {
-		flex-direction: column;
+			.track-focus-section {
+				> div {
+					div {
+						display: grid;
+						place-items: center;
+						border: 15px solid var(--grey);
+						border-radius: 50%;
+						margin-block-end: 1rem;
+						margin-inline: auto;
+						width: 220px;
+						height: 220px;
+						font-size: 4rem;
+					}
 
-		// section {
-		// 	&:first-child {
-		// 		margin-block-end: 1rem;
-		// 	}
-		// }
-	}
+					span {
+						color: var(--blue);
+						font-size: 3rem;
+					}
+				}
+			}
 
-	@media screen and (min-width: 675px) {
-		section {
-			flex: 1;
+			.stopwatch-section {
+				.watch-container {
+					display: flex;
+					justify-content: center;
+					margin-block-end: 1.1rem;
+					text-align: center;
+					font-size: 3.8rem;
+
+					&.idle {
+						color: var(--gray);
+					}
+
+					div {
+						span {
+							display: block;
+							font-size: 0.7rem;
+						}
+					}
+				}
+
+				.watch-controller {
+					display: flex;
+					justify-content: center;
+					gap: 0.5rem;
+
+					span {
+						font-size: 2rem;
+
+						&:first-child {
+							color: var(--blue);
+						}
+					}
+				}
+			}
+
+			@media screen and (max-width: 675px) {
+				flex-direction: column;
+				padding-top: 0;
+
+				// section {
+				// 	&:first-child {
+				// 		margin-block-end: 1rem;
+				// 	}
+				// }
+			}
+
+			@media screen and (min-width: 675px) {
+				padding: 2rem;
+
+				section {
+					flex: 1;
+				}
+			}
+
+			@media screen and (min-width: 670px) and (max-width: 879px) {
+				padding-block: 0.5rem;
+			}
 		}
 	}
 }
