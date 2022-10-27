@@ -1,7 +1,7 @@
 import * as React from "react";
-import { useUserTasks } from "../../../contexts/user-tasks";
+import { useUserTasks } from "../../contexts/user-tasks";
 
-import { TaskProps } from "../../../interfaces";
+import { TaskProps } from "../../interfaces";
 
 type ListDetailProps = {
 	item: TaskProps;
