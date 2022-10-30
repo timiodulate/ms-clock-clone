@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useOutsideHoverClose } from "../../utils/useOutsideClose";
 import { ProjectProps } from "./Props";
 
 interface FilterProps {
@@ -16,7 +17,12 @@ const Filter = ({
 	activeFilter,
 	setActiveFilter,
 }: FilterProps) => {
-	const [menuVisible, setMenuVisible] = useState(false);
+	// const [menuVisible, setMenuVisible] = useState(false);
+	const {
+		elementRef,
+		isVisible: menuVisible,
+		toggle,
+	} = useOutsideHoverClose();
 
 	const filterData: string[] = [
 		"all-projects",
@@ -27,7 +33,10 @@ const Filter = ({
 
 	const selectFilter = (selected: string): void => {
 		setActiveFilter(selected);
-		setMenuVisible(false);
+
+		if (menuVisible) {
+			toggle();
+		}
 	};
 
 	useEffect(() => {
@@ -45,14 +54,11 @@ const Filter = ({
 	}, [activeFilter]);
 
 	return (
-		<div className={`filter ${className}`}>
+		<div className={`filter ${className}`} ref={elementRef}>
 			<div className="menu-visible">
 				<span className="menu-title">Filter:</span>
 
-				<span
-					className="menu-toggle hover"
-					onClick={() => setMenuVisible(!menuVisible)}
-				>
+				<span className="menu-toggle hover" onClick={toggle}>
 					{activeFilter}
 				</span>
 			</div>

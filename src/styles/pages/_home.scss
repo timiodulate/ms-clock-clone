@@ -1,3 +1,9 @@
+* {
+	&::selection {
+		background: #ccc4b9;
+	}
+}
+
 html {
 	&.hide-scrollbar {
 		-ms-overflow-style: none; /* IE and Edge */
@@ -20,7 +26,8 @@ html {
 	background-color: var(--bg-color);
 	// mix-blend-mode: darken;
 	background-blend-mode: lighten;
-	font-family: "Inter Tight", sans-serif;
+	// font-family: "Inter Tight", sans-serif;
+	font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 	font-size: 0.8rem;
 	text-transform: uppercase;
 	cursor: none;
@@ -39,7 +46,7 @@ html {
 		// overflow-y: hidden;
 
 		* {
-			transition: all 100ms ease-in-out;
+			transition: all 500ms ease-in-out;
 
 			&.hide {
 				transform: translateY(calc(100% + 29px));
@@ -92,6 +99,7 @@ html {
 				font-size: 4rem;
 				text-align: center;
 				text-transform: uppercase;
+				font-weight: bolder;
 			}
 
 			.filter {
@@ -102,7 +110,9 @@ html {
 		.projects-cards {
 			display: grid;
 			grid-template-columns: 1fr;
+			grid-row-gap: 3vw;
 			padding-inline: var(--pad);
+			// padding-top: 3vw;
 
 			.project-card-wrapper {
 				border-bottom: solid 1px;
@@ -111,18 +121,22 @@ html {
 			}
 
 			.project-card {
-				.image-container {
-					position: relative;
-					width: 100%;
-					height: 360px;
-					scale: 1/1;
+				.image-bg {
+					border: solid black 1px;
 					margin-block-end: 1rem;
-					animation-name: pulsing;
-					animation-duration: 1500ms;
-					animation-iteration-count: infinite;
+					width: 100%;
+					height: auto;
 
-					&:hover {
-						animation-duration: 500ms;
+					.image-container {
+						position: relative;
+						scale: 1/1;
+						animation-name: pulsing;
+						animation-duration: 1500ms;
+						animation-iteration-count: infinite;
+
+						&:hover {
+							animation-duration: 500ms;
+						}
 					}
 				}
 
@@ -150,7 +164,11 @@ html {
 			}
 
 			@media screen and (min-width: 675px) {
-				grid-template-columns: repeat(2, 1fr);
+				grid-template-columns: 1fr 1fr;
+				grid-template-rows: auto;
+				grid-auto-columns: 1fr;
+				grid-column-gap: 0vw;
+				grid-row-gap: 0vw;
 
 				.project-card-wrapper {
 					border-right: solid 1px;
@@ -176,7 +194,7 @@ html {
 
 	@keyframes pulsing {
 		from {
-			transform: scale(0.98, 0.98);
+			transform: scale(0.99, 0.99);
 		}
 		to {
 			transform: scale(1, 1);
@@ -185,32 +203,31 @@ html {
 
 	.mouse-tracker {
 		position: fixed;
+		z-index: 101;
 		border-radius: 50%;
 		width: 10px;
 		height: 10px;
-		// z-index: 100;
 		pointer-events: none;
-		mix-blend-mode: color-burn;
 
 		&.primary {
 			background-color: black;
-			z-index: 101;
 		}
 
 		&.secondary {
-			// background-color: rgba(255, 0, 0, 0.377);
-			// backdrop-filter: greyscale();
+			// applies to everything behind the element
+			backdrop-filter: brightness(100px);
 			border: 1px solid;
 			width: 50px;
 			height: 50px;
+
+			background-color: transparent;
 		}
 	}
 
 	.filter {
 		position: relative;
-
 		text-transform: uppercase;
-		width: 150px;
+		min-width: 150px;
 
 		.menu-visible {
 			.menu-toggle {

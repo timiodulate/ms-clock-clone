@@ -1,6 +1,10 @@
 import { useEffect, useState, useRef } from "react";
 
-const useOutsideClose = (refs?, callback?) => {
+const useOutsideClose = (
+	refs?,
+	callback?,
+	options?: { ref?: string[]; closeOnHover?: boolean }
+) => {
 	const [isVisible, setIsVisible] = useState(false);
 	const elementRef: any = useRef();
 
@@ -44,10 +48,6 @@ const useOutsideClose = (refs?, callback?) => {
 		// console.log(refs);
 
 		if (refs.current) {
-			console.log(elementRef.current);
-			console.log(e.target);
-			console.log(refs.current);
-
 			if (
 				isVisible &&
 				elementRef.current &&
@@ -86,3 +86,76 @@ const useOutsideClose = (refs?, callback?) => {
 };
 
 export default useOutsideClose;
+
+export const useOutsideHoverClose = (callback?) => {
+	const [isVisible, setIsVisible] = useState(false);
+	const elementRef: any = useRef();
+
+	useEffect(() => {
+		if (isVisible) {
+			elementRef.current.addEventListener(
+				"mouseleave",
+				checkIfClickedOutside
+			);
+
+			return () => {
+				// Cleanup the event listener
+				elementRef.current.removeEventListener(
+					"mouseleave",
+					checkIfClickedOutside
+				);
+			};
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}
+	}, [isVisible]);
+
+	function toggle() {
+		if (isVisible) {
+			setIsVisible(false);
+		} else {
+			setIsVisible(true);
+		}
+	}
+
+	const checkIfClickedOutside = () => {
+		const setTimer = 50;
+
+		let timeLeft = 0;
+
+		const interval = setInterval(() => {
+			timeLeft++;
+
+			if (timeLeft === setTimer) {
+				clearInterval(interval);
+
+				setIsVisible(false);
+			} else {
+				const doThis = () => {
+					clearInterval(interval);
+					setIsVisible(true);
+					// elementRef.current.removeEventListener(
+					// 	"mouseenter",
+					// 	() => ""
+					// );
+				};
+
+				isVisible &&
+					elementRef.current.addEventListener("mouseenter", doThis);
+
+				// return () => {
+				// 	// 	// Cleanup the event listener
+				// 	elementRef.current.removeEventListener(
+				// 		"mouseenter",
+				// 		() => ""
+				// 	);
+				// };
+			}
+		}, 1);
+	};
+
+	return {
+		elementRef,
+		isVisible,
+		toggle,
+	};
+};

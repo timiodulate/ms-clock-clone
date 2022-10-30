@@ -81,17 +81,19 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 					}}
 				>
 					<CLink href={link} className="project-link hover">
-						<div className="image-container">
-							<Image
-								src={src || candy}
-								alt={alt}
-								layout="fill"
-								// style={{
-								// 	objectFit: "contain",
-								// }}
-								objectFit="cover"
-								objectPosition={bgPosition}
-							/>
+						<div className="image-bg">
+							<div className="image-container">
+								<Image
+									src={src || candy}
+									alt={alt}
+									layout="fill"
+									// style={{
+									// 	objectFit: "contain",
+									// }}
+									objectFit="cover"
+									objectPosition={bgPosition}
+								/>
+							</div>
 						</div>
 
 						<div className="project-details">

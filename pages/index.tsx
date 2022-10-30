@@ -8,6 +8,10 @@ import {
 	ProjectsCards,
 } from "../src/components/projects-list";
 import { projects } from "../src/utils/sample-data";
+import {
+	useElementTop,
+	useRotateOnScroll,
+} from "../src/utils/useRotateOnScroll";
 
 {
 	/* This Website contains all of my projects, organized in an
@@ -15,42 +19,11 @@ import { projects } from "../src/utils/sample-data";
 }
 
 const IndexPage = ({ projectsData }: { projectsData: ProjectProps[] }) => {
-	const [rotationPosition, setRotationPosition] = useState({
-		left: "",
-	});
-
-	const [myElementIsVisible, updateMyElementIsVisible] = useState(false);
-
-	const [elementPosition, setElementPosition] = useState(0);
-
-	const myRef = useRef();
-
-	useEffect(() => {
-		const handle = (e) => {
-			setRotationPosition({
-				left: window.pageYOffset + "deg",
-			});
-
-			var bodyRect = document.body.getBoundingClientRect(),
-				elemRect = document
-					.querySelector(".projects-section")
-					.getBoundingClientRect(),
-				offset = elemRect.top - bodyRect.top;
-
-			setElementPosition(elemRect.top);
-
-			updateMyElementIsVisible(elemRect.top <= -7 ? true : false);
-		};
-
-		document.addEventListener("scroll", handle);
-
-		return () => document.removeEventListener("scroll", handle);
-	}, []);
+	const { rotationPosition } = useRotateOnScroll();
+	const { elementRef: projectSectRef, myElementIsVisible } = useElementTop();
 
 	useEffect(() => {
 		fetchProjects();
-
-		// observeCards();
 	}, []);
 
 	const [allProjects, setAllProjects] = useState([]);
@@ -62,21 +35,6 @@ const IndexPage = ({ projectsData }: { projectsData: ProjectProps[] }) => {
 		setFilteredProjects(projectsData);
 	};
 
-	const observeCards = () => {
-		const observer = new IntersectionObserver((entries, observer) => {
-			const entry = entries[0];
-			console.log("entries", entries);
-			console.log("entry", entry);
-			console.log("entry.isIntersecting", entry.isIntersecting);
-
-			entry.intersectionRect;
-
-			updateMyElementIsVisible(entry.isIntersecting);
-		});
-
-		observer.observe(myRef.current);
-	};
-
 	return (
 		<main className="projects-page">
 			<MouseTracker />
@@ -85,7 +43,7 @@ const IndexPage = ({ projectsData }: { projectsData: ProjectProps[] }) => {
 				<div>
 					<div
 						className="rotate"
-						style={{ rotate: `${rotationPosition.left}` }}
+						style={{ rotate: `${rotationPosition}` }}
 					></div>
 
 					<span
@@ -119,9 +77,9 @@ const IndexPage = ({ projectsData }: { projectsData: ProjectProps[] }) => {
 				</div>
 			</section>
 
-			<section className="projects-section">
+			<section className="projects-section" ref={projectSectRef}>
 				<div className="projects-header">
-					<h1 ref={myRef}>Projects</h1>
+					<h1>Projects</h1>
 
 					<Filter
 						allProjects={allProjects}
