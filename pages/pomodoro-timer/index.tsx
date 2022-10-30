@@ -23,6 +23,7 @@ const IndexPage = () => {
 		hr: 0,
 		min: 0,
 		sec: 0,
+		ms: 0,
 	});
 
 	useEffect(() => {
@@ -109,6 +110,7 @@ const IndexPage = () => {
 					stopwatchTime={stopwatchTime}
 					startStopwatch={startStopwatch}
 					updateState={updateState}
+					setStopwatchTime={setStopwatchTime}
 				/>
 			</main>
 		</PomodoroLayout>
