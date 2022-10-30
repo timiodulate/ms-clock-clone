@@ -89,7 +89,7 @@ const IndexPage = () => {
 
 	return (
 		<PomodoroLayout>
-			<main>
+			<main className="timer-page">
 				{!startFocus ? (
 					<SetFocusSection
 						totalFocusMin={totalFocusMin}
@@ -128,7 +128,7 @@ const PomodoroLayout = ({ children }) => {
 	} = useOutsideClose(btnRef);
 
 	return (
-		<div className={`timer-page ${showNav ? "disableScroll" : ""}`}>
+		<div className={`timer-layout ${showNav ? "disableScroll" : ""}`}>
 			<aside className={showNav ? "show" : ""} ref={elementRef}>
 				<div className="top">
 					<button onClick={toggleNav}>=</button>
