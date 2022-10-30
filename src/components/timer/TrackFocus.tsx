@@ -7,18 +7,26 @@ const TrackFocusSection = ({
 	focusTime,
 	totalBreakMin,
 }: any) => {
+	const percent = 50;
+
 	return (
 		<section className="track-focus-section">
 			<div>
-				<div>
-					{sessionTime.min.toString().length == 2
-						? sessionTime.min
-						: "0" + sessionTime.min}
-					:
-					{sessionTime.secs.toString().length == 2
-						? sessionTime.secs
-						: "0" + sessionTime.secs}
-				</div>
+				<CircleProgress
+					percent={percent}
+					circleWidth={"220px"}
+					progressColor={"rgb(192, 191, 191)"}
+				>
+					<div>
+						{sessionTime.min.toString().length == 2
+							? sessionTime.min
+							: "0" + sessionTime.min}
+						:
+						{sessionTime.secs.toString().length == 2
+							? sessionTime.secs
+							: "0" + sessionTime.secs}
+					</div>
+				</CircleProgress>
 
 				<span
 					onClick={() => {
@@ -64,3 +72,53 @@ const TrackFocusSection = ({
 };
 
 export default TrackFocusSection;
+
+interface circleProgress {
+	circleWidth?: any;
+	percent?: any;
+	content?: any;
+	progressColor?: any;
+	children?;
+}
+
+const CircleProgress = ({
+	circleWidth,
+	percent,
+	children,
+	progressColor,
+}: circleProgress) => {
+	const deg = (360 / 100) * percent;
+
+	const style = {
+		"--circle-width": circleWidth ? circleWidth : "200px",
+		"--content-color": "red",
+		"--progress-color": progressColor ? progressColor : "red",
+	} as React.CSSProperties;
+
+	return (
+		<div className="circle-wrap" style={style}>
+			<div className="circle">
+				<div
+					className="mask full"
+					style={{ transform: `rotate(${deg / 2}deg)` }}
+				>
+					<div
+						className="fill"
+						style={{ transform: `rotate(${deg / 2}deg)` }}
+					></div>
+				</div>
+
+				<div className="mask half">
+					<div
+						className="fill"
+						style={{ transform: `rotate(${deg / 2}deg)` }}
+					></div>
+				</div>
+
+				<div className="inside-circle">
+					<span className="content">{children}</span>
+				</div>
+			</div>
+		</div>
+	);
+};
