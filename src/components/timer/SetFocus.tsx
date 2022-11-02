@@ -5,10 +5,12 @@ import { BsPlayFill } from "react-icons/bs";
 const SetFocusSection = ({
 	totalFocusMin,
 	updateState,
+	updatePageState,
 	sessionCount,
 }: {
 	totalFocusMin: number;
 	updateState: (stateTitle: any, arg: any) => void;
+	updatePageState: (stateTitle: any, arg: any) => void;
 	sessionCount: number;
 }) => {
 	const [trackTotalTime, setTrackTotalTime] = useState(true);
@@ -29,7 +31,7 @@ const SetFocusSection = ({
 		e.preventDefault();
 
 		updateState("startFocus", true);
-		trackTotalTime && updateState("startStopwatch", true);
+		trackTotalTime && updatePageState("startStopwatch", true);
 	};
 
 	return (

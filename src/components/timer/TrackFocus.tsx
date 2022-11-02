@@ -1,8 +1,9 @@
 import { BsFillStopCircleFill } from "react-icons/bs";
 
 const TrackFocusSection = ({
-	sessionTime,
+	updatePageState,
 	updateState,
+	sessionTime,
 	currentSession,
 	focusTime,
 	totalBreakMin,
@@ -32,6 +33,7 @@ const TrackFocusSection = ({
 					onClick={() => {
 						updateState("startFocus", false);
 						updateState("currentSession", "focus");
+						updatePageState("startStopwatch", false);
 					}}
 				>
 					<BsFillStopCircleFill />

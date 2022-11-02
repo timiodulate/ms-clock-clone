@@ -1,23 +1,12 @@
-import Layout from "../../src/layouts/Layout";
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import {
-	SetFocusSection,
-	TrackFocusSection,
+	FocusTimerSection,
 	StopwatchSection,
 } from "../../src/components/timer";
 import CLink from "../../src/components/_reusables/CLink";
 import useOutsideClose from "../../src/utils/useOutsideClose";
 
 const IndexPage = () => {
-	const [totalFocusMin, setTotalFocusMin] = useState(0);
-	const [totalBreakMin, setTotalBreakMin] = useState(0);
-
-	const [currentSession, setCurrentSession] = useState("focus");
-	const [sessionCount, setSessionCount] = useState(2);
-
-	const [startFocus, setStartFocus] = useState(false);
-	const [sessionTime, setSessionTime] = useState({ min: 0, secs: 0 });
-
 	const [startStopwatch, setStartStopwatch] = useState(false);
 	const [stopwatchTime, setStopwatchTime] = useState({
 		hr: 0,
@@ -26,91 +15,23 @@ const IndexPage = () => {
 		ms: 0,
 	});
 
-	useEffect(() => {
-		if (startFocus) {
-			const now = new Date();
-
-			let totalSessionMin =
-				currentSession == "focus"
-					? now.valueOf() + totalFocusMin * 1000 * 60
-					: now.valueOf() + totalBreakMin * 1000 * 60;
-
-			const interval = setInterval(() => {
-				const now = new Date();
-
-				const difference = totalSessionMin - now.getTime();
-
-				const m = Math.floor(
-					(difference % (1000 * 60 * 60)) / (1000 * 60)
-				);
-
-				const s = Math.floor((difference % (1000 * 60)) / 1000);
-
-				setSessionTime({ min: m, secs: s });
-
-				if (m === 0 && s === 0) {
-					return switchSession();
-				}
-			});
-
-			return () => clearInterval(interval);
-		}
-	}, [startFocus, currentSession]);
-
-	let arr: string[] = [];
-
-	const switchSession = () => {
-		const nextSession = currentSession == "focus" ? "break" : "focus";
-
-		if (currentSession == "focus") {
-			arr.push("focus");
-		}
-
-		if (arr.length == sessionCount) {
-			updateState("startFocus", false);
-		} else {
-			setCurrentSession(nextSession);
-		}
-	};
-
-	const updateState = (stateTitle: any, arg: any) => {
-		if (stateTitle == "startFocus") {
-			setStartFocus(arg);
-		} else if (stateTitle == "totalFocusMin") {
-			setTotalFocusMin(arg);
-		} else if (stateTitle == "startStopwatch") {
+	const updatePageState = (stateTitle: any, arg: any) => {
+		if (stateTitle == "startStopwatch") {
 			setStartStopwatch(arg);
 		} else if (stateTitle == "stopwatchTime") {
 			setStopwatchTime(arg);
-			// } else if (stateTitle == "totalSessionMin") {
-			// 	setTotalSessionMin(arg);
 		}
 	};
 
 	return (
 		<PomodoroLayout>
 			<main className="timer-page">
-				{!startFocus ? (
-					<SetFocusSection
-						totalFocusMin={totalFocusMin}
-						updateState={updateState}
-						sessionCount={sessionCount}
-					/>
-				) : (
-					<TrackFocusSection
-						updateState={updateState}
-						sessionTime={sessionTime}
-						currentSession={currentSession}
-						focusTime={totalFocusMin}
-						totalBreakMin={totalBreakMin}
-					/>
-				)}
+				<FocusTimerSection updatePageState={updatePageState} />
 
 				<StopwatchSection
+					updateState={updatePageState}
 					stopwatchTime={stopwatchTime}
 					startStopwatch={startStopwatch}
-					updateState={updateState}
-					setStopwatchTime={setStopwatchTime}
 				/>
 			</main>
 		</PomodoroLayout>
@@ -118,6 +39,14 @@ const IndexPage = () => {
 };
 
 export default IndexPage;
+
+import { IoSettingsOutline, IoStopwatchOutline } from "react-icons/io5";
+import { FiChevronsLeft } from "react-icons/fi";
+import { GiSandsOfTime } from "react-icons/gi";
+import { TiTime } from "react-icons/ti";
+import { FcAlarmClock } from "react-icons/fc";
+import { AiOutlineBars } from "react-icons/ai";
+import { useRouter } from "next/router";
 
 const PomodoroLayout = ({ children }) => {
 	const btnRef: any = useRef();
@@ -127,35 +56,36 @@ const PomodoroLayout = ({ children }) => {
 		toggle: toggleNav,
 	} = useOutsideClose(btnRef);
 
+	const { pathname } = useRouter();
+
 	return (
 		<div className={`timer-layout ${showNav ? "disableScroll" : ""}`}>
 			<aside className={showNav ? "show" : ""} ref={elementRef}>
-				<div className="top">
-					<button onClick={toggleNav}>=</button>
-
-					<div>
-						<span className="icon-container">😀</span>
-						<span className="title">Timer + Stopwatch</span>
-					</div>
-				</div>
+				<Header className={"top"} toggleNav={toggleNav} />
 
 				<nav>
 					<ul>
-						<li>
-							<CLink href="/" className="flex-list">
-								<span className="icon-container">😀</span>
-								<span className="title">Timer</span>
+						<li className="">
+							<CLink href={pathname} className="flex-list active">
+								<span className="icon-container">
+									<TiTime />
+								</span>
+								<span className="title">Pomodoro Timer</span>
 							</CLink>
 						</li>
 						<li>
-							<CLink href="/" className="flex-list">
-								<span className="icon-container">😉</span>
-								<span className="title">Timer</span>
+							<CLink href={pathname} className="flex-list">
+								<span className="icon-container">
+									<IoStopwatchOutline />
+								</span>
+								<span className="title">Stopwatch</span>
 							</CLink>
 						</li>
 						<li>
-							<CLink href="/" className="flex-list">
-								<span className="icon-container">😐</span>
+							<CLink href={pathname} className="flex-list">
+								<span className="icon-container">
+									<GiSandsOfTime />
+								</span>
 								<span className="title">Timer</span>
 							</CLink>
 						</li>
@@ -163,14 +93,18 @@ const PomodoroLayout = ({ children }) => {
 
 					<ul className="bottom">
 						<li>
-							<CLink href="/" className="flex-list">
-								<span className="icon-container">😐</span>
+							<CLink href={pathname} className="flex-list">
+								<span className="icon-container">
+									<IoSettingsOutline />
+								</span>
 								<span className="title">Settings</span>
 							</CLink>
 						</li>
 						<li>
 							<CLink href="/" className="flex-list">
-								<span className="icon-container">😐</span>
+								<span className="icon-container">
+									<FiChevronsLeft />
+								</span>
 								<span className="title">Back to Portfolio</span>
 							</CLink>
 						</li>
@@ -180,19 +114,35 @@ const PomodoroLayout = ({ children }) => {
 			<div className="aside-placeholder"></div>
 
 			<div className="main">
-				<header>
-					<button onClick={toggleNav} ref={btnRef}>
-						=
-					</button>
-
-					<div className="flex-list">
-						<span className="icon-container">😀</span>
-						<span className="title">Timer + Stopwatch</span>
-					</div>
-				</header>
+				<Header toggleNav={toggleNav} btnRef={btnRef} />
 
 				{children}
 			</div>
 		</div>
+	);
+};
+
+const Header = ({
+	className,
+	toggleNav,
+	btnRef,
+}: {
+	className?: string;
+	toggleNav: any;
+	btnRef?;
+}) => {
+	return (
+		<header className={className || ""}>
+			<button onClick={toggleNav} ref={btnRef ? btnRef : null}>
+				<AiOutlineBars />
+			</button>
+
+			<div className="flex-list">
+				<span className="icon-container">
+					<FcAlarmClock />
+				</span>
+				<span className="title">Timer + Stopwatch</span>
+			</div>
+		</header>
 	);
 };
