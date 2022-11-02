@@ -1,5 +1,11 @@
+import FocusTimerSection from "./FocusTimer";
 import SetFocusSection from "./SetFocus";
 import TrackFocusSection from "./TrackFocus";
 import StopwatchSection from "./Stopwatch";
 
-export { SetFocusSection, TrackFocusSection, StopwatchSection };
+export {
+	FocusTimerSection,
+	SetFocusSection,
+	TrackFocusSection,
+	StopwatchSection,
+};
