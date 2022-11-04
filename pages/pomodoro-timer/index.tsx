@@ -58,6 +58,8 @@ const PomodoroLayout = ({ children }) => {
 
 	const { pathname } = useRouter();
 
+	const [headerBG, setHeaderBG] = useState(false);
+
 	return (
 		<div className={`timer-layout ${showNav ? "disableScroll" : ""}`}>
 			<aside className={showNav ? "show" : ""} ref={elementRef}>
@@ -131,9 +133,29 @@ const Header = ({
 	toggleNav: any;
 	btnRef?;
 }) => {
+	const [headerBG, setHeaderBG] = useState(true);
+
+	const toggleBg = () => {
+		let tiner;
+
+		if (!headerBG) {
+			tiner = setTimeout(() => {
+				setHeaderBG(true);
+			}, 600);
+		} else {
+			setHeaderBG(false);
+			clearTimeout(tiner);
+		}
+	};
+
+	const handleClick = () => {
+		toggleNav();
+		toggleBg();
+	};
+
 	return (
-		<header className={className || ""}>
-			<button onClick={toggleNav} ref={btnRef ? btnRef : null}>
+		<header className={`${className || ""} ${headerBG ? "" : "no-bg"}`}>
+			<button onClick={handleClick} ref={btnRef ? btnRef : null}>
 				<AiOutlineBars />
 			</button>
 

@@ -16,6 +16,8 @@
 	position: relative;
 	background-color: var(--gray-bg);
 
+	width: 100vw;
+
 	&.disableScroll {
 		// max-height: 100vh;
 		// // position: absolute;
@@ -23,7 +25,6 @@
 
 		overflow: hidden;
 		position: fixed;
-		width: 100%;
 		height: 100%;
 	}
 
@@ -123,8 +124,6 @@
 					}
 
 					.icon-container {
-						// border: solid red;
-
 						* {
 							font-size: 1.2rem;
 						}
@@ -138,7 +137,7 @@
 			border-radius: 0 10px 10px 0;
 			box-shadow: 1px 1px 2px var(--gray);
 			min-width: var(--aside-width);
-			translate: -283px;
+			translate: -285px;
 
 			header.top {
 				visibility: hidden;
@@ -217,7 +216,13 @@
 			position: sticky;
 			top: 0;
 			display: flex;
+			align-items: center;
 			padding-inline: 1rem;
+			background-color: var(--gray-bg);
+
+			&.no-bg {
+				background-color: transparent;
+			}
 
 			&::after {
 				content: "";
@@ -226,10 +231,15 @@
 				display: block;
 				width: 100%;
 				height: 100%;
-				// background-color: var(--gray-bg);
+			}
+
+			button {
+				display: grid;
+				place-items: center;
 			}
 
 			@media screen and (max-width: 670px) {
+				height: 38.3px;
 			}
 
 			@media screen and (min-width: 670px) and (max-width: 879px) {
@@ -257,21 +267,21 @@
 .timer-page {
 	--section-width: 450px;
 
-	display: flex;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 	gap: 0.8rem;
 	padding: 1rem;
 	min-height: 100vh;
 
 	section {
-		flex: 1;
 		border: var(--gray-border) 1px solid;
 		border-radius: 6px;
 		padding-block-start: 2.8rem;
 		padding-block-end: 3.5rem;
 		padding-inline: 1rem;
-		max-width: var(--section-width);
 		height: 100%;
 		min-height: 487px;
+		max-height: 487px;
 		background-color: white;
 		text-align: center;
 
@@ -421,7 +431,7 @@
 			justify-content: center;
 			margin-block-end: 1.1rem;
 			text-align: center;
-			font-size: 3.8rem;
+			font-size: clamp(2.5rem, 5vw, 3.8rem);
 
 			&.idle {
 				color: var(--gray);
@@ -452,10 +462,6 @@
 				}
 
 				&.blur {
-					// filter: drop-shadow(20px);
-
-					// border: solid red;
-
 					svg {
 						color: var(--grey);
 						pointer-events: none;
@@ -473,27 +479,28 @@
 	}
 
 	@media screen and (max-width: 670px) {
+		display: flex;
 		flex-direction: column;
 		padding-top: 0;
-
-		section {
-			max-width: initial;
-			width: 100%;
-		}
 	}
 
 	@media screen and (min-width: 670px) and (max-width: 879px) {
 		padding: 2rem;
 		padding-block: 0.5rem;
-
-		section {
-			flex: 1;
-		}
 	}
 
 	@media screen and (min-width: 879px) {
 		padding-block-start: 2.6rem;
 		padding-inline: 2rem;
+	}
+
+	@media screen and (min-width: 1259px) {
+		display: flex;
+
+		section {
+			flex: 1;
+			max-width: var(--section-width);
+		}
 	}
 }
 

@@ -8,7 +8,8 @@ const TrackFocusSection = ({
 	focusTime,
 	totalBreakMin,
 }: any) => {
-	const percent = 50;
+	const percent =
+		((sessionTime.min * 60 + sessionTime.secs) * 100) / (focusTime * 60);
 
 	return (
 		<section className="track-focus-section">
@@ -16,7 +17,7 @@ const TrackFocusSection = ({
 				<CircleProgress
 					percent={percent}
 					circleWidth={"220px"}
-					progressColor={"rgb(192, 191, 191)"}
+					progressColor={"#227ded"}
 				>
 					<div>
 						{sessionTime.min.toString().length == 2
