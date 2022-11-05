@@ -24,6 +24,12 @@ button {
 	}
 }
 
+html,
+body {
+	width: 100vw;
+	overflow-x: hidden;
+}
+
 :root {
 	--clr-secondary: rgb(228, 228, 228);
 	--clr-icons: gray;

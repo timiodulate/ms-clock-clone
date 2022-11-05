@@ -96,7 +96,7 @@ html {
 			padding-block-end: calc(var(--pad) / 4);
 
 			h1 {
-				font-size: 4rem;
+				font-size: clamp(2rem, 5vw, 4rem);
 				text-align: center;
 				text-transform: uppercase;
 				font-weight: bolder;
@@ -158,8 +158,13 @@ html {
 			}
 
 			@media screen and (max-width: 675px) {
-				.ade {
-					flex-direction: column;
+				.project-card {
+					.image-bg {
+						.image-container {
+							width: 100%;
+							min-height: 250px;
+						}
+					}
 				}
 			}
 
