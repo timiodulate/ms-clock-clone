@@ -5,6 +5,7 @@ interface Props {
 	href: string;
 	className?: string;
 	external?: boolean;
+	type?: "external" | "nav";
 }
 
 const CLink: NextPage<Props> = ({
@@ -44,3 +45,42 @@ const CLink: NextPage<Props> = ({
 };
 
 export default CLink;
+
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+
+const CNavLink = ({
+	href,
+	children,
+	exact,
+	className,
+	active,
+	...props
+}: any) => {
+	const [classN, setClassN] = useState("");
+	const { pathname, asPath } = useRouter();
+	const isActive = exact
+		? pathname === href
+		: pathname.startsWith(href) || asPath.includes(href);
+
+	const activeC = () => {
+		if (typeof active === "string") {
+			return active === "active" ? active : "";
+		} else {
+			return isActive ? "active" : "";
+		}
+	};
+
+	useEffect(() => {
+		setClassN(`${activeC()} ${className ? className : ""}`);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [pathname, asPath]);
+
+	return (
+		<CLink href={href} {...props} className={classN}>
+			{children}
+		</CLink>
+	);
+};
+
+export { CNavLink };
