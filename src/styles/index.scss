@@ -30,6 +30,18 @@ body {
 	overflow-x: hidden;
 }
 
+body {
+	&.stop-scrolling {
+		// max-height: 100vh;
+		// position: absolute;
+		// overflow-y: hidden;
+
+		height: 100%;
+		overflow: hidden;
+		position: fixed;
+	}
+}
+
 :root {
 	--clr-secondary: rgb(228, 228, 228);
 	--clr-icons: gray;

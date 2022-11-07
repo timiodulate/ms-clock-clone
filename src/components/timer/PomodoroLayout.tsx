@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { CNavLink } from "../../components/_reusables/CLink";
 import useOutsideClose from "../../utils/useOutsideClose";
 import { IoSettingsOutline, IoStopwatchOutline } from "react-icons/io5";
@@ -17,9 +17,56 @@ const PomodoroLayout = ({ children }) => {
 		toggle: toggleNav,
 	} = useOutsideClose(btnRef);
 
-	const { pathname } = useRouter();
+	// function disableScroll() {
+	// // Get the current page scroll position
+	// let scrollTop =
+	// 	window.pageYOffset || document.documentElement.scrollTop;
+	// let scrollLeft =
+	// 	window.pageXOffset || document.documentElement.scrollLeft;
 
-	const [headerBG, setHeaderBG] = useState(false);
+	// let scrollLeft = window.scrollY;
+	// let scrollTop = window.scrollX;
+
+	// // // if any scroll is attempted, set this to the previous value
+	// window.onscroll = function () {
+	// 	window.scrollTo(scrollLeft, scrollTop);
+	// };
+
+	// 2
+	// document?.body.classList.add("stop-scrolling");
+
+	// 3
+	// function preventDefault(e) {
+	// 	e.preventDefault();
+	// }
+
+	// var supportsPassive = false;
+
+	// var wheelOpt = supportsPassive ? { passive: false } : false;
+	// var wheelEvent =
+	// 	"onwheel" in document.createElement("div") ? "wheel" : "mousewheel";
+
+	// window.addEventListener("DOMMouseScroll", preventDefault, false); // older FF
+	// window.addEventListener(wheelEvent, preventDefault, wheelOpt); // modern desktop
+	// window.addEventListener("touchmove", preventDefault, wheelOpt); // mobile
+	// // window.addEventListener('keydown', preventDefaultForScrollKeys, false);
+
+	// console.log("th");
+
+	// elementRef?.current.focus();
+	// }
+
+	// function enableScroll() {
+	// 	// window.onscroll = function () {};
+
+	// 	document?.body.classList.remove("stop-scrolling");
+	// }
+
+	// if (showNav) {
+	// 	disableScroll();
+	// } else {
+	// 	enableScroll();
+	// }
 
 	return (
 		<div className={`timer-layout ${showNav ? "disableScroll" : ""}`}>

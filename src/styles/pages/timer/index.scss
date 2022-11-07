@@ -19,16 +19,6 @@
 	position: relative;
 	background-color: var(--gray-bg);
 
-	// &.disableScroll {
-	// max-height: 100vh;
-	// position: absolute;
-	// overflow-y: hidden;
-
-	// overflow: hidden;
-	// position: fixed;
-	// height: 100%;
-	// }
-
 	@media screen and (max-width: 670px) {
 		.header-bg {
 			position: fixed;
