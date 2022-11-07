@@ -7,6 +7,9 @@
 	--blue: rgb(35, 82, 170);
 	--clr-text: rgb(95, 95, 95);
 
+	--nav-pad: 0.2rem;
+	--aside-width: 283px;
+
 	font-family: "Courier New", Courier, monospace;
 	font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
 		"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
@@ -16,17 +19,26 @@
 	position: relative;
 	background-color: var(--gray-bg);
 
-	width: 100%;
-	border: solid red 1px;
+	// &.disableScroll {
+	// max-height: 100vh;
+	// position: absolute;
+	// overflow-y: hidden;
 
-	&.disableScroll {
-		// max-height: 100vh;
-		// // position: absolute;
-		// overflow-y: hidden;
+	// overflow: hidden;
+	// position: fixed;
+	// height: 100%;
+	// }
 
-		overflow: hidden;
-		position: fixed;
-		height: 100%;
+	@media screen and (max-width: 670px) {
+		.header-bg {
+			position: fixed;
+			z-index: 2;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 38.3px;
+			background-color: var(--gray-bg);
+		}
 	}
 
 	@media screen and (min-width: 670px) {
@@ -36,9 +48,6 @@
 			flex: 1;
 		}
 	}
-
-	--nav-pad: 0.2rem;
-	--aside-width: 283px;
 
 	.flex-list {
 		display: flex;
@@ -103,10 +112,10 @@
 					a {
 						&.active,
 						&:hover {
-							// padding-left: 0 !important;
 							border-radius: 4px;
 							background-color: var(--gray-border);
-
+						}
+						&.active {
 							&::before {
 								content: "";
 								position: absolute;
@@ -135,6 +144,7 @@
 
 		@media screen and (max-width: 670px) {
 			position: fixed;
+			z-index: 2;
 			border-radius: 0 10px 10px 0;
 			box-shadow: 1px 1px 2px var(--gray);
 			min-width: var(--aside-width);
@@ -214,33 +224,29 @@
 		flex: 1;
 
 		header {
-			position: sticky;
-			top: 0;
 			display: flex;
 			align-items: center;
 			padding-inline: 1rem;
-			background-color: var(--gray-bg);
-
-			&.no-bg {
-				background-color: transparent;
-			}
-
-			&::after {
-				content: "";
-				position: absolute;
-				z-index: -5;
-				display: block;
-				width: 100%;
-				height: 100%;
-			}
+			width: 100%;
 
 			button {
 				display: grid;
 				place-items: center;
 			}
 
+			div {
+				.title {
+					font-size: 0.8rem;
+				}
+			}
+
 			@media screen and (max-width: 670px) {
+				position: fixed;
+				top: 0;
+				left: 0;
+				z-index: 2;
 				height: 38.3px;
+				gap: 5px;
 			}
 
 			@media screen and (min-width: 670px) and (max-width: 879px) {
@@ -262,24 +268,35 @@
 				}
 			}
 		}
+
+		.header-placeholder {
+			@media screen and (max-width: 670px) {
+				display: block;
+				width: 100%;
+				height: 38.3px;
+			}
+		}
 	}
 }
 
 .timer-page {
 	--section-width: 450px;
 
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+	display: flex;
 	gap: 0.8rem;
 	padding: 1rem;
 	min-height: 100vh;
 
 	section {
+		flex: 1;
+		flex-basis: auto;
 		border: var(--gray-border) 1px solid;
 		border-radius: 6px;
 		padding-block-start: 2.8rem;
 		padding-block-end: 3.5rem;
 		padding-inline: 1rem;
+		width: 250px;
+		max-width: var(--section-width);
 		height: 100%;
 		min-height: 487px;
 		max-height: 487px;
@@ -480,9 +497,13 @@
 	}
 
 	@media screen and (max-width: 670px) {
-		display: flex;
 		flex-direction: column;
 		padding-top: 0;
+
+		section {
+			width: 100%;
+			max-width: initial;
+		}
 	}
 
 	@media screen and (min-width: 670px) and (max-width: 879px) {
@@ -494,15 +515,6 @@
 		padding-block-start: 2.6rem;
 		padding-inline: 2rem;
 	}
-
-	@media screen and (min-width: 1259px) {
-		display: flex;
-
-		section {
-			flex: 1;
-			max-width: var(--section-width);
-		}
-	}
 }
 
 .circle-wrap {
@@ -513,8 +525,6 @@
 	background: #fefcff;
 	border-radius: 50%;
 	border: 1px solid #cdcbd0;
-
-	// border-color: red;
 
 	.circle {
 		position: relative;
@@ -542,6 +552,8 @@
 	}
 
 	.inside-circle {
+		position: absolute;
+		z-index: 1;
 		display: grid;
 		place-items: center;
 		width: 85%;
@@ -549,13 +561,11 @@
 		border: solid 1px var(--grey);
 		border-radius: 50%;
 		background: white;
-		line-height: 120px;
-		text-align: center;
-		color: var(--content-color, black);
-		position: absolute;
-		z-index: 100;
-		font-weight: 700;
 		font-size: 2em;
+		font-weight: 700;
+		text-align: center;
+		line-height: 120px;
+		color: var(--content-color, black);
 	}
 
 	/* color animation */
