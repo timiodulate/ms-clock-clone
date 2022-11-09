@@ -42,7 +42,7 @@ const useOutsideClose = (
 	};
 
 	const checkIfClickedOutside = (e) => {
-		console.log("outside click");
+		// console.log("outside click");
 		// If the menu is open and the clicked target is not within the menu,
 		// then close the menu
 		// console.log(refs);
