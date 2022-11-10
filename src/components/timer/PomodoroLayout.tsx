@@ -190,7 +190,7 @@ const Header = ({
 				<span className="icon-container">
 					<FcAlarmClock />
 				</span>
-				<span className="title">Timer + Stopwatch</span>
+				<span className="title">Clock</span>
 			</div>
 		</header>
 	);
