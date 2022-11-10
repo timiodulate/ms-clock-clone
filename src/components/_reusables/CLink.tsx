@@ -1,5 +1,7 @@
 import { NextPage } from "next";
 import NextLink from "next/link";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 interface Props {
 	href: string;
@@ -8,13 +10,25 @@ interface Props {
 	type?: "external" | "nav";
 }
 
-const CLink: NextPage<Props> = ({
-	external,
+const CLink: NextPage<Props> = ({ children, type, ...props }) => {
+	if (type == "nav") {
+		return <NavLink {...props}>{children}</NavLink>;
+	} else {
+		return <NormalLink {...props}>{children}</NormalLink>;
+	}
+};
+
+export default CLink;
+
+const NormalLink = ({
 	href,
-	className,
 	children,
+	exact,
+	className,
+	active,
+	external,
 	...props
-}) => {
+}: any) => {
 	if (external || href[0] !== "/") {
 		return (
 			<a
@@ -27,12 +41,6 @@ const CLink: NextPage<Props> = ({
 			</a>
 		);
 	} else {
-		// return navLink ? (
-		// 	<NavLink to={link} className={classname}>
-		// 		{component}
-		// 	</NavLink>
-		// ) : (
-
 		return (
 			<NextLink href={href}>
 				<a className={className} {...props}>
@@ -40,14 +48,42 @@ const CLink: NextPage<Props> = ({
 				</a>
 			</NextLink>
 		);
-		// );
 	}
 };
 
-export default CLink;
+const NavLink = ({
+	href,
+	children,
+	exact,
+	className,
+	active,
+	...props
+}: any) => {
+	const [classN, setClassN] = useState("");
+	const { pathname, asPath } = useRouter();
+	const isActive = exact
+		? pathname === href
+		: pathname.startsWith(href) || asPath.includes(href);
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
+	const activeC = () => {
+		if (typeof active === "string") {
+			return active === "active" ? active : "";
+		} else {
+			return isActive ? "active" : "";
+		}
+	};
+
+	useEffect(() => {
+		setClassN(`${activeC()} ${className ? className : ""}`);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [pathname, asPath]);
+
+	return (
+		<CLink href={href} {...props} className={classN}>
+			{children}
+		</CLink>
+	);
+};
 
 const CNavLink = ({
 	href,
