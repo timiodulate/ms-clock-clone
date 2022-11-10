@@ -51,11 +51,14 @@ export const pomodoroSlice = createSlice({
 			const { h, m, s, ms } = state.stopWatchTime;
 
 			const details: any = {
+				title: "focus-started",
 				time: "00",
 				total: `${h}:${m}:${s}.${ms}`,
-				title: "focus-started",
 			};
-			state.stopWatchHistory = [...state.stopWatchHistory, details];
+			state.stopWatchHistory = [
+				{ id: state.stopWatchHistory.length + 1, ...details },
+				...state.stopWatchHistory,
+			];
 		},
 		pauseStopWatch: (state) => {
 			state.stopWatchIsOn = false;
@@ -64,32 +67,37 @@ export const pomodoroSlice = createSlice({
 			const { h, m, s, ms } = state.stopWatchTime;
 
 			const details: any = {
+				title: "timer-paused",
 				time: "00",
 				total: `${h}:${m}:${s}.${ms}`,
-				title: "timer-paused",
 			};
-			state.stopWatchHistory = [...state.stopWatchHistory, details];
+			state.stopWatchHistory = [
+				{ id: state.stopWatchHistory.length + 1, ...details },
+				...state.stopWatchHistory,
+			];
 		},
 		stopStopWatch: (state) => {
+			// Bookmark action
+			const { h, m, s, ms } = state.stopWatchTime;
+
+			const details: any = {
+				title: "timer-stopped",
+				time: "00",
+				total: `${h}:${m}:${s}.${ms}`,
+			};
+			state.stopWatchHistory = [
+				{ id: state.stopWatchHistory.length + 1, ...details },
+				...state.stopWatchHistory,
+			];
+
+			state.stopWatchIsOn = false;
+
 			state.stopWatchTime = {
 				h: 0,
 				m: 0,
 				s: 0,
 				ms: 0,
 			};
-
-			state.stopWatchIsOn = false;
-
-			// Bookmark action
-			const { h, m, s, ms } = state.stopWatchTime;
-
-			const details: any = {
-				time: "00",
-				total: `${h}:${m}:${s}.${ms}`,
-				title: "timer-stopped",
-			};
-			state.stopWatchHistory = [...state.stopWatchHistory, details];
-
 			// bookmarkStopWatchTime()
 		},
 		bookmarkStopWatchTime: (state) => {
@@ -100,7 +108,10 @@ export const pomodoroSlice = createSlice({
 				total: `${h}:${m}:${s}.${ms}`,
 			};
 
-			state.stopWatchHistory = [...state.stopWatchHistory, details];
+			state.stopWatchHistory = [
+				{ id: state.stopWatchHistory.length + 1, ...details },
+				...state.stopWatchHistory,
+			];
 		},
 
 		// startCountDown: (state) => {
