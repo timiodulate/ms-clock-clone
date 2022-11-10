@@ -98,12 +98,12 @@ export const projects: ProjectProps[] = [
 	// },
 	{
 		id: 1,
-		image: { src: pomodoroProject, alt: "Pomodoro timer with stopwatch" },
-		title: "Pomodoro timer with stopwatch",
+		image: { src: pomodoroProject, alt: "Clock" },
+		title: "Clock",
 		description: "",
 		categories: ["projects", "personal"],
 		tools: ["Next Js.", "(S)css"],
-		link: "/pomodoro-timer",
+		link: "/clock",
 		bgPosition: "center top",
 	},
 	// {
