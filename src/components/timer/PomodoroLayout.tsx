@@ -79,19 +79,19 @@ const PomodoroLayout = ({ children }) => {
 					<ul>
 						<li className="">
 							<CNavLink
-								href={`/pomodoro-timer`}
+								href={`/clock`}
 								exact
 								className="flex-list "
 							>
 								<span className="icon-container">
 									<TiTime />
 								</span>
-								<span className="title">Pomodoro Timer</span>
+								<span className="title">Pomodoro timer</span>
 							</CNavLink>
 						</li>
 						<li>
 							<CNavLink
-								href={`/pomodoro-timer/stopwatch`}
+								href={`/clock/stopwatch`}
 								exact
 								className="flex-list"
 							>
@@ -103,7 +103,7 @@ const PomodoroLayout = ({ children }) => {
 						</li>
 						<li>
 							<CNavLink
-								href={`/pomodoro-timer/timer`}
+								href={`/clock/timer`}
 								exact
 								className="flex-list"
 							>
@@ -118,7 +118,7 @@ const PomodoroLayout = ({ children }) => {
 					<ul className="bottom">
 						<li>
 							<CNavLink
-								href={`/pomodoro-timer/settings`}
+								href={`/clock/settings`}
 								exact
 								className="flex-list"
 							>
