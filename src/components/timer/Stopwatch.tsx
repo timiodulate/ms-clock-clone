@@ -1,3 +1,4 @@
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { BiReset } from "react-icons/bi";
 import {
@@ -5,24 +6,41 @@ import {
 	BsFillPauseCircleFill,
 	BsFillPlayCircleFill,
 } from "react-icons/bs";
+import { useDispatch, useSelector } from "react-redux";
 
-const StopwatchSection = ({
-	stopwatchTime,
-	startStopwatch,
-	updateState,
-}: any) => {
-	const [time, setTime] = useState(0);
-	const [isOn, setIsOn]: any = useState(false);
-	const [interv, setInterv] = useState(null);
-	const [stopwatchHistory, setStopwatchHistory]: any = useState([]);
+import {
+	updateStopWatchTime,
+	startStopWatch,
+	pauseStopWatch,
+	stopStopWatch,
+	bookmarkStopWatchTime,
+} from "../../clock/features/pomodoroSlice";
 
-	useEffect(() => {
-		if (startStopwatch) {
-			startWatch();
-		} else {
-			stopWatch();
-		}
-	}, [startStopwatch]);
+const StopwatchSection = () => {
+	return (
+		<section className="stopwatch-section">
+			{/* watch-container */}
+			<div className="watch">
+				{/* watch-face */}
+				<StopwatchWatchFace />
+
+				<StopwatchController />
+			</div>
+
+			<StopwatchBookmark />
+		</section>
+	);
+};
+
+export default StopwatchSection;
+
+const StopwatchWatchFace = () => {
+	const stopWatchIsOn = useSelector(
+		(state: any) => state.pomodoroTimer.stopWatchIsOn
+	);
+	const stopWatchTime = useSelector(
+		(state: any) => state.pomodoroTimer.stopWatchTime
+	);
 
 	const formatTime = (time, type: "h" | "m" | "s" | "ms") => {
 		let timeH: number;
@@ -31,9 +49,9 @@ const StopwatchSection = ({
 		let timeMS: number;
 
 		if (typeof time == "object") {
-			timeH = time.hr;
-			timeM = time.min;
-			timeS = time.sec;
+			timeH = time.hr || time.h;
+			timeM = time.min || time.m;
+			timeS = time.sec || time.s;
 			timeMS = time.ms;
 		} else {
 			timeH = Math.floor((time / 1000) % 60);
@@ -75,18 +93,128 @@ const StopwatchSection = ({
 		}
 	};
 
-	const startWatch = () => {
-		if (interv !== null) {
-			clearInterval(interv);
+	return (
+		<div className={`watch-container ${stopWatchIsOn ? "" : "idle"}`}>
+			<div>
+				{formatTime(stopWatchTime, "h")}
+
+				<span>hr</span>
+			</div>
+			<span>:</span>
+			<div>
+				{formatTime(stopWatchTime, "m")}
+
+				<span>min</span>
+			</div>
+			<span>:</span>
+			<div>
+				{formatTime(stopWatchTime, "s")}
+
+				<span>sec</span>
+			</div>
+			<span>.</span>
+			<div>{formatTime(stopWatchTime, "ms")}</div>
+		</div>
+	);
+};
+
+const StopwatchController = () => {
+	const dispatch = useDispatch();
+	const [stopWatchInterval, setStopWatchInterval] = useState(null);
+	const [startedOnce, setStartedOnce] = useState([]);
+	const [action, setAction] = useState("");
+	const stopWatchTime = useSelector(
+		(state: any) => state.pomodoroTimer.stopWatchTime
+	);
+	const stopWatchIsOn = useSelector(
+		(state: any) => state.pomodoroTimer.stopWatchIsOn
+	);
+
+	// 	actons =
+	// 	sesseion started
+	// sW paused
+	// sW resumed
+	// custom bookmark
+	// session ended
+	// sw Stopped
+	// sw Reset
+
+	useEffect(() => {
+		if (stopWatchIsOn) {
+			startedOnce.includes(1)
+				? null
+				: setStartedOnce([...startedOnce, 1]);
+		} else {
+			startedOnce.includes(0)
+				? null
+				: setStartedOnce([...startedOnce, 0]);
+
+			if (startedOnce.length === 0) {
+				setStartedOnce([...startedOnce, 1]);
+			}
 		}
 
-		// updateState("startStopwatch", !startStopwatch);
-		setIsOn(!isOn);
+		if (startedOnce.includes(1)) {
+			if (stopWatchIsOn) {
+				if (action == "start") {
+					return;
+				}
+				handleStart();
+			} else {
+				if (action == "pause" || action == "stop") {
+					return;
+				}
+				handleStop();
+			}
+		}
+	}, [stopWatchIsOn]);
 
-		// const interval = setInterval(displayTimer, 20.5 17);
-		const interval = setInterval(displayTimer2, 20);
+	const handleStart = () => {
+		if (stopWatchInterval !== null) {
+			clearInterval(stopWatchInterval);
+		}
 
-		setInterv(interval);
+		setAction("start");
+		dispatch(startStopWatch());
+
+		let interv = setInterval(runStopWatch, 1);
+
+		setStopWatchInterval(interv);
+	};
+
+	let timeAtInitialization = moment();
+
+	const runStopWatch = () => {
+		let stopwatch: moment.Duration | any = moment.duration(
+			moment().diff(timeAtInitialization)
+		);
+
+		if (
+			stopWatchTime.h == 0 &&
+			stopWatchTime.m == 0 &&
+			stopWatchTime.s == 0 &&
+			stopWatchTime.ms == 0
+		) {
+			let watchTime = {
+				h: stopwatch._data.hours,
+				m: stopwatch._data.minutes,
+				s: stopwatch._data.seconds,
+				ms: stopwatch._data.milliseconds.toString().slice(0, 2),
+			};
+
+			dispatch(updateStopWatchTime(watchTime));
+		} else {
+			let milliS =
+				parseInt(stopWatchTime.s) + stopwatch._data.milliseconds;
+
+			let watchTime = {
+				h: stopWatchTime.h + stopwatch._data.hours,
+				m: stopWatchTime.m + stopwatch._data.minutes,
+				s: stopWatchTime.s + stopwatch._data.seconds,
+				ms: milliS.toString().slice(0, 2),
+			};
+			dispatch(updateStopWatchTime(watchTime));
+		}
 	};
 
 	let ms = 0;
@@ -94,7 +222,7 @@ const StopwatchSection = ({
 	let m = 0;
 	let h = 0;
 
-	function displayTimer() {
+	function runStopWatch2() {
 		if (ms < 99) {
 			ms += 3;
 		}
@@ -114,31 +242,30 @@ const StopwatchSection = ({
 			h += 1;
 		}
 
-		updateState("stopwatchTime", {
-			...stopwatchTime,
-			hr: h,
-			min: m,
-			sec: s,
+		let watchTime = {
+			h: h,
+			m: m,
+			s: s,
 			ms: ms,
-		});
+		};
 
-		// setTime((prevTime) => prevTime + 10);
+		dispatch(updateStopWatchTime(watchTime));
 	}
 
 	let [milliseconds, seconds, minutes, hours] =
-		stopwatchTime.ms > 0 ||
-		stopwatchTime.sec > 0 ||
-		stopwatchTime.min > 0 ||
-		stopwatchTime.hr > 0
+		stopWatchTime.ms > 0 ||
+		stopWatchTime.s > 0 ||
+		stopWatchTime.m > 0 ||
+		stopWatchTime.h > 0
 			? [
-					stopwatchTime.ms,
-					stopwatchTime.sec,
-					stopwatchTime.min,
-					stopwatchTime.hr,
+					stopWatchTime.ms,
+					stopWatchTime.s,
+					stopWatchTime.m,
+					stopWatchTime.h,
 			  ]
 			: [0, 0, 0, 0];
 
-	function displayTimer2() {
+	function runStopWatch3() {
 		milliseconds += 10;
 
 		// if (milliseconds == 1000) {
@@ -155,139 +282,100 @@ const StopwatchSection = ({
 			}
 		}
 
-		updateState("stopwatchTime", {
-			...stopwatchTime,
-			hr: hours,
-			min: minutes,
-			sec: seconds,
+		let watchTime = {
+			h: hours,
+			m: minutes,
+			s: seconds,
 			ms: milliseconds,
-		});
+		};
+
+		dispatch(updateStopWatchTime(watchTime));
 	}
 
-	const pauseWatch = () => {
-		// updateState("startStopwatch", !startStopwatch);
-		setIsOn(!isOn);
+	const handlePause = () => {
+		clearInterval(stopWatchInterval);
 
-		clearInterval(interv);
+		setAction("pause");
+
+		dispatch(pauseStopWatch());
 	};
 
-	const stopWatch = () => {
-		updateState("stopwatchTime", {
-			hr: 0,
-			min: 0,
-			sec: 0,
-			ms: 0,
-		});
+	const handleStop = () => {
+		clearInterval(stopWatchInterval);
 
-		// setTime(0);
-		updateState("startStopwatch", false);
-		setIsOn(false);
+		setAction("stop");
 
-		clearInterval(interv);
-	};
-
-	const bookmarkTime = () => {
-		const { hr, min, sec, ms } = stopwatchTime;
-
-		const details: any = { time: "00", total: `${hr}:${min}:${sec}.${ms}` };
-
-		setStopwatchHistory([...stopwatchHistory, details]);
+		dispatch(stopStopWatch());
 	};
 
 	return (
-		<section className="stopwatch-section">
-			<div className={`watch-container ${isOn ? "" : "idle"}`}>
-				<div>
-					{formatTime(stopwatchTime, "h")}
-
-					<span>hr</span>
-				</div>
-				<span>:</span>
-				<div>
-					{formatTime(stopwatchTime, "m")}
-
-					<span>min</span>
-				</div>
-				<span>:</span>
-				<div>
-					{formatTime(stopwatchTime, "s")}
-
-					<span>sec</span>
-				</div>
-				<span>.</span>
-				<div>{formatTime(stopwatchTime, "ms")}</div>
+		<div className="watch-controller">
+			<div>
+				{!stopWatchIsOn ? (
+					<span onClick={() => handleStart()}>
+						<BsFillPlayCircleFill />
+					</span>
+				) : (
+					<span onClick={() => handlePause()}>
+						<BsFillPauseCircleFill />
+					</span>
+				)}
 			</div>
 
-			<div className="watch-controller">
-				<div>
-					{!isOn ? (
-						<span onClick={startWatch}>
-							<BsFillPlayCircleFill />
-						</span>
-					) : (
-						<span onClick={pauseWatch}>
-							<BsFillPauseCircleFill />
-						</span>
-					)}
-				</div>
+			<span
+				onClick={() => dispatch(bookmarkStopWatchTime())}
+				className={stopWatchIsOn ? "" : "blur"}
+			>
+				<BsBookmarkFill />
+			</span>
 
-				<span onClick={bookmarkTime} className={isOn ? "" : "blur"}>
-					<BsBookmarkFill />
-				</span>
-
-				<span
-					onClick={stopWatch}
-					className={stopwatchTime.sec > 0 ? "" : "blur"}
-				>
-					<BiReset />
-				</span>
-			</div>
-
-			<StopwatchBookmark stopwatchHistory={stopwatchHistory} />
-		</section>
+			<span
+				onClick={() => handleStop()}
+				className={stopWatchTime.s > 0 ? "" : "blur"}
+			>
+				<BiReset />
+			</span>
+		</div>
 	);
 };
 
-export default StopwatchSection;
+const StopwatchBookmark = () => {
+	const stopWatchHistory = useSelector(
+		(state: any) => state.pomodoroTimer.stopWatchHistory
+	);
 
-// const StopwatchWatchFace = () => {
-
-// 	return (
-
-// 	)
-// }
-// const StopwatchController = () => {
-
-// 	return (
-
-// 	)
-// }
-const StopwatchBookmark = ({ stopwatchHistory }) => {
 	return (
-		<>
-			{stopwatchHistory.length > 0 && (
+		<div className="bookmark-container">
+			{stopWatchHistory.length > 0 && (
 				<table className="bookmark">
-					<tr>
-						<th>No</th>
-						<th>Mins</th>
-						<th>Total</th>
-					</tr>
-
-					{stopwatchHistory.map((his, ind) => (
-						<tr key={ind}>
-							<td>
-								<div>{ind}</div>
-							</td>
-							<td>
-								<div>{his.total}</div>
-							</td>
-							<td>
-								<div>{his.total}</div>
-							</td>
+					<thead>
+						<tr>
+							<th colSpan={2}>No</th>
+							<th>Mins</th>
+							<th>Total</th>
 						</tr>
-					))}
+					</thead>
+
+					<tbody>
+						{stopWatchHistory.map((his, ind) => (
+							<tr key={his.id}>
+								<td>
+									<div>{his.id}</div>
+								</td>
+								<td className="title">
+									<div>{his.title || ""}</div>
+								</td>
+								<td>
+									<div>{his.total}</div>
+								</td>
+								<td>
+									<div>{his.total}</div>
+								</td>
+							</tr>
+						))}
+					</tbody>
 				</table>
 			)}
-		</>
+		</div>
 	);
 };

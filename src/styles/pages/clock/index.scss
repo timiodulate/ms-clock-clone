@@ -14,13 +14,9 @@
 
 	--section-maxwidth: 450px;
 
-	font-family: "Courier New", Courier, monospace;
-	font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-		"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-	font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+		Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
 		sans-serif;
-
-	position: relative;
 	background-color: var(--gray-bg);
 
 	h1,
@@ -431,6 +427,7 @@
 		display: flex;
 		flex-direction: column;
 		overflow-y: hidden;
+		padding-block-start: 1.6rem;
 		padding-block-end: 0;
 
 		.watch-container {
@@ -485,30 +482,41 @@
 			}
 		}
 
+		// .bookmark-container {
+		// 	overflow-y: scroll;
+		// }
 		.bookmark {
-			padding-block-start: 1.5rem;
-			overflow-y: scroll;
-			max-height: 20px;
-
-			// border: solid;
+			margin-block-start: 1.5rem;
+			width: 100%;
+			border-collapse: collapse;
 
 			thead {
-				border-bottom: 1px var(--clr-text) solid;
+				border-bottom: 1px var(--gray-border) solid;
 
 				tr {
-					border-bottom: 1px var(--clr-text) solid;
-				}
-
-				th {
-					text-align: left;
+					th {
+						padding-block: 0.77rem;
+						text-align: left;
+					}
 				}
 			}
 
 			tbody {
-				height: 20px;
-
 				tr {
-					padding-block: 1rem;
+					td {
+						padding-block: 0.77rem;
+						text-align: left;
+						font-size: 0.98rem;
+						font-weight: lighter;
+
+						// &.title {
+
+						// }
+
+						&:first-child {
+							width: 30px;
+						}
+					}
 				}
 			}
 		}
