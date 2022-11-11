@@ -10,7 +10,7 @@ interface Props {
 	type?: "external" | "nav";
 }
 
-const CLink: NextPage<Props> = ({ children, type, ...props }) => {
+const CLink = ({ children, type, ...props }: any) => {
 	if (type == "nav") {
 		return <NavLink {...props}>{children}</NavLink>;
 	} else {
