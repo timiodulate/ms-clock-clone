@@ -1,38 +1,79 @@
 import { createSlice } from "@reduxjs/toolkit";
-import moment from "moment";
 
 export const pomodoroSlice = createSlice({
 	name: "pomodoroTimer",
 	initialState: {
-		value: 0,
-		// future: moment().add(2, "m"),
+		focusSession: { time: 15, count: 3 },
+		breakSession: { time: 0, count: 0 },
+
 		countdownTime: { h: 0, m: 0, s: 0, ms: 0 },
 
+		showStopWatchTile: true,
 		stopWatchIsOn: false,
 		stopWatchTime: { h: 0, m: 0, s: 0, ms: 0 },
 		stopWatchHistory: [],
 	},
 	reducers: {
-		increment: (state) => {
-			// Redux Toolkit allows us to write "mutating" logic in reducers. It
-			// doesn't actually mutate the state because it uses the Immer library,
-			// which detects changes to a "draft state" and produces a brand new
-			// immutable state based off those changes
-			state.value += 1;
+		setFocusSession: (
+			state,
+			payload: {
+				payload: { time?: number; count?: number };
+				type: string;
+			}
+		) => {
+			const { time, count }: any = payload.payload;
+
+			if (time != undefined) {
+				state.focusSession = {
+					...state.focusSession,
+					time: time,
+				};
+			}
+			if (count != undefined) {
+				state.focusSession = {
+					...state.focusSession,
+					count: count,
+				};
+			}
 		},
-		incrementByAmount: (state, action) => {
-			state.value += action.payload;
+		setBreakSession: (
+			state,
+			payload: {
+				payload: { time?: number; count?: number };
+				type: string;
+			}
+		) => {
+			const { time, count }: any = payload.payload;
+
+			if (time != undefined) {
+				state.breakSession = {
+					...state.breakSession,
+					time: time,
+				};
+			}
+			if (count != undefined) {
+				state.breakSession = {
+					...state.breakSession,
+					count: count,
+				};
+			}
 		},
+		// increment: (state) => {
+		// 	// Redux Toolkit allows us to write "mutating" logic in reducers. It
+		// 	// doesn't actually mutate the state because it uses the Immer library,
+		// 	// which detects changes to a "draft state" and produces a brand new
+		// 	// immutable state based off those changes
+		// 	state.value += 1;
+		// },
 
 		// custom
+		toggleStopWatchTile: (state) => {
+			state.showStopWatchTile = !state.showStopWatchTile;
+		},
 		toggleStopWatch: (state, payload) => {
 			const { payload: stat } = payload;
 
-			// if (stat) {
 			state.stopWatchIsOn = stat;
-			// } else {
-			// 	state.stopWatchIsOn = !state.stopWatchIsOn;
-			// }
 		},
 		updateStopWatchTime: (state, payload) => {
 			const { payload: time } = payload;
@@ -51,7 +92,7 @@ export const pomodoroSlice = createSlice({
 			const { h, m, s, ms } = state.stopWatchTime;
 
 			const details: any = {
-				title: "focus-started",
+				title: "Session Started",
 				time: "00",
 				total: `${h}:${m}:${s}.${ms}`,
 			};
@@ -67,7 +108,7 @@ export const pomodoroSlice = createSlice({
 			const { h, m, s, ms } = state.stopWatchTime;
 
 			const details: any = {
-				title: "timer-paused",
+				title: "Stopwatch paused",
 				time: "00",
 				total: `${h}:${m}:${s}.${ms}`,
 			};
@@ -81,7 +122,8 @@ export const pomodoroSlice = createSlice({
 			const { h, m, s, ms } = state.stopWatchTime;
 
 			const details: any = {
-				title: "timer-stopped",
+				title: "Session stopped / ended",
+				// title: "Stopwatch stopped",
 				time: "00",
 				total: `${h}:${m}:${s}.${ms}`,
 			};
@@ -128,19 +170,24 @@ export const pomodoroSlice = createSlice({
 		// 		};
 		// 	}, 100);
 		// },
+		toggleTodo: (state) => {},
 	},
 });
 
 // Action creators are generated for each case reducer function
 export const {
-	increment,
-	incrementByAmount,
+	setFocusSession,
+	setBreakSession,
+	// stopwatch
+	toggleStopWatchTile,
 	toggleStopWatch,
 	updateStopWatchTime,
 	startStopWatch,
 	pauseStopWatch,
 	stopStopWatch,
 	bookmarkStopWatchTime,
+	// todo
+	toggleTodo,
 } = pomodoroSlice.actions;
 
 export default pomodoroSlice.reducer;
