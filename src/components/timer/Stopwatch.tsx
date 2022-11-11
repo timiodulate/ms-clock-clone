@@ -17,8 +17,14 @@ import {
 } from "../../clock/features/pomodoroSlice";
 
 const StopwatchSection = () => {
+	const showStopWatchTile = useSelector(
+		(state: any) => state.pomodoroTimer.showStopWatchTile
+	);
+
 	return (
-		<section className="stopwatch-section">
+		<section
+			className={`stopwatch-section ${showStopWatchTile ? "" : "hide"}`}
+		>
 			{/* watch-container */}
 			<div className="watch">
 				{/* watch-face */}

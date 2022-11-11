@@ -1,9 +1,18 @@
 import { IoPencilSharp } from "react-icons/io5";
+import { useDispatch, useSelector } from "react-redux";
 import { CircleProgress } from "../_reusables/CircleProgress";
 
 const DailyProgressSection = () => {
+	const showStopWatchTile = useSelector(
+		(state: any) => state.pomodoroTimer.showStopWatchTile
+	);
+
 	return (
-		<section className="daily-progress-section">
+		<section
+			className={`daily-progress-section ${
+				showStopWatchTile ? "" : "move"
+			}`}
+		>
 			<div className="section-header">
 				<h1>Daily progress</h1>
 
