@@ -6,9 +6,11 @@ const FocusTimerSection = () => {
 		(state: any) => state.pomodoroTimer.focusSessionIsOn
 	);
 
-	return (
-		<>{!focusSessionIsOn ? <SetFocusSection /> : <TrackFocusSection />}</>
-	);
+	if (!focusSessionIsOn) {
+		return <SetFocusSection />;
+	} else {
+		return <TrackFocusSection />;
+	}
 };
 
 export default FocusTimerSection;
