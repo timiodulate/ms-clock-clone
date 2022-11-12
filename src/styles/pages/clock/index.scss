@@ -595,11 +595,9 @@
 	}
 
 	.track-focus-section {
-		> div:first-child {
-			span {
-				color: var(--blue);
-				font-size: 3rem;
-			}
+		span {
+			color: var(--blue);
+			font-size: 3rem;
 		}
 	}
 

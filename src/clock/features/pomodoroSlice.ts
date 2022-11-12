@@ -3,9 +3,12 @@ import { createSlice } from "@reduxjs/toolkit";
 export const pomodoroSlice = createSlice({
 	name: "pomodoroTimer",
 	initialState: {
-		focusSession: { time: 15, count: 3 },
-		breakSession: { time: 0, count: 0 },
+		focusSession: { time: 1, count: 3 },
+		breakSession: { time: 5, count: 0 },
+		allSessions: [],
+		currentSessionDetails: { sessionTime: 15, sessionTitle: "focus" },
 
+		focusSessionIsOn: false,
 		countdownTime: { h: 0, m: 0, s: 0, ms: 0 },
 
 		showStopWatchTile: true,
@@ -57,6 +60,47 @@ export const pomodoroSlice = createSlice({
 					count: count,
 				};
 			}
+		},
+		getAllSessions: (state) => {
+			state.allSessions = [];
+
+			for (let index = 0; index < state.focusSession.count; index++) {
+				// const element = array[index];
+				let focusDetail = {
+					sessionTitle: "focus",
+					sessionTime: state.focusSession.time,
+				};
+				let breakDetail = {
+					sessionTitle: "break",
+					sessionTime: state.breakSession.time,
+				};
+
+				let newArr = state.allSessions;
+
+				if (index == state.focusSession.count - 1) {
+					newArr.push(focusDetail);
+				} else {
+					newArr.push(focusDetail);
+					newArr.push(breakDetail);
+				}
+				state.allSessions = newArr;
+			}
+		},
+		getCurrentSession: (state) => {
+			let remainingSessions = state.allSessions.filter(
+				(sessionDetails, i) => {
+					if (i == 0) {
+						state.currentSessionDetails = sessionDetails;
+					} else {
+						return sessionDetails;
+					}
+				}
+			);
+
+			state.allSessions = remainingSessions;
+		},
+		toggleFocusSession: (state) => {
+			state.focusSessionIsOn = !state.focusSessionIsOn;
 		},
 		// increment: (state) => {
 		// 	// Redux Toolkit allows us to write "mutating" logic in reducers. It
@@ -178,6 +222,10 @@ export const pomodoroSlice = createSlice({
 export const {
 	setFocusSession,
 	setBreakSession,
+	getAllSessions,
+
+	getCurrentSession,
+	toggleFocusSession,
 	// stopwatch
 	toggleStopWatchTile,
 	toggleStopWatch,
