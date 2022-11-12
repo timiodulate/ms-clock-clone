@@ -3,19 +3,21 @@ import { BiUpArrow, BiDownArrow, BiDotsHorizontal } from "react-icons/bi";
 import { BsPlayFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import {
+	getAllSessions,
+	getCurrentSession,
 	setBreakSession,
 	setFocusSession,
+	toggleFocusSession,
 	toggleStopWatch,
 	toggleStopWatchTile,
 } from "../../clock/features/pomodoroSlice";
+import useOutsideClose from "../../utils/useOutsideClose";
+import { useVisibility } from "../../utils/useVisibility";
 import CCheckbox from "../_reusables/CCheckbox";
 import CLink from "../_reusables/CLink";
+import CMenuContainer from "../_reusables/CMenu";
 
-const SetFocusSection = ({
-	updateState,
-}: {
-	updateState: (stateTitle: any, arg: any) => void;
-}) => {
+const SetFocusSection = () => {
 	const dispatch = useDispatch();
 
 	const focusSession = useSelector(
@@ -34,13 +36,11 @@ const SetFocusSection = ({
 
 	const changeFocusTime = (event: "increase" | "reduce") => {
 		if (event === "increase") {
-			focusSession.time != 240
-				? dispatch(setFocusSession({ time: focusSession.time + 15 }))
-				: null;
+			focusSession.time != 240 &&
+				dispatch(setFocusSession({ time: focusSession.time + 15 }));
 		} else {
-			focusSession.time != 15
-				? dispatch(setFocusSession({ time: focusSession.time - 15 }))
-				: null;
+			focusSession.time != 15 &&
+				dispatch(setFocusSession({ time: focusSession.time - 15 }));
 		}
 	};
 
@@ -55,16 +55,42 @@ const SetFocusSection = ({
 	const handleSubmit = (e: any) => {
 		e.preventDefault();
 
-		updateState("startFocus", true);
-		showStopWatchTile && dispatch(toggleStopWatch(true));
+		dispatch(getAllSessions());
+		dispatch(getCurrentSession());
+
+		dispatch(toggleFocusSession());
 	};
+
+	const { isVisible, toggle } = useVisibility();
+
+	// const { elementRef, isVisible, toggle } = useOutsideClose();
 
 	return (
 		<section className="set-focus-section">
 			<div className="section-header">
-				<CLink href="/clock/settings" className="icon-container">
-					<BiDotsHorizontal />
-				</CLink>
+				<CMenuContainer className="tile-actions">
+					<CMenuContainer.Toggler
+						className="icon-container"
+						toggle={toggle}
+					>
+						<BiDotsHorizontal />
+					</CMenuContainer.Toggler>
+
+					<CMenuContainer.Menu
+						isVisible={isVisible}
+						toggle={toggle}
+						// ref={elementRef}
+					>
+						<li onClick={toggle}>
+							<CLink
+								href="/clock/settings"
+								className="icon-container"
+							>
+								View Settings
+							</CLink>
+						</li>
+					</CMenuContainer.Menu>
+				</CMenuContainer>
 			</div>
 
 			<div className="section-main">
@@ -115,28 +141,33 @@ const SetFocusSection = ({
 						</div>
 					</div>
 
-					<p>
-						{breakSession.count == 0 && "You'll have no breaks."}
-						{breakSession.count > 0 &&
-							`You'll have ${breakSession.count} break.`}
-					</p>
+					<div className="more-actions">
+						<div className="break-actions">
+							<p className="break-info">
+								{breakSession.count == 0 &&
+									"You'll have no breaks."}
+								{breakSession.count > 0 &&
+									`You'll have ${breakSession.count}  ${
+										breakSession.count == 1
+											? "break"
+											: "breaks"
+									}.`}
+							</p>
 
-					<div
-						className={`skip-breaks-toggle ${
-							breakSession.count == 0 ? "disabled" : ""
-						}`}
-					>
-						<CCheckbox
-							id="break-toggle"
-							disabled={focusSession.count - 1 == 0}
-							onChange={(e) => toggleBreaks(e)}
-						>
-							Skip breaks
-						</CCheckbox>
-					</div>
+							<CCheckbox
+								className={`skip-breaks-toggle ${
+									breakSession.count == 0 ? "disabled" : ""
+								}`}
+								id="break-toggle"
+								disabled={focusSession.count - 1 == 0}
+								onChange={(e) => toggleBreaks(e)}
+							>
+								Skip breaks
+							</CCheckbox>
+						</div>
 
-					<div>
 						<CCheckbox
+							className="track-focus-toggle"
 							id="track-with-pauses"
 							checked={showStopWatchTile}
 							onChange={(e: any) =>
@@ -160,9 +191,3 @@ const SetFocusSection = ({
 };
 
 export default SetFocusSection;
-function dispatch(arg0: {
-	payload: { time: number };
-	type: "pomodoroTimer/setFocusSession";
-}) {
-	throw new Error("Function not implemented.");
-}

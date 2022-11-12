@@ -47,7 +47,7 @@ const useOutsideClose = (
 		// then close the menu
 		// console.log(refs);
 
-		if (refs.current) {
+		if (refs?.current) {
 			if (
 				isVisible &&
 				elementRef.current &&

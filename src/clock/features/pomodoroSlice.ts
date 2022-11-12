@@ -3,10 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 export const pomodoroSlice = createSlice({
 	name: "pomodoroTimer",
 	initialState: {
-		focusSession: { time: 1, count: 3 },
+		focusSession: { time: 15, count: 1 },
 		breakSession: { time: 5, count: 0 },
 		allSessions: [],
-		currentSessionDetails: { sessionTime: 15, sessionTitle: "focus" },
+		currentSessionDetails: { sessionTime: 0, sessionTitle: "" },
 
 		focusSessionIsOn: false,
 		countdownTime: { h: 0, m: 0, s: 0, ms: 0 },
@@ -15,8 +15,15 @@ export const pomodoroSlice = createSlice({
 		stopWatchIsOn: false,
 		stopWatchTime: { h: 0, m: 0, s: 0, ms: 0 },
 		stopWatchHistory: [],
+
+		dailyGoal: 30,
+		completedFocus: 0,
 	},
 	reducers: {
+		// Redux Toolkit allows us to write "mutating" logic in reducers. It
+		// 	// doesn't actually mutate the state because it uses the Immer library,
+		// 	// which detects changes to a "draft state" and produces a brand new
+		// 	// immutable state based off those changes
 		setFocusSession: (
 			state,
 			payload: {
@@ -87,30 +94,41 @@ export const pomodoroSlice = createSlice({
 			}
 		},
 		getCurrentSession: (state) => {
-			let remainingSessions = state.allSessions.filter(
-				(sessionDetails, i) => {
-					if (i == 0) {
-						state.currentSessionDetails = sessionDetails;
-					} else {
-						return sessionDetails;
+			if (state.allSessions.length > 0) {
+				let remainingSessions = state.allSessions.filter(
+					(sessionDetails, i) => {
+						if (i == 0) {
+							state.currentSessionDetails = sessionDetails;
+						} else {
+							return sessionDetails;
+						}
 					}
-				}
-			);
+				);
 
-			state.allSessions = remainingSessions;
+				state.allSessions = remainingSessions;
+			} else {
+				state.currentSessionDetails = {
+					sessionTime: 0,
+					sessionTitle: "",
+				};
+				state.allSessions = [];
+			}
 		},
 		toggleFocusSession: (state) => {
 			state.focusSessionIsOn = !state.focusSessionIsOn;
-		},
-		// increment: (state) => {
-		// 	// Redux Toolkit allows us to write "mutating" logic in reducers. It
-		// 	// doesn't actually mutate the state because it uses the Immer library,
-		// 	// which detects changes to a "draft state" and produces a brand new
-		// 	// immutable state based off those changes
-		// 	state.value += 1;
-		// },
 
-		// custom
+			if (state.focusSessionIsOn) {
+				if (state.showStopWatchTile) {
+					state.stopWatchIsOn = true;
+				}
+			} else {
+				// if (state.showStopWatchTile) {
+				state.stopWatchIsOn = false;
+				// }
+			}
+		},
+
+		// Stopwatch Tile
 		toggleStopWatchTile: (state) => {
 			state.showStopWatchTile = !state.showStopWatchTile;
 		},
@@ -200,20 +218,14 @@ export const pomodoroSlice = createSlice({
 			];
 		},
 
-		// startCountDown: (state) => {
-		// 	let ade = setInterval(() => {
-		// 		let countdown: moment.Duration | any = moment.duration(
-		// 			state.future.diff(moment())
-		// 		);
+		// Daily Progress Tile
+		updateDailyProgress: (state) => {
+			if (state.currentSessionDetails.sessionTitle == "focus") {
+				state.completedFocus += state.currentSessionDetails.sessionTime;
+			}
+		},
 
-		// 		state.countdownTime = {
-		// 			h: countdown._data.hours,
-		// 			m: countdown._data.minutes,
-		// 			s: countdown._data.seconds,
-		// 			ms: countdown._data.milliseconds,
-		// 		};
-		// 	}, 100);
-		// },
+		// Todo Tile
 		toggleTodo: (state) => {},
 	},
 });
@@ -234,6 +246,8 @@ export const {
 	pauseStopWatch,
 	stopStopWatch,
 	bookmarkStopWatchTime,
+	// dailyGoal
+	updateDailyProgress,
 	// todo
 	toggleTodo,
 } = pomodoroSlice.actions;
