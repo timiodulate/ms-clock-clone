@@ -1,6 +1,6 @@
 import { FaCheck, FaCheckSquare } from "react-icons/fa";
 
-const CCheckbox = ({
+const CToggle = ({
 	id,
 	className,
 	disabled,
@@ -15,7 +15,7 @@ const CCheckbox = ({
 
 	return (
 		<div
-			className={`input-field checkbox flex items-center gap-2 ${
+			className={`input-field toggle flex items-center gap-2 ${
 				className ? className : ""
 			}`}
 		>
@@ -39,7 +39,7 @@ const CCheckbox = ({
 				)}
 
 				<span>
-					<FaCheck />
+					<span className="circle"></span>
 				</span>
 
 				{label ? <>{label}</> : <>{children}</>}
@@ -48,4 +48,4 @@ const CCheckbox = ({
 	);
 };
 
-export default CCheckbox;
+export default CToggle;
