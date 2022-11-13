@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { BiUpArrow, BiDownArrow, BiDotsHorizontal } from "react-icons/bi";
-import { BsPlayFill } from "react-icons/bs";
+import { BiUpArrow, BiDownArrow } from "react-icons/bi";
+import { BsPlayFill, BsThreeDots } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	getAllSessions,
@@ -8,10 +8,9 @@ import {
 	setBreakSession,
 	setFocusSession,
 	toggleFocusSession,
-	toggleStopWatch,
+	toggleSkipBreaks,
 	toggleStopWatchTile,
 } from "../../clock/features/pomodoroSlice";
-import useOutsideClose from "../../utils/useOutsideClose";
 import { useVisibility } from "../../utils/useVisibility";
 import CCheckbox from "../_reusables/CCheckbox";
 import CLink from "../_reusables/CLink";
@@ -25,6 +24,9 @@ const SetFocusSection = () => {
 	);
 	const breakSession = useSelector(
 		(state: any) => state.pomodoroTimer.breakSession
+	);
+	const skipBreaks = useSelector(
+		(state: any) => state.pomodoroTimer.skipBreaks
 	);
 	const showStopWatchTile = useSelector(
 		(state: any) => state.pomodoroTimer.showStopWatchTile
@@ -44,14 +46,6 @@ const SetFocusSection = () => {
 		}
 	};
 
-	const toggleBreaks = (e: any) => {
-		if (e.target.checked) {
-			dispatch(setBreakSession({ count: 0 }));
-		} else {
-			dispatch(setBreakSession({ count: focusSession.count - 1 }));
-		}
-	};
-
 	const handleSubmit = (e: any) => {
 		e.preventDefault();
 
@@ -62,18 +56,17 @@ const SetFocusSection = () => {
 	};
 
 	const { isVisible, toggle } = useVisibility();
-
 	// const { elementRef, isVisible, toggle } = useOutsideClose();
 
 	return (
-		<section className="set-focus-section">
+		<section className="set-focus-section set-focus-tile">
 			<div className="section-header">
 				<CMenuContainer className="tile-actions">
 					<CMenuContainer.Toggler
 						className="icon-container"
 						toggle={toggle}
 					>
-						<BiDotsHorizontal />
+						<BsThreeDots />
 					</CMenuContainer.Toggler>
 
 					<CMenuContainer.Menu
@@ -160,7 +153,8 @@ const SetFocusSection = () => {
 								}`}
 								id="break-toggle"
 								disabled={focusSession.count - 1 == 0}
-								onChange={(e) => toggleBreaks(e)}
+								checked={skipBreaks}
+								onChange={() => dispatch(toggleSkipBreaks())}
 							>
 								Skip breaks
 							</CCheckbox>

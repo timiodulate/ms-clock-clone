@@ -298,25 +298,27 @@ body {
 
 // Select
 select {
-	// border: none;
 	border: 1px solid #dbdfea;
+	border-radius: var(--border-radius);
+	padding-block: 5px;
 	padding-inline: 10px;
-	text-transform: capitalize;
-	// font-size: 14px;
+	padding-inline-end: 50px;
+	width: 100px;
+	background-color: white;
 	line-height: 19px;
 	text-transform: capitalize;
-	background-color: white;
-	color: #364a63;
+	color: rgb(58, 58, 58) !important;
 	opacity: 0.5;
 
 	outline: none;
-	appearance: none;
+	// appearance: none;
 
 	option {
 		text-transform: capitalize;
 
 		&[value=""] {
 			color: #344357;
+			color: black;
 		}
 	}
 }

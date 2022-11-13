@@ -327,7 +327,7 @@
 					.setting-container {
 						.primary-setting {
 							display: grid;
-							grid-template-columns: 3rem 1fr 1rem 3rem;
+							grid-template-columns: 3rem 1fr max-content 3rem;
 							grid-template-areas: "icon details actions toggler";
 							gap: var(--norm-fs);
 							border: solid 1px var(--gray-border);
@@ -349,7 +349,7 @@
 
 							> div {
 								display: grid;
-								grid-template-columns: 3rem 1fr 1fr 3rem;
+								grid-template-columns: 3rem 1fr max-content 3rem;
 								grid-template-areas: "icon details actions toggler";
 								gap: var(--norm-fs);
 								border: solid 1px var(--gray-border);
@@ -383,6 +383,7 @@
 						}
 						#actions {
 							grid-area: actions;
+							align-self: center;
 						}
 						#toggler {
 							grid-area: toggler;
@@ -611,30 +612,52 @@
 	.stopwatch-section {
 		display: flex;
 		flex-direction: column;
+		gap: 1.5rem;
 		overflow-y: hidden;
-		padding-block-start: 1.6rem;
-		padding-block-end: 0;
+		padding-block-start: 1rem;
+		padding-block-end: 1rem;
 
 		&.hide {
 			display: none;
 		}
 
-		.watch-container {
+		.watch-face {
 			display: flex;
 			justify-content: center;
+			align-items: center;
 			margin-block-end: 1.1rem;
 			text-align: center;
-			font-size: clamp(2.5rem, 5vw, 3.8rem);
 			color: var(--clr-text-dark);
 
 			&.idle {
 				color: var(--clr-text);
 			}
 
-			div {
-				span {
+			> div {
+				div {
+					font-size: clamp(2.5rem, 5vw, 3.8rem);
+
+					> span {
+						font-size: clamp(2.5rem, 5vw, 3.8rem);
+					}
+				}
+
+				> span {
 					display: block;
 					font-size: 0.7rem;
+					padding-right: 0.75rem;
+				}
+
+				&:last-child {
+					font-size: clamp(1.5rem, 5vw, 2.8rem);
+				}
+
+				&:not(:last-child) {
+					div {
+						span {
+							vertical-align: top;
+						}
+					}
 				}
 			}
 		}
@@ -671,11 +694,12 @@
 			}
 		}
 
-		// .bookmark-container {
-		// 	overflow-y: scroll;
-		// }
+		.bookmark-container {
+			flex: 1;
+			padding-inline: 1rem;
+		}
+
 		.bookmark {
-			margin-block-start: 1.5rem;
 			width: 100%;
 			border-collapse: collapse;
 
@@ -686,6 +710,7 @@
 					th {
 						padding-block: 0.77rem;
 						text-align: left;
+						font-weight: 500;
 					}
 				}
 			}
@@ -695,7 +720,7 @@
 					td {
 						padding-block: 0.77rem;
 						text-align: left;
-						font-size: 0.98rem;
+						font-size: 0.9rem;
 						font-weight: lighter;
 
 						// &.title {
@@ -712,8 +737,39 @@
 	}
 
 	.to-do-section {
+		display: flex;
+		flex-direction: column;
+
 		.section-header {
 			margin-block-end: 3rem;
+		}
+
+		.section-main {
+			flex: 1;
+			padding-inline: 2rem;
+
+			p {
+				display: grid;
+				place-items: center;
+				height: 100%;
+			}
+		}
+
+		&.hide-tile {
+			display: none;
+		}
+
+		&.hide-tasks {
+			padding-block-end: 0.2rem;
+			height: fit-content;
+
+			.section-header {
+				margin-block-end: 0;
+			}
+
+			.section-main {
+				display: none;
+			}
 		}
 	}
 
