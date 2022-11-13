@@ -259,28 +259,29 @@ body {
 	.menu {
 		position: absolute;
 		right: 0;
+		z-index: 2;
 		display: none;
 		border-radius: var(--border-radius);
 		padding: 0.2rem;
 		background-color: var(--gray-nav);
-		width: fit-content;
+		width: max-content;
 
 		* {
 			font-size: var(--norm-fs);
 		}
 
-		> * {
+		li {
 			display: flex;
 			align-items: center;
 			gap: 0.2rem;
 			border-radius: var(--border-radius);
 			padding-block: calc(var(--nav-pad) * 2);
 			padding-inline: calc(var(--nav-pad) * 3);
-			min-width: 200px;
+			min-width: max-content;
 			text-align: left;
 
 			* {
-				display: block;
+				// display: block;
 				text-align: left;
 			}
 
