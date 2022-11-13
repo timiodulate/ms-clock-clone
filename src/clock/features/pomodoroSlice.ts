@@ -3,10 +3,11 @@ import { createSlice } from "@reduxjs/toolkit";
 export const pomodoroSlice = createSlice({
 	name: "pomodoroTimer",
 	initialState: {
-		focusSession: { time: 15, count: 1 },
+		focusSession: { time: 15, count: 4 },
 		breakSession: { time: 5, count: 0 },
 		allSessions: [],
 		currentSessionDetails: { sessionTime: 0, sessionTitle: "" },
+		skipBreaks: false,
 
 		focusSessionIsOn: false,
 		countdownTime: { h: 0, m: 0, s: 0, ms: 0 },
@@ -15,6 +16,9 @@ export const pomodoroSlice = createSlice({
 		stopWatchIsOn: false,
 		stopWatchTime: { h: 0, m: 0, s: 0, ms: 0 },
 		stopWatchHistory: [],
+
+		isTodoTileVisible: true,
+		isTasksVisible: true,
 
 		dailyGoal: 30,
 		completedFocus: 0,
@@ -68,6 +72,21 @@ export const pomodoroSlice = createSlice({
 				};
 			}
 		},
+		toggleSkipBreaks: (state) => {
+			if (state.skipBreaks) {
+				state.breakSession = {
+					...state.breakSession,
+					count: state.focusSession.count - 1,
+				};
+			} else {
+				state.breakSession = {
+					...state.breakSession,
+					count: 0,
+				};
+			}
+
+			state.skipBreaks = !state.skipBreaks;
+		},
 		getAllSessions: (state) => {
 			state.allSessions = [];
 
@@ -88,7 +107,8 @@ export const pomodoroSlice = createSlice({
 					newArr.push(focusDetail);
 				} else {
 					newArr.push(focusDetail);
-					newArr.push(breakDetail);
+
+					!state.skipBreaks && newArr.push(breakDetail);
 				}
 				state.allSessions = newArr;
 			}
@@ -226,7 +246,12 @@ export const pomodoroSlice = createSlice({
 		},
 
 		// Todo Tile
-		toggleTodo: (state) => {},
+		toggleTodoTile: (state) => {
+			state.isTodoTileVisible = !state.isTodoTileVisible;
+		},
+		toggleTodo: (state) => {
+			state.isTasksVisible = !state.isTasksVisible;
+		},
 	},
 });
 
@@ -234,6 +259,7 @@ export const pomodoroSlice = createSlice({
 export const {
 	setFocusSession,
 	setBreakSession,
+	toggleSkipBreaks,
 	getAllSessions,
 
 	getCurrentSession,
@@ -249,6 +275,7 @@ export const {
 	// dailyGoal
 	updateDailyProgress,
 	// todo
+	toggleTodoTile,
 	toggleTodo,
 } = pomodoroSlice.actions;
 
