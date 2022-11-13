@@ -1,13 +1,11 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { CNavLink } from "../../components/_reusables/CLink";
 import useOutsideClose from "../../utils/useOutsideClose";
-import { IoSettingsOutline, IoStopwatchOutline } from "react-icons/io5";
+import { IoSettingsOutline } from "react-icons/io5";
 import { FiChevronsLeft } from "react-icons/fi";
-import { GiSandsOfTime } from "react-icons/gi";
 import { TiTime } from "react-icons/ti";
 import { FcAlarmClock } from "react-icons/fc";
 import { AiOutlineBars } from "react-icons/ai";
-import { useRouter } from "next/router";
 
 const PomodoroLayout = ({ children }) => {
 	const btnRef: any = useRef();
@@ -89,7 +87,7 @@ const PomodoroLayout = ({ children }) => {
 								<span className="title">Pomodoro timer</span>
 							</CNavLink>
 						</li>
-						<li>
+						{/* <li>
 							<CNavLink
 								href={`/clock/stopwatch`}
 								exact
@@ -112,7 +110,7 @@ const PomodoroLayout = ({ children }) => {
 								</span>
 								<span className="title">Timer</span>
 							</CNavLink>
-						</li>
+						</li> */}
 					</ul>
 
 					<ul className="bottom">
