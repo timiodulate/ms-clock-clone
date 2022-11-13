@@ -8,6 +8,7 @@ import {
 	toggleTodoTile,
 } from "../../src/clock/features/pomodoroSlice";
 import PomodoroLayout from "../../src/components/timer/PomodoroLayout";
+import CSelect from "../../src/components/_reusables/CSelect";
 import CToggle from "../../src/components/_reusables/CToggle";
 import { useVisibility } from "../../src/utils/useVisibility";
 
@@ -26,15 +27,31 @@ const IndexPage = () => {
 		(state: any) => state.pomodoroTimer.isTodoTileVisible
 	);
 
-	// default focus count = 3
-	// number can be increased gaaan
-	// to change it
 	const setFocusSessionCount = (count) => {
 		dispatch(setFocusSession({ count: count }));
 	};
 	const setBreakPeriodDuration = (time) => {
 		dispatch(setBreakSession({ time: time }));
 	};
+
+	const focusCountOptions = [
+		{ "1": 1 },
+		{ "2": 2 },
+		{ "3": 3 },
+		{ "4": 4 },
+		{ "5": 5 },
+		{ "6": 6 },
+		{ "7": 7 },
+		{ "8": 8 },
+		{ "9": 9 },
+	];
+	const breakDurationOptions = [
+		{
+			"5 minutes": 5,
+		},
+		{ "10 minutes": 10 },
+		{ "15 minutes": 15 },
+	];
 
 	return (
 		<PomodoroLayout>
@@ -83,7 +100,7 @@ const IndexPage = () => {
 											<div id="details">
 												<h3>Focus session count</h3>
 											</div>
-											<select
+											<CSelect
 												name="counts"
 												id="actions"
 												onChange={(e) =>
@@ -92,23 +109,14 @@ const IndexPage = () => {
 													)
 												}
 												defaultValue={focusCount}
-											>
-												<option value="1">1</option>
-												<option value="2">2</option>
-												<option value="3">3</option>
-												<option value="4">4</option>
-												<option value="5">5</option>
-												<option value="6">6</option>
-												<option value="7">7</option>
-												<option value="8">8</option>
-												<option value="9">9</option>
-											</select>
+												data={focusCountOptions}
+											/>
 										</div>
 										<div>
 											<div id="details">
 												<h3>Break period duration</h3>
 											</div>
-											<select
+											<CSelect
 												name="break-duration"
 												id="actions"
 												onChange={(e) =>
@@ -116,17 +124,9 @@ const IndexPage = () => {
 														e.target.value
 													)
 												}
-											>
-												<option value="5">
-													5 minutes
-												</option>
-												<option value="10">
-													10 minutes
-												</option>
-												<option value="15">
-													15 minutes
-												</option>
-											</select>
+												defaultValue={breakDuration}
+												data={breakDurationOptions}
+											/>
 										</div>
 									</div>
 								</div>

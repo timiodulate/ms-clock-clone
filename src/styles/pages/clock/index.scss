@@ -19,6 +19,8 @@
 	--norm-fs: 0.9rem;
 	--small-fs: 0.75rem;
 
+	--icon-size: 1.2rem;
+
 	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
 		Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
 		sans-serif;
@@ -135,7 +137,7 @@
 
 					.icon-container {
 						* {
-							font-size: 1.2rem;
+							font-size: var(--icon-size);
 						}
 					}
 				}
@@ -325,15 +327,23 @@
 					gap: 0.3rem;
 
 					.setting-container {
-						.primary-setting {
+						.primary-setting,
+						.secondary-settings > div {
 							display: grid;
-							grid-template-columns: 3rem 1fr max-content 3rem;
-							grid-template-areas: "icon details actions toggler";
+							grid-template-columns: 1fr max-content;
+							grid-template-areas:
+								"details  toggler"
+								"actions actions";
 							gap: var(--norm-fs);
 							border: solid 1px var(--gray-border);
 							border-radius: var(--border-radius);
-							padding: calc(var(--nav-pad) * 3);
+							padding-block: calc(var(--nav-pad) * 3);
+							padding-inline: calc(var(--nav-pad) * 6);
 							background-color: white;
+
+							#icon {
+								display: none;
+							}
 
 							div {
 								flex: 1;
@@ -348,13 +358,8 @@
 							display: none;
 
 							> div {
-								display: grid;
-								grid-template-columns: 3rem 1fr max-content 3rem;
-								grid-template-areas: "icon details actions toggler";
-								gap: var(--norm-fs);
-								border: solid 1px var(--gray-border);
 								border-top: none;
-								padding: calc(var(--nav-pad) * 3);
+								background-color: initial;
 
 								div {
 									flex: 1;
@@ -377,6 +382,7 @@
 
 						#icon {
 							grid-area: icon;
+							font-size: var(--icon-size);
 						}
 						#details {
 							grid-area: details;
@@ -402,6 +408,46 @@
 	// 	padding: 2rem;
 	// }
 
+	@media screen and (min-width: 375px) {
+		.sections-container {
+			.settings-sections-container {
+				section {
+					.settings-container {
+						.setting-container {
+							.primary-setting,
+							.secondary-settings > div {
+								grid-template-columns: 1fr max-content 3rem;
+								grid-template-areas: "details actions toggler";
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	@media screen and (min-width: 539px) {
+		.sections-container {
+			.settings-sections-container {
+				section {
+					.settings-container {
+						.setting-container {
+							.primary-setting,
+							.secondary-settings > div {
+								grid-template-columns: 1.2rem 1fr max-content 1.2rem;
+								grid-template-areas: "icon details actions toggler";
+
+								#icon {
+									display: grid;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
 	@media screen and (min-width: 670px) and (max-width: 879px) {
 		padding-block: 0.5rem;
 	}
@@ -410,6 +456,34 @@
 		padding-block-start: 2.6rem;
 		padding-inline: 4rem;
 	}
+
+	@media screen and (min-width: 881px) and (max-width: 900px) {
+		.sections-container {
+			.settings-sections-container {
+				section {
+					.settings-container {
+						.setting-container {
+							.primary-setting,
+							.secondary-settings > div {
+								grid-template-columns: 1fr max-content 3rem;
+								grid-template-areas: "details actions toggler";
+
+								#icon {
+									display: none;
+								}
+							}
+
+							.secondary-settings > div {
+								grid-template-columns: 1fr max-content;
+								grid-template-areas: "details actions";
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
 	@media screen and (min-width: 1369px) {
 		padding-block-start: 2.6rem;
 		padding-inline: 4rem;
