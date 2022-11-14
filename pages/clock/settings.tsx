@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
 	setBreakSession,
 	setFocusSession,
+	toggleDailyProgressTile,
 	toggleTodoTile,
 } from "../../src/clock/features/pomodoroSlice";
 import PomodoroLayout from "../../src/components/timer/PomodoroLayout";
@@ -25,6 +26,9 @@ const IndexPage = () => {
 	);
 	const isTodoTileVisible = useSelector(
 		(state: any) => state.pomodoroTimer.isTodoTileVisible
+	);
+	const isDailyProgressTileVisible = useSelector(
+		(state: any) => state.pomodoroTimer.isDailyProgressTileVisible
 	);
 
 	const setFocusSessionCount = (count) => {
@@ -155,6 +159,37 @@ const IndexPage = () => {
 											checked={isTodoTileVisible}
 										>
 											{isTodoTileVisible ? "On" : "Off"}
+										</CToggle>
+									</div>
+								</div>
+								<div className="setting-container">
+									<div className="primary-setting">
+										<span
+											className="icon-container"
+											id="icon"
+										>
+											<BiCheck />
+										</span>
+
+										<div id="details">
+											<h3>Daily Progress</h3>
+											<p>
+												Show tile in the focus session
+												experience
+											</p>
+										</div>
+
+										<CToggle
+											onChange={() => {
+												dispatch(
+													toggleDailyProgressTile()
+												);
+											}}
+											checked={isDailyProgressTileVisible}
+										>
+											{isDailyProgressTileVisible
+												? "On"
+												: "Off"}
 										</CToggle>
 									</div>
 								</div>

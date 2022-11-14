@@ -50,7 +50,7 @@ const SetFocusSection = () => {
 		e.preventDefault();
 
 		dispatch(getAllSessions());
-		dispatch(getCurrentSession());
+		dispatch(getCurrentSession(false));
 
 		dispatch(toggleFocusSession());
 	};

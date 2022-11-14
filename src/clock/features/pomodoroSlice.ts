@@ -20,6 +20,7 @@ export const pomodoroSlice = createSlice({
 		isTodoTileVisible: true,
 		isTasksVisible: true,
 
+		isDailyProgressTileVisible: true,
 		dailyGoal: 30,
 		completedFocus: 0,
 	},
@@ -113,12 +114,16 @@ export const pomodoroSlice = createSlice({
 				state.allSessions = newArr;
 			}
 		},
-		getCurrentSession: (state) => {
+		getCurrentSession: (state, payload?) => {
+			const option = payload.payload;
+
 			if (state.allSessions.length > 0) {
 				let remainingSessions = state.allSessions.filter(
 					(sessionDetails, i) => {
 						if (i == 0) {
-							state.currentSessionDetails = sessionDetails;
+							if (!option) {
+								state.currentSessionDetails = sessionDetails;
+							}
 						} else {
 							return sessionDetails;
 						}
@@ -239,6 +244,10 @@ export const pomodoroSlice = createSlice({
 		},
 
 		// Daily Progress Tile
+		toggleDailyProgressTile: (state) => {
+			state.isDailyProgressTileVisible =
+				!state.isDailyProgressTileVisible;
+		},
 		updateDailyProgress: (state) => {
 			if (state.currentSessionDetails.sessionTitle == "focus") {
 				state.completedFocus += state.currentSessionDetails.sessionTime;
@@ -273,6 +282,7 @@ export const {
 	stopStopWatch,
 	bookmarkStopWatchTime,
 	// dailyGoal
+	toggleDailyProgressTile,
 	updateDailyProgress,
 	// todo
 	toggleTodoTile,
