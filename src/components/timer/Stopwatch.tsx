@@ -5,6 +5,7 @@ import {
 	BsBookmarkFill,
 	BsFillPauseCircleFill,
 	BsFillPlayCircleFill,
+	BsThreeDots,
 } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -15,25 +16,72 @@ import {
 	stopStopWatch,
 	bookmarkStopWatchTime,
 } from "../../clock/features/pomodoroSlice";
+import { useVisibility } from "../../utils/useVisibility";
+import CCheckbox from "../_reusables/CCheckbox";
+import CMenuContainer from "../_reusables/CMenu";
 
 const StopwatchSection = () => {
 	const showStopWatchTile = useSelector(
 		(state: any) => state.pomodoroTimer.showStopWatchTile
 	);
 
+	const [showBookmark, setShowBookmark] = useState(true);
+
+	const toggleBookmark = () => {
+		setShowBookmark(!showBookmark);
+	};
+
+	const { isVisible, toggle } = useVisibility();
+
 	return (
 		<section
-			className={`stopwatch-section ${showStopWatchTile ? "" : "hide"}`}
+			className={`stopwatch-section stopwatch-tile ${
+				showStopWatchTile ? "" : "hide"
+			} ${showBookmark ? "" : "hide-bookmark"}`}
 		>
-			{/* watch-container */}
-			<div className="watch">
-				{/* watch-face */}
-				<StopwatchWatchFace />
+			<div className="section-header">
+				<h1>Session time tracker</h1>
 
-				<StopwatchController />
+				<CMenuContainer className="tile-actions">
+					<CMenuContainer.Toggler
+						className="icon-container"
+						toggle={toggle}
+					>
+						<BsThreeDots />
+					</CMenuContainer.Toggler>
+
+					<CMenuContainer.Menu
+						isVisible={isVisible}
+						toggle={toggle}
+						// ref={elementRef}
+					>
+						<li>
+							<CCheckbox
+								id="bookmark toggle"
+								checked={showBookmark}
+								onChange={(e: any) => {
+									toggleBookmark();
+									toggle();
+								}}
+							>
+								Show bookmark
+							</CCheckbox>
+						</li>
+					</CMenuContainer.Menu>
+				</CMenuContainer>
 			</div>
 
-			<StopwatchBookmark />
+			<div className="section-main">
+				{/* watch-container */}
+				<div className="watch-container">
+					{/* watch-face */}
+					<StopwatchWatchFace />
+
+					<StopwatchController />
+				</div>
+
+				<StopwatchBookmark />
+			</div>
 		</section>
 	);
 };
@@ -100,25 +148,34 @@ const StopwatchWatchFace = () => {
 	};
 
 	return (
-		<div className={`watch-container ${stopWatchIsOn ? "" : "idle"}`}>
+		<div className={`watch-face ${stopWatchIsOn ? "" : "idle"}`}>
 			<div>
-				{formatTime(stopWatchTime, "h")}
+				<div>
+					{formatTime(stopWatchTime, "h")}
+
+					<span>:</span>
+				</div>
 
 				<span>hr</span>
 			</div>
-			<span>:</span>
 			<div>
-				{formatTime(stopWatchTime, "m")}
+				<div>
+					{formatTime(stopWatchTime, "m")}
+
+					<span>:</span>
+				</div>
 
 				<span>min</span>
 			</div>
-			<span>:</span>
 			<div>
-				{formatTime(stopWatchTime, "s")}
+				<div>
+					{formatTime(stopWatchTime, "s")}
+					<span>.</span>
+				</div>
 
 				<span>sec</span>
 			</div>
-			<span>.</span>
+
 			<div>{formatTime(stopWatchTime, "ms")}</div>
 		</div>
 	);

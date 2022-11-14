@@ -8,7 +8,7 @@ const CMenuContainer = ({ children, className }: any) => {
 	// console.log(children);
 
 	useEffect(() => {
-		const T = children.filter((e) => e.type.name == "Toggler");
+		// const T = children.filter((e) => e.type.name == "Toggler");
 		// console.log((T[0].props = isVisible));
 	}, []);
 

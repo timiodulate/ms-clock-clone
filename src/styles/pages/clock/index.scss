@@ -727,125 +727,143 @@
 	.stopwatch-section {
 		display: flex;
 		flex-direction: column;
-		gap: 1.5rem;
+		gap: 0.5rem;
 		overflow-y: hidden;
-		padding-block-start: 1rem;
-		padding-block-end: 1rem;
+
+		.section-main {
+			.watch-container {
+				.watch-face {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					margin-block-end: 1.1rem;
+					text-align: center;
+					color: var(--clr-text-dark);
+
+					&.idle {
+						color: var(--clr-text);
+					}
+
+					> div {
+						div {
+							font-size: clamp(2.5rem, 5vw, 3.8rem);
+
+							> span {
+								font-size: clamp(2.5rem, 5vw, 3.8rem);
+							}
+						}
+
+						> span {
+							display: block;
+							font-size: 0.7rem;
+							padding-right: 0.75rem;
+						}
+
+						&:last-child {
+							font-size: clamp(1.5rem, 5vw, 2.8rem);
+						}
+
+						&:not(:last-child) {
+							div {
+								span {
+									vertical-align: top;
+								}
+							}
+						}
+					}
+				}
+
+				.watch-controller {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					gap: 0.7rem;
+
+					span {
+						display: grid;
+						place-items: center;
+						font-size: 2rem;
+						cursor: pointer;
+
+						&:first-child {
+							color: var(--blue);
+						}
+
+						&.blur {
+							svg {
+								color: var(--grey);
+								pointer-events: none;
+							}
+						}
+					}
+					> span {
+						border: solid 1px var(--grey);
+						border-radius: 50%;
+						width: 2rem;
+						height: 2rem;
+						font-size: 1rem;
+					}
+				}
+			}
+
+			.bookmark-container {
+				flex: 1;
+				padding-inline: 1rem;
+				max-height: 250px;
+				overflow-y: auto;
+
+				.bookmark {
+					width: 100%;
+
+					thead {
+						tr {
+							th {
+								position: sticky;
+								top: 0;
+								border-bottom: 1px var(--gray-border) solid;
+								padding-block: 0.77rem;
+								margin-block-end: 0.77rem;
+								background-color: white;
+								text-align: left;
+								font-weight: 500;
+							}
+						}
+					}
+
+					tbody {
+						tr {
+							td {
+								padding-block: 0.77rem;
+								text-align: left;
+								font-size: 0.9rem;
+								font-weight: lighter;
+
+								&:first-child {
+									width: 30px;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 
 		&.hide {
 			display: none;
 		}
 
-		.watch-face {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			margin-block-end: 1.1rem;
-			text-align: center;
-			color: var(--clr-text-dark);
-
-			&.idle {
-				color: var(--clr-text);
-			}
-
-			> div {
-				div {
-					font-size: clamp(2.5rem, 5vw, 3.8rem);
-
-					> span {
-						font-size: clamp(2.5rem, 5vw, 3.8rem);
-					}
-				}
-
-				> span {
-					display: block;
-					font-size: 0.7rem;
-					padding-right: 0.75rem;
-				}
-
-				&:last-child {
-					font-size: clamp(1.5rem, 5vw, 2.8rem);
-				}
-
-				&:not(:last-child) {
-					div {
-						span {
-							vertical-align: top;
-						}
-					}
-				}
-			}
-		}
-
-		.watch-controller {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			gap: 0.7rem;
-
-			span {
+		&.hide-bookmark {
+			.section-main {
 				display: grid;
 				place-items: center;
-				font-size: 2rem;
-				cursor: pointer;
+				height: 100%;
 
-				&:first-child {
-					color: var(--blue);
-				}
-
-				&.blur {
-					svg {
-						color: var(--grey);
-						pointer-events: none;
-					}
-				}
-			}
-			> span {
-				border: solid 1px var(--grey);
-				border-radius: 50%;
-				width: 2rem;
-				height: 2rem;
-				font-size: 1rem;
-			}
-		}
-
-		.bookmark-container {
-			flex: 1;
-			padding-inline: 1rem;
-		}
-
-		.bookmark {
-			width: 100%;
-			border-collapse: collapse;
-
-			thead {
-				border-bottom: 1px var(--gray-border) solid;
-
-				tr {
-					th {
-						padding-block: 0.77rem;
-						text-align: left;
-						font-weight: 500;
-					}
-				}
-			}
-
-			tbody {
-				tr {
-					td {
-						padding-block: 0.77rem;
-						text-align: left;
-						font-size: 0.9rem;
-						font-weight: lighter;
-
-						// &.title {
-
-						// }
-
-						&:first-child {
-							width: 30px;
-						}
-					}
+				// .watch-container {
+				// 	// flex: 1;
+				// 	// height: 100%;
+				// }
+				.bookmark-container {
+					display: none;
 				}
 			}
 		}

@@ -3,7 +3,7 @@ import { useState } from "react";
 export const useVisibility = () => {
 	const [isVisible, setIsVisible] = useState(false);
 
-	function toggle(ref) {
+	function toggle(ref?) {
 		// setIsVisible(!isVisible);
 
 		if (isVisible) {
