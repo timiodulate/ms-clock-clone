@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { User } from "../../interfaces";
+import { User } from "../interfaces";
 import { MdHourglassBottom } from "react-icons/md";
 import { GiAlarmClock } from "react-icons/gi";
 
@@ -22,7 +22,7 @@ const List = ({ items, completed, updateTasks }: ListProps) => (
 export default List;
 
 import Link from "next/link";
-import { useUserTasks } from "../../contexts/user-tasks";
+import { useUserTasks } from "../contexts/user-tasks";
 
 type Props = {
 	data: User;

@@ -1,16 +1,13 @@
-import {
-	FocusTimerSection,
-	StopwatchSection,
-} from "../../src/components/timer";
-import PomodoroLayout from "../../src/components/timer/PomodoroLayout";
+import ClockLayout from "../../src/clock/layouts/ClockLayout";
+import { FocusTimerSection } from "../../src/clock/components";
 
 const IndexPage = () => {
 	return (
-		<PomodoroLayout>
+		<ClockLayout>
 			<main className="timer-page">
 				<FocusTimerSection />
 			</main>
-		</PomodoroLayout>
+		</ClockLayout>
 	);
 };
 

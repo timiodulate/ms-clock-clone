@@ -61,9 +61,8 @@ body {
 
 // Components
 .circle-wrap {
-	margin-block-end: 1rem;
 	margin-inline: auto;
-	width: var(--circle-width, 150px);
+	width: var(--circle-width);
 	aspect-ratio: 1;
 	background: #fefcff;
 	border-radius: 50%;
@@ -78,7 +77,7 @@ body {
 
 		.mask,
 		.fill {
-			width: var(--circle-width, 150px);
+			width: var(--circle-width);
 			aspect-ratio: 1;
 			position: absolute;
 			border-radius: 50%;

@@ -1,7 +1,7 @@
 import moment from "moment";
 import { useState } from "react";
-import { useUserTasks } from "../../contexts/user-tasks";
-import { TaskProps } from "../../interfaces";
+import { useUserTasks } from "../contexts/user-tasks";
+import { TaskProps } from "../interfaces";
 
 const AddTask = () => {
 	const { userTasks, addTask } = useUserTasks();

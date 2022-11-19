@@ -1,8 +1,8 @@
 import { BsThreeDots } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleTodo } from "../../clock/features/pomodoroSlice";
-import { useVisibility } from "../../utils/useVisibility";
-import CMenuContainer from "../_reusables/CMenu";
+import { toggleTodo } from "../../features/pomodoroSlice";
+import { useVisibility } from "../../../utils/useVisibility";
+import { CMenuContainer } from "../../../components/_reusables";
 
 const TodoSection = () => {
 	const { isVisible, toggle } = useVisibility();

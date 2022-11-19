@@ -6,7 +6,7 @@ import {
 	MouseTracker,
 	Filter,
 	ProjectsCards,
-} from "../src/components/projects-list";
+} from "../src/projects/components";
 import { projects } from "../src/utils/sample-data";
 import {
 	useElementTop,

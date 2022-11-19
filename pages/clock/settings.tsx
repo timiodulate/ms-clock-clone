@@ -1,3 +1,4 @@
+import ClockLayout from "../../src/clock/layouts/ClockLayout";
 import { BiCheck } from "react-icons/bi";
 import { BsCaretDown, BsCaretUp } from "react-icons/bs";
 import { TiTime } from "react-icons/ti";
@@ -8,7 +9,6 @@ import {
 	toggleDailyProgressTile,
 	toggleTodoTile,
 } from "../../src/clock/features/pomodoroSlice";
-import PomodoroLayout from "../../src/components/timer/PomodoroLayout";
 import CSelect from "../../src/components/_reusables/CSelect";
 import CToggle from "../../src/components/_reusables/CToggle";
 import { useVisibility } from "../../src/utils/useVisibility";
@@ -58,7 +58,7 @@ const IndexPage = () => {
 	];
 
 	return (
-		<PomodoroLayout>
+		<ClockLayout>
 			<main className="settings-page">
 				<h1>Settings</h1>
 
@@ -203,7 +203,7 @@ const IndexPage = () => {
 					</section>
 				</div>
 			</main>
-		</PomodoroLayout>
+		</ClockLayout>
 	);
 };
 

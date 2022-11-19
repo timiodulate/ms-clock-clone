@@ -1,8 +1,8 @@
-import Layout from "../../src/layouts/Layout";
-import { TaskProps } from "../../src/interfaces";
+import Layout from "../../src/todo/layouts/Layout";
+import { TaskProps } from "../../src/todo/interfaces";
 import { sampleUserData } from "../../src/utils/sample-data";
-import List from "../../src/components/tasks/List";
-import { useUserTasks } from "../../src/contexts/user-tasks";
+import List from "../../src/todo/components/List";
+import { useUserTasks } from "../../src/todo/contexts/user-tasks";
 import { BiChevronRight, BiChevronDown } from "react-icons/bi";
 import { useEffect, useState } from "react";
 

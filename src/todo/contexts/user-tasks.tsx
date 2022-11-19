@@ -2,7 +2,7 @@
 import moment from "moment";
 import { createContext, FC, useContext, useState, useEffect } from "react";
 import { TaskProps } from "../interfaces";
-import { sampleUserData } from "../utils/sample-data";
+import { sampleUserData } from "../../utils/sample-data";
 import _ from "lodash";
 
 interface Props {

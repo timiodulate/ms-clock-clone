@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
-import { SetFocusSection, TrackFocusSection } from "../../components/timer";
+import SetFocusSection from "./SetFocus";
+import TrackFocusSection from "./TrackFocus";
 
 const FocusTimerSection = () => {
 	const focusSessionIsOn = useSelector(

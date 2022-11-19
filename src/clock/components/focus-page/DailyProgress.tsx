@@ -1,6 +1,6 @@
 import { IoPencilSharp } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
-import { CircleProgress } from "../_reusables/CircleProgress";
+import { CircleProgress } from "../../../components/_reusables";
 
 const DailyProgressSection = () => {
 	const isDailyProgressTileVisible = useSelector(
@@ -16,8 +16,9 @@ const DailyProgressSection = () => {
 		(state: any) => state.pomodoroTimer.completedFocus
 	);
 
-	const percent =
-		completedFocus >= dailyGoal ? 100 : (completedFocus * 100) / dailyGoal;
+	// const percent =
+	// 	completedFocus >= dailyGoal ? 100 : (completedFocus * 100) / dailyGoal;
+	const percent = 20;
 
 	return (
 		<section
@@ -48,7 +49,7 @@ const DailyProgressSection = () => {
 					<div className="daily">
 						<CircleProgress
 							percent={percent}
-							circleWidth={"210px"}
+							circleWidth={"100%"}
 							progressColor={"green"}
 						>
 							<div className="progress-container">

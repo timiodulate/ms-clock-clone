@@ -15,8 +15,8 @@ import {
 	pauseStopWatch,
 	stopStopWatch,
 	bookmarkStopWatchTime,
-} from "../../clock/features/pomodoroSlice";
-import { useVisibility } from "../../utils/useVisibility";
+} from "../../features/pomodoroSlice";
+import { useVisibility } from "../../../utils/useVisibility";
 
 const StopwatchSection = () => {
 	const showStopWatchTile = useSelector(

@@ -1,4 +1,4 @@
-import Layout from "../src/layouts/Layout";
+import Layout from "../src/todo/layouts/Layout";
 
 const AboutPage = () => (
 	<Layout title="About | Next.js + TypeScript Example">

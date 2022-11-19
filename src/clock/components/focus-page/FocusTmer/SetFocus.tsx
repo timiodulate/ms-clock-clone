@@ -10,11 +10,13 @@ import {
 	toggleFocusSession,
 	toggleSkipBreaks,
 	toggleStopWatchTile,
-} from "../../clock/features/pomodoroSlice";
-import { useVisibility } from "../../utils/useVisibility";
-import CCheckbox from "../_reusables/CCheckbox";
-import CLink from "../_reusables/CLink";
-import CMenuContainer from "../_reusables/CMenu";
+} from "../../../features/pomodoroSlice";
+import { useVisibility } from "../../../../utils/useVisibility";
+import {
+	CCheckbox,
+	CLink,
+	CMenuContainer,
+} from "../../../../components/_reusables";
 
 const SetFocusSection = () => {
 	const dispatch = useDispatch();

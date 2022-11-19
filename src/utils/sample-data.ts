@@ -1,5 +1,5 @@
-import { ProjectProps } from "../components/projects-list";
-import { User } from "../interfaces";
+import { ProjectProps } from "../projects/components";
+import { User } from "../todo/interfaces";
 
 /** Dummy user data. */
 export const sampleUserData: User[] = [

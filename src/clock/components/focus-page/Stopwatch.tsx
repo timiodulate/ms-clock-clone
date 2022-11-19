@@ -14,10 +14,9 @@ import {
 	pauseStopWatch,
 	stopStopWatch,
 	bookmarkStopWatchTime,
-} from "../../clock/features/pomodoroSlice";
-import { useVisibility } from "../../utils/useVisibility";
-import CCheckbox from "../_reusables/CCheckbox";
-import CMenuContainer from "../_reusables/CMenu";
+} from "../../features/pomodoroSlice";
+import { useVisibility } from "../../../utils/useVisibility";
+import { CCheckbox, CMenuContainer } from "../../../components/_reusables";
 
 const StopwatchSection = () => {
 	const showStopWatchTile = useSelector(

@@ -1,12 +1,11 @@
-import { UserTasksProvider } from "./user-tasks";
-import { Provider } from "react-redux";
-import store from "../clock/app/store";
+import ClockContexts from "../clock/contexts";
+import TodoContexts from "../todo/contexts";
 
 function Contexts({ children }: any) {
 	return (
-		<Provider store={store}>
-			<UserTasksProvider>{children}</UserTasksProvider>;
-		</Provider>
+		<ClockContexts>
+			<TodoContexts>{children}</TodoContexts>;
+		</ClockContexts>
 	);
 }
 

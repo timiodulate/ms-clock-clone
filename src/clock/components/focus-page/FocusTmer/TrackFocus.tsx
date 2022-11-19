@@ -10,13 +10,13 @@ import {
 	toggleStopWatch,
 	toggleStopWatchTile,
 	updateDailyProgress,
-} from "../../clock/features/pomodoroSlice";
+} from "../features/pomodoroSlice";
 import { BsFillStopCircleFill, BsThreeDots } from "react-icons/bs";
-import { CircleProgress } from "../_reusables/CircleProgress";
+import { CircleProgress } from "../../components/_reusables/CircleProgress";
 import { BiDotsHorizontal } from "react-icons/bi";
-import CCheckbox from "../_reusables/CCheckbox";
+import CCheckbox from "../../components/_reusables/CCheckbox";
 import { TbTree } from "react-icons/tb";
-import CMenuContainer from "../_reusables/CMenu";
+import CMenuContainer from "../../components/_reusables/CMenu";
 import { useVisibility } from "../../utils/useVisibility";
 
 const TrackFocusSection = () => {

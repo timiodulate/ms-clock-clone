@@ -3,19 +3,19 @@ import {
 	FocusTimerSection,
 	StopwatchSection,
 	TodoSection,
-} from "../../src/components/timer";
-import PomodoroLayout from "../../src/components/timer/PomodoroLayout";
+} from "../../src/clock/components";
+import ClockLayout from "../../src/clock/layouts/ClockLayout";
 
 const IndexPage = () => {
 	return (
-		<PomodoroLayout>
+		<ClockLayout>
 			<main className="timer-page">
 				<FocusTimerSection />
 				<StopwatchSection />
 				<DailyProgressSection />
 				<TodoSection />
 			</main>
-		</PomodoroLayout>
+		</ClockLayout>
 	);
 };
 

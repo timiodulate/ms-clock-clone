@@ -2,7 +2,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { ClassProp, ProjectProps } from "./Props";
 import { candy } from "../../assets/images";
-import CLink from "../_reusables/CLink";
+import CLink from "../../components/_reusables/CLink";
 
 const ProjectsCards = ({
 	filteredProjects,

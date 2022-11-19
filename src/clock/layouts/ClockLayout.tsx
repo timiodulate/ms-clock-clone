@@ -7,7 +7,7 @@ import { TiTime } from "react-icons/ti";
 import { FcAlarmClock } from "react-icons/fc";
 import { AiOutlineBars } from "react-icons/ai";
 
-const PomodoroLayout = ({ children }) => {
+const ClockLayout = ({ children }) => {
 	const btnRef: any = useRef();
 	const {
 		elementRef,
@@ -141,7 +141,7 @@ const PomodoroLayout = ({ children }) => {
 
 			<div className="main">
 				<Header toggleNav={toggleNav} btnRef={btnRef} />
-				<div className="header-placeholder"></div>
+				{/* <div className="header-placeholder"></div> */}
 
 				{children}
 			</div>
@@ -194,4 +194,4 @@ const Header = ({
 	);
 };
 
-export default PomodoroLayout;
+export default ClockLayout;

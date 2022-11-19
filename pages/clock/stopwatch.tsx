@@ -1,13 +1,13 @@
-import PomodoroLayout from "../../src/components/timer/PomodoroLayout";
-import StopwatchSection from "../../src/components/timer/Stopwatch-copy";
+import ClockLayout from "../../src/clock/layouts/ClockLayout";
+import StopwatchSection from "../../src/clock/components/stopwatch-page/Stopwatch";
 
 const IndexPage = () => {
 	return (
-		<PomodoroLayout>
+		<ClockLayout>
 			<main className="stopwatch-page">
 				<StopwatchSection />
 			</main>
-		</PomodoroLayout>
+		</ClockLayout>
 	);
 };
 
