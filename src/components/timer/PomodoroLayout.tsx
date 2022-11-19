@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { CNavLink } from "../../components/_reusables/CLink";
 import useOutsideClose from "../../utils/useOutsideClose";
-import { IoSettingsOutline } from "react-icons/io5";
+import { IoSettingsOutline, IoStopwatchOutline } from "react-icons/io5";
 import { FiChevronsLeft } from "react-icons/fi";
 import { TiTime } from "react-icons/ti";
 import { FcAlarmClock } from "react-icons/fc";
@@ -87,7 +87,7 @@ const PomodoroLayout = ({ children }) => {
 								<span className="title">Pomodoro timer</span>
 							</CNavLink>
 						</li>
-						{/* <li>
+						<li>
 							<CNavLink
 								href={`/clock/stopwatch`}
 								exact
@@ -99,7 +99,7 @@ const PomodoroLayout = ({ children }) => {
 								<span className="title">Stopwatch</span>
 							</CNavLink>
 						</li>
-						<li>
+						{/*						<li>
 							<CNavLink
 								href={`/clock/timer`}
 								exact
