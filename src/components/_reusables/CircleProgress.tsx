@@ -47,4 +47,31 @@ const CircleProgress = ({
 		</div>
 	);
 };
-export { CircleProgress };
+const CircleProgress2 = ({
+	circleWidth,
+	percent,
+	children,
+	progressColor,
+}: circleProgress) => {
+	const deg = (360 / 100) * percent;
+
+	const style = {
+		"--circle-width": circleWidth ? circleWidth : "200px",
+		"--content-color": "black",
+		"--progress-color": progressColor ? progressColor : "red",
+		"--clr": "#04fc43",
+		"--num": 85,
+	} as React.CSSProperties;
+
+	return (
+		<div className="progress-percent" style={style}>
+			<div className="dott"></div>
+			<svg>
+				<circle cx="70" cy="70" r="70"></circle>
+				<circle cx="70" cy="70" r="70"></circle>
+			</svg>
+		</div>
+	);
+};
+
+export { CircleProgress, CircleProgress2 };

@@ -10,6 +10,7 @@
 	"dependencies": {
 		"@reduxjs/toolkit": "^1.9.0",
 		"framer-motion": "6.2.4",
+		"js-circle-progress": "^0.2.4",
 		"lodash": "^4.17.21",
 		"moment": "^2.29.4",
 		"next": "11.1.2",

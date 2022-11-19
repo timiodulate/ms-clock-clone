@@ -42,18 +42,11 @@ const StopwatchSection = () => {
 				<h1>Session time tracker</h1>
 
 				<CMenuContainer className="tile-actions">
-					<CMenuContainer.Toggler
-						className="icon-container"
-						toggle={toggle}
-					>
+					<CMenuContainer.Toggler className="icon-container">
 						<BsThreeDots />
 					</CMenuContainer.Toggler>
 
-					<CMenuContainer.Menu
-						isVisible={isVisible}
-						toggle={toggle}
-						// ref={elementRef}
-					>
+					<CMenuContainer.Menu>
 						<li>
 							<CCheckbox
 								id="bookmark toggle"

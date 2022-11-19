@@ -925,6 +925,7 @@
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
+				gap: 1rem;
 				padding-inline: 1rem;
 
 				.progress-container {
@@ -947,6 +948,10 @@
 							}
 						}
 					}
+				}
+
+				.daily {
+					flex: 1;
 				}
 			}
 		}
