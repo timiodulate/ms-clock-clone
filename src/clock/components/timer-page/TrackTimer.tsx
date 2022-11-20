@@ -10,18 +10,18 @@ import {
 	toggleStopWatch,
 	toggleStopWatchTile,
 	updateDailyProgress,
-} from "../../../features/pomodoroSlice";
+} from "../../features/pomodoroSlice";
 import { BsFillStopCircleFill, BsThreeDots } from "react-icons/bs";
 import {
 	CircleProgress,
 	CCheckbox,
 	CMenuContainer,
-} from "../../../../components/_reusables";
+} from "../../../components/_reusables";
 import { BiDotsHorizontal } from "react-icons/bi";
 import { TbTree } from "react-icons/tb";
-import { useVisibility } from "../../../../utils/useVisibility";
+import { useVisibility } from "../../../utils/useVisibility";
 
-const TrackFocusSection = () => {
+const TrackTimerSection = () => {
 	const { isVisible, toggle } = useVisibility();
 	const dispatch = useDispatch();
 
@@ -275,4 +275,4 @@ const TrackFocusSection = () => {
 	);
 };
 
-export default TrackFocusSection;
+export default TrackTimerSection;

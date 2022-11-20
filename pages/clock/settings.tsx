@@ -199,6 +199,10 @@ const IndexPage = () => {
 
 					<section className="about-app">
 						<p>About this app</p>
+						<p>
+							It is a clone of windows clock built using Next.js,
+							SCSS, and typescript.
+						</p>
 						<p>@ 2022 Timiodulate. All rights reserved.</p>
 					</section>
 				</div>

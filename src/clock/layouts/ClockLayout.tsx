@@ -6,6 +6,7 @@ import { FiChevronsLeft } from "react-icons/fi";
 import { TiTime } from "react-icons/ti";
 import { FcAlarmClock } from "react-icons/fc";
 import { AiOutlineBars } from "react-icons/ai";
+import { GiSandsOfTime } from "react-icons/gi";
 
 const ClockLayout = ({ children }) => {
 	const btnRef: any = useRef();
@@ -87,6 +88,18 @@ const ClockLayout = ({ children }) => {
 								<span className="title">Pomodoro timer</span>
 							</CNavLink>
 						</li>
+						{/* <li>
+							<CNavLink
+								href={`/clock/timer`}
+								exact
+								className="flex-list"
+							>
+								<span className="icon-container">
+									<GiSandsOfTime />
+								</span>
+								<span className="title">Timer</span>
+							</CNavLink>
+						</li> */}
 						<li>
 							<CNavLink
 								href={`/clock/stopwatch`}
@@ -99,18 +112,6 @@ const ClockLayout = ({ children }) => {
 								<span className="title">Stopwatch</span>
 							</CNavLink>
 						</li>
-						{/*						<li>
-							<CNavLink
-								href={`/clock/timer`}
-								exact
-								className="flex-list"
-							>
-								<span className="icon-container">
-									<GiSandsOfTime />
-								</span>
-								<span className="title">Timer</span>
-							</CNavLink>
-						</li> */}
 					</ul>
 
 					<ul className="bottom">
@@ -131,7 +132,7 @@ const ClockLayout = ({ children }) => {
 								<span className="icon-container">
 									<FiChevronsLeft />
 								</span>
-								<span className="title">Back to Portfolio</span>
+								<span className="title">Back to Projects</span>
 							</CNavLink>
 						</li>
 					</ul>

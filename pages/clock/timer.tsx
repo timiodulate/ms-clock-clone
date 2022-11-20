@@ -1,11 +1,11 @@
 import ClockLayout from "../../src/clock/layouts/ClockLayout";
-import { FocusTimerSection } from "../../src/clock/components";
+import { TrackTimerSection } from "../../src/clock/components/timer-page";
 
 const IndexPage = () => {
 	return (
 		<ClockLayout>
 			<main className="timer-page">
-				<FocusTimerSection />
+				<TrackTimerSection />
 			</main>
 		</ClockLayout>
 	);

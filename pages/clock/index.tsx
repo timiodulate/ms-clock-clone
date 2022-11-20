@@ -3,7 +3,7 @@ import {
 	FocusTimerSection,
 	StopwatchSection,
 	TodoSection,
-} from "../../src/clock/components";
+} from "../../src/clock/components/focus-page";
 import ClockLayout from "../../src/clock/layouts/ClockLayout";
 
 const IndexPage = () => {

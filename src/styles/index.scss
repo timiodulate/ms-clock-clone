@@ -3,6 +3,28 @@
 	margin: 0;
 	box-sizing: border-box;
 }
+:root {
+	--clr-secondary: rgb(228, 228, 228);
+	--clr-icons: gray;
+
+	// overflow-y: scroll;
+	// caret-color: transparent;
+	// scrollbar-color: transparent;
+	// scrollbar-gutter: hidden;
+	// scrollbar-width: 100px;
+}
+// body {
+// 	&.stop-scrolling {
+// 		// max-height: 100vh;
+// 		// position: absolute;
+// 		// overflow-y: hidden;
+
+// 		height: 100%;
+// 		overflow: hidden;
+// 		position: fixed;
+// 	}
+// }
+
 li {
 	list-style: none;
 }
@@ -15,6 +37,18 @@ button {
 	border: none;
 }
 
+html,
+body {
+	width: 100vw;
+	overflow-x: hidden;
+}
+
+@import "./layouts/normalLayout";
+
+@import "./pages/home";
+@import "./pages/todo-list";
+@import "./pages/clock";
+
 .icon-container {
 	display: grid;
 	place-items: center;
@@ -23,41 +57,6 @@ button {
 		color: gray;
 	}
 }
-
-html,
-body {
-	width: 100vw;
-	overflow-x: hidden;
-}
-
-body {
-	&.stop-scrolling {
-		// max-height: 100vh;
-		// position: absolute;
-		// overflow-y: hidden;
-
-		height: 100%;
-		overflow: hidden;
-		position: fixed;
-	}
-}
-
-:root {
-	--clr-secondary: rgb(228, 228, 228);
-	--clr-icons: gray;
-
-	// overflow-y: scroll;
-	// caret-color: transparent;
-	// scrollbar-color: transparent;
-	// scrollbar-gutter: hidden;
-	// scrollbar-width: 100px;
-}
-
-@import "./layouts/normalLayout";
-
-@import "./pages/home";
-@import "./pages/todo-list";
-@import "./pages/clock";
 
 // Components
 .circle-wrap {

@@ -4,7 +4,7 @@ import TodoContexts from "../todo/contexts";
 function Contexts({ children }: any) {
 	return (
 		<ClockContexts>
-			<TodoContexts>{children}</TodoContexts>;
+			<TodoContexts>{children}</TodoContexts>
 		</ClockContexts>
 	);
 }

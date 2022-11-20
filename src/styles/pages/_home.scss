@@ -1,9 +1,3 @@
-* {
-	&::selection {
-		background: #ccc4b9;
-	}
-}
-
 html {
 	&.hide-scrollbar {
 		-ms-overflow-style: none; /* IE and Edge */
@@ -22,6 +16,12 @@ html {
 .projects-page {
 	--pad: 2vw;
 	--bg-color: rgb(233, 233, 233);
+
+	* {
+		&::selection {
+			background: #ccc4b9;
+		}
+	}
 
 	min-height: 100vh;
 	background-image: url("../../assets/images/bubbles.gif");
@@ -132,7 +132,7 @@ html {
 					.image-container {
 						position: relative;
 						scale: 1/1;
-						animation-name: pulsing;
+						// animation-name: pulsing;
 						animation-duration: 1500ms;
 						animation-iteration-count: infinite;
 
