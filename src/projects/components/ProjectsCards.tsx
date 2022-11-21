@@ -61,14 +61,38 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 			scale: 0,
 		},
 	};
+	const line = {
+		hidden: {
+			opacity: 0,
+			scale: 0,
+		},
+		visible: {
+			opacity: 1,
+			scale: 1,
+			// transition: { duration: 0.5 },
+		},
+		exit: {
+			opacity: 1,
+			scale: 1,
+			// transition: { duration: 0.5 },
+		},
+	};
 
 	return (
 		<motion.li className="project-card-wrapper">
+			<motion.div
+				className="line"
+				variants={line}
+				initial="hidden"
+				whileInView="visible"
+				exit="exit"
+			></motion.div>
+
 			<AnimatePresence>
 				<motion.div
 					className="project-card "
 					id={`${id}`}
-					drag
+					// drag
 					variants={anim}
 					initial="hidden"
 					whileInView="visible"

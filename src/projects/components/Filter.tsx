@@ -1,56 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { useOutsideHoverClose } from "../../utils/useOutsideClose";
-import { ProjectProps } from "./Props";
+import { useProjectsList } from "../contexts";
 
 interface FilterProps {
 	className?: string;
-	allProjects: ProjectProps[];
-	setFilteredProjects: any;
-	activeFilter: string;
-	setActiveFilter: any;
 }
 
-const Filter = ({
-	className,
-	allProjects,
-	setFilteredProjects,
-	activeFilter,
-	setActiveFilter,
-}: FilterProps) => {
-	// const [menuVisible, setMenuVisible] = useState(false);
+const Filter = ({ className }: FilterProps) => {
 	const {
 		elementRef,
 		isVisible: menuVisible,
 		toggle,
 	} = useOutsideHoverClose();
 
-	const filterData: string[] = [
-		"all-projects",
-		"works",
-		"personal",
-		"challenges",
-	];
-
-	const selectFilter = (selected: string): void => {
-		setActiveFilter(selected);
-
-		if (menuVisible) {
-			toggle();
-		}
-	};
+	const { filterData, activeFilter, filterProjects, selectFilter } =
+		useProjectsList();
 
 	useEffect(() => {
-		if (activeFilter == filterData[0]) {
-			setFilteredProjects(allProjects);
-
-			return;
-		}
-
-		const filtered = allProjects.filter((project) =>
-			project.categories.includes(activeFilter)
-		);
-
-		setFilteredProjects(filtered);
+		filterProjects();
 	}, [activeFilter]);
 
 	return (

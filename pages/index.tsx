@@ -1,12 +1,13 @@
 import { GetStaticProps } from "next";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 
 import {
 	ProjectProps,
-	MouseTracker,
 	Filter,
 	ProjectsCards,
 } from "../src/projects/components";
+import { useProjectsList } from "../src/projects/contexts";
+import ProjectsLayout from "../src/projects/layouts";
 import { projects } from "../src/utils/sample-data";
 import {
 	useElementTop,
@@ -19,79 +20,27 @@ import {
 }
 
 const IndexPage = ({ projectsData }: { projectsData: ProjectProps[] }) => {
-	const { rotationPosition } = useRotateOnScroll();
-	const { elementRef: projectSectRef, myElementIsVisible } = useElementTop();
+	const { fetchProjects, filteredProjects, projectSectRef } =
+		useProjectsList();
 
 	useEffect(() => {
-		fetchProjects();
+		fetchProjects(projectsData);
 	}, []);
 
-	const [allProjects, setAllProjects] = useState([]);
-	const [filteredProjects, setFilteredProjects] = useState([]);
-	const [activeFilter, setActiveFilter] = useState("all-projects");
-
-	const fetchProjects = () => {
-		setAllProjects(projectsData);
-		setFilteredProjects(projectsData);
-	};
-
 	return (
-		<main className="projects-page">
-			<MouseTracker />
+		<ProjectsLayout>
+			<main className="projects-page">
+				<section className="projects-section" ref={projectSectRef}>
+					<div className="projects-header">
+						<h1>Projects</h1>
 
-			<section className="page-header">
-				<div>
-					<div
-						className="rotate"
-						style={{ rotate: `${rotationPosition}` }}
-					></div>
+						<Filter />
+					</div>
 
-					<span
-						className={`separator ${
-							myElementIsVisible ? "show" : "hide"
-						}`}
-					>
-						-
-					</span>
-					<span
-						className={`heading ${
-							myElementIsVisible ? "show" : "hide"
-						}`}
-					>
-						Projects
-					</span>
-				</div>
-
-				<div>
-					<Filter
-						className={myElementIsVisible ? "show" : "hide"}
-						allProjects={allProjects}
-						setFilteredProjects={setFilteredProjects}
-						activeFilter={activeFilter}
-						setActiveFilter={setActiveFilter}
-					/>
-				</div>
-
-				<div className="hover">
-					<span>MENU =</span>
-				</div>
-			</section>
-
-			<section className="projects-section" ref={projectSectRef}>
-				<div className="projects-header">
-					<h1>Projects</h1>
-
-					<Filter
-						allProjects={allProjects}
-						setFilteredProjects={setFilteredProjects}
-						activeFilter={activeFilter}
-						setActiveFilter={setActiveFilter}
-					/>
-				</div>
-
-				<ProjectsCards filteredProjects={filteredProjects} />
-			</section>
-		</main>
+					<ProjectsCards filteredProjects={filteredProjects} />
+				</section>
+			</main>
+		</ProjectsLayout>
 	);
 };
 

@@ -39,8 +39,7 @@ button {
 
 html,
 body {
-	width: 100vw;
-	overflow-x: hidden;
+	max-width: 100vw;
 }
 
 @import "./layouts/normalLayout";

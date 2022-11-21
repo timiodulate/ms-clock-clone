@@ -52,6 +52,7 @@ export const sampleUserData: User[] = [
 import {
 	pomodoroProject,
 	hhhfoundationImg,
+	hhhfoundationFullImg,
 	dzinezImg,
 	portfolioImg,
 	articlePreviewImg,
@@ -60,7 +61,10 @@ import {
 export const projects: ProjectProps[] = [
 	{
 		id: 2,
-		image: { src: hhhfoundationImg, alt: "Pomodoro timer with stopwatch" },
+		image: {
+			src: hhhfoundationFullImg,
+			alt: "Pomodoro timer with stopwatch",
+		},
 		title: "3hfoundation",
 		// isPrivate: true,
 		categories: ["works"],
@@ -69,7 +73,7 @@ export const projects: ProjectProps[] = [
 			"A funtional and responsive website of HeadHeartHand Foundation which is a non-profit organization located in Surrey, British Columbia, Canada and open to all members of the public.",
 		// repoLink: "",
 		link: "https://3hfoundation.ca/",
-		bgPosition: "-40px",
+		bgPosition: "center top",
 	},
 
 	// {

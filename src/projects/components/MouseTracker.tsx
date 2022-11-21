@@ -4,6 +4,8 @@ import { ClassProp } from "./Props";
 type MouseTrackerProps = ClassProp;
 
 const MouseTracker = ({ className }: MouseTrackerProps) => {
+	const [movedMouse, setMovedMouse] = useState(false);
+
 	const mainCursor = useRef(null);
 	const secondaryCursor = useRef(null);
 
@@ -22,23 +24,43 @@ const MouseTracker = ({ className }: MouseTrackerProps) => {
 		// document.firstElementChild.classList.add("hide-scrollbar");
 
 		const handle = (e) => {
+			// if (!movedMouse) {
+			setMovedMouse(true);
+			// }
+
 			const { clientX, clientY } = e;
 
 			const mouseX = clientX;
 			const mouseY = clientY;
 
-			positionRef.current.mouseX =
-				mouseX - secondaryCursor.current.clientWidth / 2;
-			positionRef.current.mouseY =
-				mouseY - secondaryCursor.current.clientHeight / 2;
+			if (secondaryCursor.current) {
+				positionRef.current.mouseX =
+					mouseX - secondaryCursor.current.clientWidth / 2;
+				positionRef.current.mouseY =
+					mouseY - secondaryCursor.current.clientHeight / 2;
+			}
 
-			mainCursor.current.style.transform = `translate3d(${
-				mouseX - mainCursor.current.clientWidth / 2
-			}px,${mouseY - mainCursor.current.clientHeight / 2}px, 0 )`;
+			if (mainCursor.current) {
+				mainCursor.current.style.transform = `translate3d(${
+					mouseX - mainCursor.current.clientWidth / 2
+				}px,${mouseY - mainCursor.current.clientHeight / 2}px, 0 )`;
+			}
 		};
 
 		document.addEventListener("mousemove", handle);
 
+		// primary
+		// style={{
+		// 	transform: `translate(${mousePosition.x - 5}px, ${
+		// 		mousePosition.y - 5
+		// 	}px) `,
+		// }}
+		// secondary
+		// style={{
+		// 	transform: `translate(${mousePosition.x - 25}px, ${
+		// 		mousePosition.y - 25
+		// 	}px) `,
+		// }}
 		return () => document.removeEventListener("mousemove", handle);
 	}, []);
 
@@ -85,22 +107,14 @@ const MouseTracker = ({ className }: MouseTrackerProps) => {
 		<>
 			<div
 				tabIndex={-1}
-				className="mouse-tracker primary"
-				// style={{
-				// 	transform: `translate(${mousePosition.x - 5}px, ${
-				// 		mousePosition.y - 5
-				// 	}px) `,
-				// }}
+				className={`mouse-tracker primary ${movedMouse ? "" : "hide"} `}
 				ref={mainCursor}
 			></div>
 			<div
 				tabIndex={-1}
-				className="mouse-tracker secondary"
-				// style={{
-				// 	transform: `translate(${mousePosition.x - 25}px, ${
-				// 		mousePosition.y - 25
-				// 	}px) `,
-				// }}
+				className={`mouse-tracker secondary ${
+					movedMouse ? "" : "hide"
+				} `}
 				ref={secondaryCursor}
 			></div>
 		</>
