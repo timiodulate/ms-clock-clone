@@ -48,9 +48,7 @@ const Header = () => {
 
 			<Filter className={myElementIsVisible ? "show" : "hide"} />
 
-			<div className="hover">
-				<span>MENU =</span>
-			</div>
+			<div className="hover">MENU =</div>
 		</header>
 	);
 };
