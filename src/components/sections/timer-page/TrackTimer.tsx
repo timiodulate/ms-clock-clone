@@ -12,11 +12,7 @@ import {
 	updateDailyProgress,
 } from "../../../features/pomodoroSlice";
 import { BsFillStopCircleFill, BsThreeDots } from "react-icons/bs";
-import {
-	CircleProgress,
-	CCheckbox,
-	CMenuContainer,
-} from "../../../components/_reusables";
+import { CircleProgress, CCheckbox, CDropdown } from "../../_reusables";
 import { BiDotsHorizontal } from "react-icons/bi";
 import { TbTree } from "react-icons/tb";
 import { useVisibility } from "../../../utils/useVisibility";
@@ -155,14 +151,14 @@ const TrackTimerSection = () => {
 					)}
 				</h1>
 
-				<CMenuContainer className="tile-actions">
-					<CMenuContainer.Toggler
+				<CDropdown className="tile-actions">
+					<CDropdown.Toggler
 						className="icon-container"
 						toggle={toggle}
 					>
 						<BsThreeDots />
-					</CMenuContainer.Toggler>
-				</CMenuContainer>
+					</CDropdown.Toggler>
+				</CDropdown>
 			</div>
 
 			<div className="section-main">
@@ -198,18 +194,15 @@ const TrackTimerSection = () => {
 						<BsFillStopCircleFill />
 					</button>
 
-					<CMenuContainer className="menu-container">
-						<CMenuContainer.Toggler
+					<CDropdown className="menu-container">
+						<CDropdown.Toggler
 							className="icon-container"
 							toggle={toggle}
 						>
 							<BiDotsHorizontal />
-						</CMenuContainer.Toggler>
+						</CDropdown.Toggler>
 
-						<CMenuContainer.Menu
-							isVisible={isVisible}
-							toggle={toggle}
-						>
+						<CDropdown.Menu isVisible={isVisible} toggle={toggle}>
 							<li onClick={toggle}>
 								<CCheckbox
 									id="show-time-remaining-toggle"
@@ -256,8 +249,8 @@ const TrackTimerSection = () => {
 									Show daily progress tile
 								</CCheckbox>
 							</li>
-						</CMenuContainer.Menu>
-					</CMenuContainer>
+						</CDropdown.Menu>
+					</CDropdown>
 				</div>
 
 				{sessionDetails.length != 0 && (
