@@ -75,6 +75,16 @@ export const projects: ProjectProps[] = [
 		link: "https://3hfoundation.ca/",
 		bgPosition: "center top",
 	},
+	{
+		id: 1,
+		image: { src: pomodoroProject, alt: "Clock" },
+		title: "Clock",
+		description: "",
+		categories: ["projects", "personal"],
+		tools: ["Next Js.", "(S)css"],
+		link: "/clock",
+		bgPosition: "center top",
+	},
 
 	// {
 	// 	id: 3,
@@ -100,16 +110,7 @@ export const projects: ProjectProps[] = [
 	// 	link: "https://timiodulate.me/",
 	// 	bgPosition: "left",
 	// },
-	{
-		id: 1,
-		image: { src: pomodoroProject, alt: "Clock" },
-		title: "Clock",
-		description: "",
-		categories: ["projects", "personal"],
-		tools: ["Next Js.", "(S)css"],
-		link: "/clock",
-		bgPosition: "center top",
-	},
+
 	// {
 	// 	id: 4,
 	// 	image: { src: articlePreviewImg, alt: "Pomodoro timer with stopwatch" },

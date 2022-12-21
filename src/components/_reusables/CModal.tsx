@@ -15,15 +15,14 @@ export function ClientOnlyPortal({ children, selector }) {
 
 import { FaTimes } from "react-icons/fa";
 import useOutsideClose from "../../utils/useOutsideClose";
-// import { IconContainer, } from ".";
 
-export default function Modal({
+export function Modal({
 	isVisible,
 	toggle,
 	children,
 	closable,
 	className,
-}) {
+}: any) {
 	const { elementRef: modalContainer } = useOutsideClose(isVisible, toggle);
 
 	return (
@@ -50,3 +49,55 @@ export default function Modal({
 		)
 	);
 }
+
+export const useModalVisibility = () => {
+	const [isVisible, setIsVisible] = useState(false);
+
+	function toggle(ref?) {
+		// setIsVisible(!isVisible);
+
+		if (isVisible) {
+			setIsVisible(false);
+		} else {
+			setIsVisible(true);
+		}
+
+		if (ref) {
+			!isVisible && ref.current?.focus();
+		}
+	}
+
+	return {
+		isVisible,
+		toggle,
+	};
+};
+
+// ! Add this to _app.js
+// <Contexts>
+// 	<Component {...pageProps} />
+//
+// 	<div id="modal"></div>
+// </Contexts>;
+
+// ! Add this to _app.js
+// const { isVisible, toggle } = useVisibility();
+
+// return (
+// 	<aside>
+// 		{/* Aside Header  */}
+
+// 		{/* Aside Create new  */}
+// 		<div className="create-new">
+// 			<button onClick={toggle}>
+// 				<FaPlus />
+// 			</button>
+
+// 			<CreateNewProjectForms
+// 				isVisible={isVisible}
+// 				toggle={toggle}
+// 				closable
+// 			/>
+// 		</div>
+// 	</aside>
+// );

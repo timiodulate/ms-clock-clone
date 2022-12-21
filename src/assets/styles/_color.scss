@@ -1,0 +1,44 @@
+:root {
+	--clr-secondary: rgb(228, 228, 228);
+	--clr-icons: gray;
+
+	--dark-color: #262727;
+	--color-fff: #ffffff;
+	--color-100: #f0f0f0;
+	--color-200: #eeeeee;
+	--color-300: #e0e0e0;
+	--color-400: #bdbdbd;
+	--color-500: #525252;
+	--color-600: #464545;
+	--color-700: #363535;
+	--color-800: #252525;
+	--color-900: #181818;
+	--color-000: #000000;
+	--border-color: #e9e6e1;
+	--card-color: #ffffff;
+	--body-color: #f8f6f2;
+	--body-color: #f4f7f6;
+	--white-color: #ffffff;
+	--sidebar-color: #ffffff;
+	--primary-color: #191a1c;
+	--secondary-color: #837788;
+	--chart-color1: #191a1c;
+	--chart-color2: #837788;
+	--chart-color3: #374765;
+
+	// [data-luno="theme-blue"] {
+	--primary-color: #2794eb;
+	--secondary-color: #00ac9a;
+	--primary-rgb: 13, 110, 253;
+	--secondary-rgb: 0, 172, 154;
+	--chart-color1: #2794eb;
+	--chart-color2: #6382d8;
+	--chart-color3: #8d61a5;
+	--chart-color4: #90476f;
+	--chart-color5: #00ac9a;
+	--primary-gradient: linear-gradient(
+		145deg,
+		var(--primary-color),
+		var(--secondary-color)
+	);
+}

@@ -1,15 +1,7 @@
-import ClockContexts from "../clock/contexts";
-import { ProjectsListContextProvider } from "../projects/contexts";
-import TodoContexts from "../todo/contexts";
+import ClockContexts from "./ClockContexts";
 
 function Contexts({ children }: any) {
-	return (
-		<ProjectsListContextProvider>
-			<ClockContexts>
-				<TodoContexts>{children}</TodoContexts>
-			</ClockContexts>
-		</ProjectsListContextProvider>
-	);
+	return <ClockContexts>{children}</ClockContexts>;
 }
 
 export default Contexts;

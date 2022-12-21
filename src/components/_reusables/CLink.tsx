@@ -5,12 +5,16 @@ import { useRouter } from "next/router";
 
 interface Props {
 	href: string;
+	children: any;
 	className?: string;
 	external?: boolean;
+	exact?: boolean;
+	active?: any;
 	type?: "external" | "nav";
+	props?: any;
 }
 
-const CLink = ({ children, type, ...props }: any) => {
+const CLink = ({ children, type, ...props }: Props) => {
 	if (type == "nav") {
 		return <NavLink {...props}>{children}</NavLink>;
 	} else {
@@ -28,7 +32,7 @@ const NormalLink = ({
 	active,
 	external,
 	...props
-}: any) => {
+}: Props) => {
 	if (external || href[0] !== "/") {
 		return (
 			<a
@@ -58,7 +62,7 @@ const NavLink = ({
 	className,
 	active,
 	...props
-}: any) => {
+}: Props) => {
 	const [classN, setClassN] = useState("");
 	const { pathname, asPath } = useRouter();
 	const isActive = exact
