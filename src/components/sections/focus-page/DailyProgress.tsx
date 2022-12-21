@@ -1,6 +1,6 @@
 import { IoPencilSharp } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
-import { CircleProgress } from "../../../components/_reusables";
+import { CircleProgress } from "../../_reusables";
 
 const DailyProgressSection = () => {
 	const isDailyProgressTileVisible = useSelector(
